@@ -1,0 +1,112 @@
+[
+  {
+    "name": "status:graveyard",
+    "color": "6e7781",
+    "description": "Abandoned or archived; retain the reason"
+  },
+  {
+    "name": "status:idle",
+    "color": "d4c5f9",
+    "description": "Idea requiring refinement before execution"
+  },
+  {
+    "name": "status:pending",
+    "color": "fbca04",
+    "description": "Actionable task waiting to be claimed"
+  },
+  {
+    "name": "status:wip",
+    "color": "1d76db",
+    "description": "Implementation in progress"
+  },
+  {
+    "name": "status:qualified",
+    "color": "0e8a16",
+    "description": "Checks complete; awaiting human review"
+  },
+  {
+    "name": "status:ranked",
+    "color": "5319e7",
+    "description": "Formally accepted and merged"
+  },
+  {
+    "name": "type:epic",
+    "color": "c5def5",
+    "description": "Epic task type"
+  },
+  {
+    "name": "type:feature",
+    "color": "c5def5",
+    "description": "Feature task type"
+  },
+  {
+    "name": "type:bug",
+    "color": "c5def5",
+    "description": "Bug task type"
+  },
+  {
+    "name": "type:task",
+    "color": "c5def5",
+    "description": "Task task type"
+  },
+  {
+    "name": "type:research",
+    "color": "c5def5",
+    "description": "Research task type"
+  },
+  {
+    "name": "type:refactor",
+    "color": "c5def5",
+    "description": "Refactor task type"
+  },
+  {
+    "name": "type:chore",
+    "color": "c5def5",
+    "description": "Chore task type"
+  },
+  {
+    "name": "priority:p0",
+    "color": "b60205",
+    "description": "Critical"
+  },
+  {
+    "name": "priority:p1",
+    "color": "d93f0b",
+    "description": "High"
+  },
+  {
+    "name": "priority:p2",
+    "color": "fbca04",
+    "description": "Normal"
+  },
+  {
+    "name": "priority:p3",
+    "color": "c2e0c6",
+    "description": "Low"
+  },
+  {
+    "name": "agent:ready",
+    "color": "c2e0c6",
+    "description": "Ready to be claimed"
+  },
+  {
+    "name": "agent:resume",
+    "color": "f9d0c4",
+    "description": "Paused work with a Checkpoint"
+  },
+  {
+    "name": "agent:blocked",
+    "color": "b60205",
+    "description": "External blocker or unresolved dependency"
+  },
+  {
+    "name": "agent:review",
+    "color": "bfdadc",
+    "description": "Waiting for human review"
+  },
+  {
+    "name": "loved",
+    "color": "ff80ab",
+    "description": "High long-term value; independent of lifecycle"
+  }
+]
