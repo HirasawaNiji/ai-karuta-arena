@@ -4,6 +4,8 @@
 
 GitHub Issues are the persistent task pool and project state. Use Issues, PRs, commits and repository documentation for durable knowledge; chat history is not authoritative project memory.
 
+Keep Issues concise and human-readable: what we want to do, what is done and what comes next, with links to details. Use plain language in Issues, PR summaries and user updates; avoid unnecessary engineering jargon. Put detailed requirements and validation evidence in docs and PRs instead of repeating them. Track the first Mock milestone in Issue #4; use its M1-M5 checklist and related PRs rather than separate phase Issues. Close the tracker only when all phases are accepted. Keep checkpoints brief but sufficient to resume.
+
 1. Read this file, README, `docs/project-state.md` and relevant design documents.
 2. Inspect the current branch, working tree, Issues and related PRs. Preserve unrelated changes.
 3. Query `agent:resume` first, then `status:pending`; exclude `agent:blocked` and unresolved dependencies.
