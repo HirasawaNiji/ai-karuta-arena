@@ -1,0 +1,57 @@
+name: Task
+description: Propose a task for triage.
+title: '[task] '
+labels:
+- type:task
+- status:idle
+- priority:p2
+body:
+- type: textarea
+  id: goal
+  attributes:
+    label: Goal
+    description: What outcome should this task achieve?
+  validations:
+    required: true
+- type: textarea
+  id: context
+  attributes:
+    label: Context
+    description: Explain background and current behavior.
+  validations:
+    required: true
+- type: textarea
+  id: requirements
+  attributes:
+    label: Requirements
+    description: List the concrete requirements or research questions.
+  validations:
+    required: true
+- type: textarea
+  id: constraints
+  attributes:
+    label: Constraints
+    description: State scope limits and compatibility requirements, or None.
+  validations:
+    required: true
+- type: textarea
+  id: dependencies
+  attributes:
+    label: Dependencies
+    description: Link blockers and related prerequisites, or None.
+  validations:
+    required: true
+- type: textarea
+  id: acceptance
+  attributes:
+    label: Acceptance Criteria
+    description: Provide observable checks that establish completion.
+  validations:
+    required: true
+- type: textarea
+  id: references
+  attributes:
+    label: References / Related Issues
+    description: Link supporting documents and related Issues.
+  validations:
+    required: false
