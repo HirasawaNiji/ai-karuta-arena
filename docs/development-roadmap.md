@@ -1,6 +1,6 @@
 # 开发路线图与任务依赖
 
-本次交付是需求文档，不是业务实现。当前文档任务：[#3](https://github.com/HirasawaNiji/ai-karuta-arena/issues/3)。架构建议与需求经评审接受后才开始应用骨架；初始化基础 [#1 / PR #2](https://github.com/HirasawaNiji/ai-karuta-arena/pull/2) 仍是合入 main 的前置依赖，实时状态以 GitHub 为准。
+第一版要做的事情都放在 [#4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)，方便查看做到哪了、下一步做什么。具体要求见[需求说明](requirements.md)和[检查清单](acceptance.md)。PR #2、#9 合并后，从下面的第一步开始。
 
 ## 首期实施顺序
 
@@ -12,19 +12,11 @@
 | M4 | 派对状态、Mock 主持、Mock 游戏适配、版本确认与开局检查 | REQ-05、REQ-11–14；AC-13–18 | M2、M3 |
 | M5 | CLI 集成 Demo、游戏反馈闭环、使用/接入文档与完整验收 | REQ-16–19；AC-01–20 的集成及回归 | M1–M4 |
 
-对应 GitHub Issue 链接在本文件的任务池表维护。每个阶段是一个可独立提交 PR 的单位；需求明确但前置未接受时为 Pending + agent:blocked，不能标为 ready。依赖解除后只将最先可执行任务改为 ready，领取时转 WIP。任务之间存在共享契约，不建议当前阶段同时修改同一模型。
+按 M1 到 M5 的顺序推进，每完成一步可以单独提交 PR，都关联 #4（`Refs #4`）。前一步确认完成后再做下一步，全部完成后才关闭 #4。
 
-## 任务池
+## 进度维护
 
-| 阶段 | GitHub Issue | 前置任务 |
-| --- | --- | --- |
-| M1 | [#4 工作区与领域契约](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4) | #1、#3 接受并合并 |
-| M2 | [#5 Mock 画像与矩阵](https://github.com/HirasawaNiji/ai-karuta-arena/issues/5) | #4 |
-| M3 | [#6 逐首选曲与公平评估](https://github.com/HirasawaNiji/ai-karuta-arena/issues/6) | #5 |
-| M4 | [#7 ban 后确认与 Mock 派对](https://github.com/HirasawaNiji/ai-karuta-arena/issues/7) | #5、#6 |
-| M5 | [#8 Demo 与首期验收](https://github.com/HirasawaNiji/ai-karuta-arena/issues/8) | #4、#5、#6、#7 |
-
-任务创建时均因前置依赖未接受而标记为 Pending + blocked；此表记录依赖，不是实时状态副本。是否可领取应查询 Issue 的最新标签、依赖与 Checkpoint。
+原 #5–#8 的事项已收进 #4，旧 Issue 关闭留作记录，并不代表功能已经完成。平时只更新 #4 的清单，检查结果放在对应 PR。暂停时简短写明做到哪了、代码在哪里、接下来怎么继续；状态标签仍按[任务流程](task-workflow.md)维护，不能因为其中一步完成就把整个任务标为完成。
 
 ## 里程碑边界
 
