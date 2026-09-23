@@ -1,0 +1,15 @@
+node_modules/
+dist/
+coverage/
+pnpm-lock.yaml
+*.tsbuildinfo
+**/*.md
+.github/ISSUE_TEMPLATE/
+.github/labels.json
+.env.example
+*.py
+.gitattributes
+.gitignore
+.editorconfig
+.node-version
+.npmrc
