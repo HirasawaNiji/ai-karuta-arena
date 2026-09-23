@@ -29,6 +29,8 @@
 
 退出条件：core 契约可导入、无业务算法假实现，AC-01 和 AC-02 契约部分通过，build/typecheck/test/lint/Python/diff 检查通过。M1 不声称选曲或完整游戏可用。
 
+M1.4 的实际入口、原始导入与规范集合边界见[证据契约验收](m1-evidence-contracts.md)。它不实现 M2 的去重或评分。
+
 ## 3. M2：模拟来源、证据、画像与矩阵
 
 依赖：M1 接受。建议分支 `feat/4-m2-profile-matrix`。新增 music-profile、adapters 的来源与 fixture 实现。

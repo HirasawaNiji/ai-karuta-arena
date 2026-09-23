@@ -9,7 +9,7 @@ Keep Issues concise and human-readable: what we want to do, what is done and wha
 1. Read this file, README, `docs/project-state.md` and relevant design documents. Read `docs/preliminary-demo.md` after the merged requirements for the updated playable preliminary-demo scope: manual profiles, playable questions, multiplayer/1v1 and tournaments, with no LLM integration. For the core Mock milestone, follow `docs/implementation-architecture.md`, `docs/algorithm-spec.md`, `docs/party-runtime-spec.md` and `docs/implementation-plan.md`. M1-M5 validate the core; D0-D4 add the playable experience and must not be claimed complete by CLI tests. These define package ownership, calculations, state transitions and step order; do not restart architecture selection from the archived Prompt.
 2. Inspect the current branch, working tree, Issues and related PRs. Preserve unrelated changes.
 3. Query `agent:resume` first, then `status:pending`; exclude `agent:blocked` and unresolved dependencies.
-4. Choose work by explicit user direction, dependencies, priority, Loved and continuity. Do not silently abandon resumable work for an unrelated task.
+4. The mainline is the complete project and playable Demo tracked in Issue #14: core #4, engine/material verification #11 and D1-D4. The Jay Chou playlist/special session in #12 is a P3 side task; it must not outrank or become a prerequisite for the generic Demo. Choose work by explicit user direction, dependencies, priority, Loved and continuity. Do not silently abandon resumable work for an unrelated task.
 5. Inspect the Issue, latest Checkpoint, branch, PR, commits and diff before resuming.
 6. Claim one actionable Issue, change Pending to WIP, remove stale Agent labels, and create or continue its branch.
 

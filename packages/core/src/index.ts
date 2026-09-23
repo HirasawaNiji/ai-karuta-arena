@@ -4,3 +4,8 @@ export * from './song.js';
 export * from './player.js';
 export * from './question.js';
 export * from './catalog.js';
+export * from './evidence.js';
+export * from './config.js';
+export * from './profile.js';
+export * from './familiarity.js';
+export * from './profile-input.js';

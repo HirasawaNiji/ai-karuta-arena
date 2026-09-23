@@ -15,3 +15,16 @@ export function compileTimeBoundary(
   }
   return { invalidSong, song };
 }
+
+export function profileTypeBoundary(
+  profile: import('@amp/core').PlayerMusicProfile,
+  matrix: import('@amp/core').FamiliarityMatrix,
+) {
+  // @ts-expect-error Profile evidence collections are readonly.
+  profile.songEvidence = {};
+  // @ts-expect-error A matrix cannot be patched through its public snapshot.
+  matrix.cells = {};
+  // @ts-expect-error Versioned configuration snapshots are readonly.
+  matrix.scoringConfig.weights.favorite = 0;
+  return { profile, matrix };
+}
