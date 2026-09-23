@@ -2,6 +2,10 @@
 
 状态：测试要求，尚未执行业务测试。需求定义见 [requirements.md](requirements.md)，任务依赖见 [development-roadmap.md](development-roadmap.md)。受控 Mock 通过不代表真实派对公平性、真实音乐平台或正式联网游戏已验证。
 
+实施级测试归属与顺序见[工作单](implementation-plan.md)；手算公式、精度与数据变体见[算法规格](algorithm-spec.md)，权限/版本/事件不变量见[运行规格](party-runtime-spec.md)。这些细化补充原 AC，不表示场景已执行或通过。
+
+AC-01–20 验收 M1–M5 核心 Mock。[初赛补充中的 PAD-01–10](preliminary-demo.md)另外验收手动画像、可播放题目、真实多人/1v1 和淘汰赛；两组不能互相冒充。初赛暂停 LLM 接入，QQ 不可用时必须仍能完成真人演示。score-v1 保留核心回归，score-v2-manual 按新增识别范围和自报规则验证。
+
 ## 验收场景
 
 | 编号 | 对应需求 | 输入/场景 | 必须观察到的结果 |

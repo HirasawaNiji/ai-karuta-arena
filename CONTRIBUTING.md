@@ -8,4 +8,6 @@
 6. PR 描述写明问题、结果、验证情况及实际限制。没有运行的检查必须明确说明。
 7. 完成后将 Issue 标为 Qualified，等待人工评审；正式接受并合并后才进入 Ranked。
 
+Issue #4 汇总 M1–M5，文档或单阶段 PR 完成不代表整个里程碑完成；其阶段待审与交接按[实施工作单](docs/implementation-plan.md)记录，全部实现和检查完成后才将 tracker 标为 Qualified。
+
 未完成的工作必须留下 [Checkpoint](docs/checkpoint-template.md)。权限不足时明确记录本地路径、分支、提交和恢复命令，不要声称分支已经推送。
