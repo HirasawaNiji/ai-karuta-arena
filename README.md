@@ -10,11 +10,15 @@ AI Music Party / AI 音乐派对：根据参与者的音乐画像、证据与游
 | --- | --- |
 | [需求规格](docs/requirements.md) | 19 项编号需求、接口边界、公平配置与首期范围 |
 | [仓库与架构方案](docs/architecture.md) | 单应用、轻量 Monorepo、多仓库比较；推荐方案与依赖方向 |
+| [详细实现架构](docs/implementation-architecture.md) | 开发主入口：包职责、目标文件、数据契约、工程与依赖约定 |
+| [算法规格](docs/algorithm-spec.md) | 证据归并、画像、熟悉度/可信度、逐首选曲公式与手算例 |
+| [派对运行规格](docs/party-runtime-spec.md) | 状态、命令权限、禁歌、版本确认、游戏事件与反馈结算 |
+| [实施工作单](docs/implementation-plan.md) | M1–M5 的逐项步骤、产出、测试映射与交接约定 |
 | [验收矩阵](docs/acceptance.md) | 20 组算法、状态和集成场景；区分计划测试与执行证据 |
 | [来源映射](docs/source-map.md) | 修订 Prompt 四十九章到需求和验收的完整追溯 |
 | [开发路线图](docs/development-roadmap.md) | 分阶段任务、依赖与领取条件 |
 
-建议采用 pnpm TypeScript 轻量 Monorepo：先用单进程 CLI 验证画像、选曲、主持与 Mock 游戏反馈，再接 Web/单个服务端和现有 Karuta。推荐技术栈尚未安装，需求/架构接受后再实施骨架。
+首期采用 pnpm TypeScript 轻量 Monorepo：先用单进程 CLI 验证画像、选曲、主持与 Mock 游戏反馈，再接 Web/单个服务端和现有 Karuta。技术栈尚未安装；详细架构补充接受后，按实施工作单从 M1 开始。文档规定的公式与流程尚未通过业务实现验证。
 
 ## 开始工作
 
@@ -40,6 +44,6 @@ python scripts/check_repository.py
 
 ## 当前范围
 
-本轮把修订 Prompt 转成需求和架构评审材料，不把方案文档当作功能实现。`pnpm install / build / test / lint / demo` 是后续 Mock 交付的目标命令，目前尚不可用；当前可执行检查仍是上面的 Python 命令。详见 [项目状态](docs/project-state.md)。
+当前已有修订需求与详细架构评审材料，不把方案文档当作功能实现。`pnpm install / build / test / lint / demo` 是后续 Mock 交付的目标命令，目前尚不可用；当前可执行检查仍是上面的 Python 命令。详见 [项目状态](docs/project-state.md)。
 
 仓库未选择许可证；引入外部代码、音频或图片时，须先确认其许可和使用范围。

@@ -2,6 +2,8 @@
 
 第一版要做的事情都放在 [#4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)，方便查看做到哪了、下一步做什么。具体要求见[需求说明](requirements.md)和[检查清单](acceptance.md)。PR #2、#9 合并后，从下面的第一步开始。
 
+本页是阶段概览；具体开发按[详细实现架构](implementation-architecture.md)和[实施工作单](implementation-plan.md)执行。评分与选曲统一使用[算法规格](algorithm-spec.md)，派对命令与状态统一使用[运行规格](party-runtime-spec.md)。新增架构细化接受后开始 M1，不另行初始化第二套目录或重新选择框架。
+
 ## 首期实施顺序
 
 | 阶段 | 独立交付 | 需求/主要验收 | 依赖 |

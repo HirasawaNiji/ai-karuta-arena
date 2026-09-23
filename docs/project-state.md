@@ -12,6 +12,7 @@
 - 首期范围：多元 Mock 数据、画像/评分、矩阵、逐首选曲、公平评估、Mock 主持、Mock 游戏事件与反馈；无平台 Key、无真实 LLM。
 - 已明确的体验规则：评分不称概率；选曲逐首重算；ban 后重新评估；不足时等待房主选择；知情继续绑定评估版本且不抹除告警。
 - [架构基线](architecture.md)：轻量 pnpm TypeScript Monorepo、首期单进程 Demo；后续再增加 React/Vite Web 与单个 Node 服务端。尚未实施。
+- [详细实现架构](implementation-architecture.md)补充模块/文件归属、公共数据契约与工程约定；[算法规格](algorithm-spec.md)固定首期可复现公式；[运行规格](party-runtime-spec.md)明确命令、版本和事件；[工作单](implementation-plan.md)拆解 M1–M5。文档补充是否已接受以关联 PR 为准，不能把写出规格算作 M1 完成。
 - [验收矩阵](acceptance.md)定义业务测试要求，目前只进行文档和仓库检查，不能声称算法或用户体验已经验证。
 - [来源映射](source-map.md)保留四十九章来源；[路线图](development-roadmap.md)关联后续任务。
 

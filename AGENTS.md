@@ -6,7 +6,7 @@ GitHub Issues are the persistent task pool and project state. Use Issues, PRs, c
 
 Keep Issues concise and human-readable: what we want to do, what is done and what comes next, with links to details. Use plain language in Issues, PR summaries and user updates; avoid unnecessary engineering jargon. Put detailed requirements and validation evidence in docs and PRs instead of repeating them. Track the first Mock milestone in Issue #4; use its M1-M5 checklist and related PRs rather than separate phase Issues. Close the tracker only when all phases are accepted. Keep checkpoints brief but sufficient to resume.
 
-1. Read this file, README, `docs/project-state.md` and relevant design documents.
+1. Read this file, README, `docs/project-state.md` and relevant design documents. For the first Mock milestone, follow `docs/implementation-architecture.md`, `docs/algorithm-spec.md`, `docs/party-runtime-spec.md` and `docs/implementation-plan.md` after the merged requirements. These define package ownership, calculations, state transitions and step order; do not restart architecture selection from the archived Prompt.
 2. Inspect the current branch, working tree, Issues and related PRs. Preserve unrelated changes.
 3. Query `agent:resume` first, then `status:pending`; exclude `agent:blocked` and unresolved dependencies.
 4. Choose work by explicit user direction, dependencies, priority, Loved and continuity. Do not silently abandon resumable work for an unrelated task.
@@ -23,6 +23,8 @@ Use exactly one `status:*` label: Graveyard, Idle, Pending, WIP, Qualified or Ra
 - Graveyard: abandoned or rejected; keep the Issue and record why.
 
 Run applicable checks, update documentation, create or update a PR, then move WIP to Qualified with `agent:review`. Do not self-approve or automatically promote work to Ranked. Keep scope within the Issue and necessary dependencies.
+
+For the multi-stage Issue #4, a document or individual phase PR does not qualify the whole milestone. Record the phase review in its PR and checkpoint; return the tracker to Pending + resume while waiting for phase acceptance or further authorized work. Use Qualified + review for the tracker only after all M1-M5 implementation and applicable checks are complete. Do not close it through an intermediate PR.
 
 ## Interruption
 

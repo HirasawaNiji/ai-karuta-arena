@@ -2,6 +2,8 @@
 
 状态：测试要求，尚未执行业务测试。需求定义见 [requirements.md](requirements.md)，任务依赖见 [development-roadmap.md](development-roadmap.md)。受控 Mock 通过不代表真实派对公平性、真实音乐平台或正式联网游戏已验证。
 
+实施级测试归属与顺序见[工作单](implementation-plan.md)；手算公式、精度与数据变体见[算法规格](algorithm-spec.md)，权限/版本/事件不变量见[运行规格](party-runtime-spec.md)。这些细化补充原 AC，不表示场景已执行或通过。
+
 ## 验收场景
 
 | 编号 | 对应需求 | 输入/场景 | 必须观察到的结果 |

@@ -2,6 +2,8 @@
 
 状态：首期架构文档基线；本次没有安装应用框架或建立服务。依据：[需求规格](requirements.md)。
 
+本页保留架构选型依据。后续开发统一进入[详细实现架构](implementation-architecture.md)，并依次使用[算法规格](algorithm-spec.md)、[派对运行规格](party-runtime-spec.md)与[实施工作单](implementation-plan.md)。细化文档接受后，B 为首期执行方案；不再把以下 A/B/C 对比当作未决选型。新增公式和工程默认值是待实现验证的约定，不改变已合并 REQ/AC。
+
 ## 可选仓库方案
 
 | 方案 | 仓库组织与运行方式 | 优点 | 代价与适用条件 |
