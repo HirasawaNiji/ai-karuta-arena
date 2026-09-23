@@ -38,7 +38,7 @@ evaluationContext 保存：成员 ID 集合与房主 ID、每人 profileVersion�
 
 actor 是 `{role: host | player | system, playerId?}`；Mock 中由 demo 注入并标注模拟。runtime 验证 host 的 playerId 等于 hostPlayerId。真实服务端以后从认证会话产生 actor，不能直接信任浏览器字段。AI 主持是建议来源，不是 host actor。
 
-所有外部写命令携带 commandId 和 expectedVersion，先验证期望版本；仅 INITIALIZE 使用初始版本 0。相同 commandId/内容重送返回已记录结果，不重复副作用；同 ID 不同内容拒绝。表中的“幂等”在命令 ID 查重后适用；新的确认或变更命令不得用旧版本。内部游戏事件使用会话版本，按事件规则单独校验。
+所有外部写命令携带 commandId 和 expectedVersion；仅 INITIALIZE 使用初始版本 0。先校验操作者身份，再以 partyId + commandId 查重：相同操作者与完整命令内容（包括 expectedVersion）重送返回已记录结果，不重复副作用，即使当前版本已经前进；同 ID 的操作者或内容不同则拒绝，不泄露原结果。仅未处理的新命令再验证期望版本及当前权限/状态。表中的“幂等”在上述查重后适用；新的确认或变更命令不得用旧版本。内部游戏事件使用会话版本，按事件规则单独校验。
 
 | 命令 | 允许来源 / 前置条件 | 结果与失败行为 |
 | --- | --- | --- |
