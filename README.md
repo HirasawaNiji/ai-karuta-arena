@@ -2,7 +2,7 @@
 
 AI Music Party / AI 音乐派对：根据参与者的音乐画像、证据与游戏反馈，生成兼顾熟悉覆盖、竞争性和多样性的游戏题组。Karuta 是首个游戏适配目标，QQ 音乐是可能的数据来源；领域模型不绑定某个平台、语言或音乐文化。
 
-当前已有 M1 工作区与基础领域契约，**尚无可运行的选曲或游戏应用**。初赛目标是玩家通过标签和熟悉歌曲建立画像，体验多人抢牌、经典 1v1 和简单淘汰赛；暂不接大模型，QQ 授权也不作为游玩前提。核心先完成无需 API Key 的本地 Mock 验证，再接现有歌牌引擎与真人房间。熟悉度采用规则评分，ban 后重评，覆盖不足时等待房主选择。核心开发进度见 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。
+当前已有 M1 工作区、基础领域及证据/画像/矩阵契约，**尚无可运行的选曲或游戏应用**。初赛目标是玩家通过标签和熟悉歌曲建立画像，体验多人抢牌、经典 1v1 和简单淘汰赛；暂不接大模型，QQ 授权也不作为游玩前提。核心先完成无需 API Key 的本地 Mock 验证，再接现有歌牌引擎与真人房间。熟悉度采用规则评分，ban 后重评，覆盖不足时等待房主选择。产品主线见 [真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，核心进度见 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。周杰伦专场 #12 是 P3 副线，不是通用 Demo 的前置条件。
 
 ## 需求与架构入口
 
@@ -35,7 +35,7 @@ pnpm test
 pnpm lint
 ```
 
-`@amp/core` 公共出口指向构建产物；typecheck/test 会先构建，不依赖遗留 dist。已提供稳定 ID、开放分类、歌曲/艺人/玩家偏好、录音/题目/卡牌与目录引用校验；完整画像/证据/矩阵、评分算法、运行状态与 demo 尚未实现。本阶段的验证范围见[基础契约验收](docs/m1-foundation.md)。
+`@amp/core` 公共出口指向构建产物；typecheck/test 会先构建，不依赖遗留 dist。已提供稳定 ID、开放分类、歌曲/艺人/玩家偏好、录音/题目/卡牌与目录引用校验；已补齐完整画像/证据/矩阵与配置的结构和引用校验；评分算法、运行状态与 demo 尚未实现。验证范围见[基础契约验收](docs/m1-foundation.md)和[M1.4 契约验收](docs/m1-evidence-contracts.md)。
 
 ```sh
 python scripts/check_repository.py
@@ -59,6 +59,6 @@ Python 文本检查仅需要 Python 3.11 或更新版本，无第三方依赖；
 
 ## 当前范围
 
-已交付 M1.1–M1.3 和本子范围的 CI，`install / build / typecheck / test / lint` 可用；`pnpm demo` 仍未提供。M1.4–M1.5 与完整 M1 验收、M2–M5 均未完成。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
+已交付 M1.1–M1.4 和对应契约检查，`install / build / typecheck / test / lint` 可用；`pnpm demo` 仍未提供。M1.5 与完整 M1 验收、M2–M5 均未完成。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
 
 仓库未选择许可证；引入外部代码、音频或图片时，须先确认其许可和使用范围。

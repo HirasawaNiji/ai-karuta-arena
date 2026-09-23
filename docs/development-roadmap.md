@@ -1,8 +1,8 @@
 # 开发路线图与任务依赖
 
-第一版要做的事情都放在 [#4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)，方便查看做到哪了、下一步做什么。具体要求见[需求说明](requirements.md)和[检查清单](acceptance.md)。PR #2、#9 合并后，从下面的第一步开始。
+产品主线是完成整个项目与可演示产品，由 [#14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14) 汇总。核心 M1–M5 继续统一在 [#4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4) 跟踪，D0 在 [#11](https://github.com/HirasawaNiji/ai-karuta-arena/issues/11) 跟踪。周杰伦专场 [#12](https://github.com/HirasawaNiji/ai-karuta-arena/issues/12) 是 P3 副线，不得抢占主线或作为通用 Demo 的验收前提。具体要求见[需求说明](requirements.md)和[检查清单](acceptance.md)，从最新 Checkpoint 中最早未完成且依赖已满足的步骤继续。
 
-本页是阶段概览；具体开发按[详细实现架构](implementation-architecture.md)和[实施工作单](implementation-plan.md)执行。评分与选曲统一使用[算法规格](algorithm-spec.md)，派对命令与状态统一使用[运行规格](party-runtime-spec.md)。新增架构细化接受后开始 M1，不另行初始化第二套目录或重新选择框架。
+本页是阶段概览；具体开发按[详细实现架构](implementation-architecture.md)和[实施工作单](implementation-plan.md)执行。评分与选曲统一使用[算法规格](algorithm-spec.md)，派对命令与状态统一使用[运行规格](party-runtime-spec.md)。M1 已开始，后续沿用既定架构，不另行初始化第二套目录或重新选择框架。
 
 最新产品目标见[初赛可玩 Demo](preliminary-demo.md)：初赛不接大模型，手动画像即可游玩。先核对现有歌牌引擎与素材（D0），随后依赖顺序为 M1–M5 核心验证 → D1 手动入场/真实房间 → D2 真实 1v1 → D3 多人抢牌 → D4 单淘汰；D5 小组单循环在初赛后扩展。D0 外部资料缺失时不阻塞独立的 M1 工作区配置，但不能未经核对就确认引擎接口。
 
@@ -30,7 +30,7 @@ M1 可证明工作区与契约可检查，不代表业务闭环可运行。M2/M3
 
 ## 可玩交付与后续边界
 
-可玩 D 阶段的任务与依赖在实施前单独明确，不扩张 Issue #4 的核心 Mock 完成条件。范围按以下划分：
+可玩 D 阶段由 #14 汇总，单次交付范围与依赖在实施前明确，不扩张 Issue #4 的核心 Mock 完成条件。范围按以下划分：
 
 - **真实 QQ 数据接入**：先核实比赛方官方授权、可用字段与调用限制，确定合规可用的替代路径；未确认私有接口不成为核心依赖。
 - **现有 Karuta 集成（D0/D2）**：优先核对协议、音频/卡牌来源、状态真值和计分责任，先做适配契约再接真实 1v1，保留现有项目；多人支持在 D3 验证或通过独立薄适配实现。

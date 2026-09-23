@@ -1,6 +1,6 @@
 # 艺人专场：周杰伦全曲库玩法
 
-任务：[Issue #12](https://github.com/HirasawaNiji/ai-karuta-arena/issues/12)。
+任务：[Issue #12](https://github.com/HirasawaNiji/ai-karuta-arena/issues/12)。按用户最新方向，此专场是 **P3 副线**；主线是完成整个项目与[真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，不得以本专场或全曲库核验阻塞通用 Demo。
 
 2026-09-24 用户新增方向：支持周杰伦专场，并以全曲库为内容目标。复用既有画像、公平检查、禁歌、1v1/多人流程；不硬编码文化/语言偏好，不接大模型。
 

@@ -134,7 +134,7 @@ ID 是非空、无前后空白的稳定字符串，按 SongId、PlayerId、Artis
 
 `FamiliarityEstimate` 包含 `familiarityScore, confidence, evidenceStatus: known | insufficient, reasons`。reasons 是结构化贡献列表，每项有 feature、evidenceIds、transformedValue、weight、contribution；额外记录 clamp / correctFloor 等修正，使最终数值可重算。文案从结构生成。
 
-`FamiliarityMatrix` 包含 schemaVersion、matrixVersion、referenceTime、scoringConfigVersion、按玩家的 profileVersion、排序后的 playerIds/songIds、以 ID 索引的完整 cells。所有玩家 × 候选歌曲都必须有 cell；无证据也有低可信度 cell，缺 cell 是程序错误而非零分。同一快照排序稳定；禁止用数组下标在两个不同排序中关联身份。
+`FamiliarityMatrix` 包含 schemaVersion、matrixVersion、referenceTime、scoringConfigVersion、完整 scoringConfig 快照（拒绝同版本名参数变化）、catalogVersion、按玩家的 profileVersion、排序后的 playerIds/songIds、以 ID 索引的完整 cells。所有玩家 × 候选歌曲都必须有 cell；无证据也有低可信度 cell，缺 cell 是程序错误而非零分。同一快照排序稳定；禁止用数组下标在两个不同排序中关联身份。
 
 公开纯函数：
 
