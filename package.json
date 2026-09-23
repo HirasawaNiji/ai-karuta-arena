@@ -1,0 +1,27 @@
+{
+  "name": "ai-music-party",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.5",
+  "engines": {
+    "node": ">=24.21.0 <25",
+    "pnpm": "10.34.5"
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "pnpm build && tsc -p tsconfig.test.json",
+    "test": "pnpm build && vitest run",
+    "lint": "eslint . && prettier --check .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@amp/core": "workspace:*",
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.13.3",
+    "eslint": "10.11.0",
+    "prettier": "3.9.8",
+    "typescript": "6.0.2",
+    "typescript-eslint": "8.70.1",
+    "vitest": "5.0.1"
+  }
+}
