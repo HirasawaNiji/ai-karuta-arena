@@ -2,9 +2,11 @@
 
 本文把已合并的[需求规格](requirements.md)转成可执行的开发约定。范围是 Issue #4 的 M1–M5，无业务代码已实现的含义。本文新增的实现选择随本次文档 PR 接受后成为开发基线；已合并的 REQ 和 AC 始终有效。
 
+2026-09-24 补充：[初赛可玩 Demo 架构](preliminary-demo.md)增加真人画像采集、可玩题目、多人/1v1 与赛事。本文“首期”均指 M1–M5 核心 Mock，完整初赛目标还包括补充中的 D 阶段；不再以 CLI 通过作为真人可玩完成标准。初赛不接大模型，使用规则选曲和系统主持。
+
 ## 1. 阅读与决策顺序
 
-新的开发者按以下顺序阅读：`AGENTS.md` → `docs/project-state.md` → Issue #4 最新清单、Checkpoint 和关联 PR → `requirements.md` → 本文 → [算法规格](algorithm-spec.md) → [派对运行规格](party-runtime-spec.md) → [实施工作单](implementation-plan.md) → `acceptance.md`。
+新的开发者按以下顺序阅读：`AGENTS.md` → `docs/project-state.md` → Issue #4 最新清单、Checkpoint 和关联 PR → `requirements.md` → [初赛范围补充](preliminary-demo.md) → 本文 → [算法规格](algorithm-spec.md) → [派对运行规格](party-runtime-spec.md) → [实施工作单](implementation-plan.md) → `acceptance.md`。
 
 需求规定产品行为，本文规定模块和数据归属，算法/运行规格规定确定性计算和流程，工作单规定实施顺序，验收矩阵规定交付证据。原 Prompt 快照仅用于追溯，不能再执行其初始化指令覆盖现有仓库。
 
@@ -17,6 +19,8 @@
 一次完整演示完成：加载模拟数据 → 生成画像 → 计算矩阵 → 选曲并评估 → 主持说明 → 模拟房主处理禁歌/告警 → 模拟游戏 → 收集证据 → 下一轮重新评分与选曲。模拟玩家行为由独立脚本提供，不能直接把熟悉度评分当成答题结果，否则只是在自证模型。
 
 真实 Karuta 保持原仓库，未来通过适配器接入。本仓库当前不包含其代码，不假设其协议已经确认。QQ 只作为未来来源，歌曲语言、地区、风格和文化没有默认优先级。
+
+初赛层复用这些包，另增加 web/server 组合入口。Party、Match、GameSession、Tournament 分层；来源包括手动输入；Song/Recording/Question/Card 分离。具体契约、玩法与 D0 引擎核对见初赛补充，不在核心 Mock 阶段预建空页面、空赛事包或模型 SDK。
 
 ## 3. 运行结构与依赖
 
@@ -32,7 +36,7 @@ flowchart TD
     Engine --> Core
 ```
 
-箭头表示代码依赖，不表示事件流。runtime 通过 core 接口接收已注入的来源/游戏/主持，不导入 adapters。demo 是唯一组合入口。playlist-engine 只读取已计算矩阵，不调用 music-profile。
+箭头表示代码依赖，不表示事件流。runtime 通过 core 接口接收已注入的来源/游戏/主持，不导入 adapters。M1–M5 的 demo 是唯一组合入口；可玩 D 阶段由 server 作为另一组合入口，web 不拥有状态真值。playlist-engine 只读取已计算矩阵，不调用 music-profile。
 
 | 包名 / 路径 | 拥有的职责 | 不得承担的职责 |
 | --- | --- | --- |
@@ -174,12 +178,12 @@ assessPlaylist 不调用 selectPlaylist；独立接受最终有序题组、玩�
 
 公共运行操作返回 `Result<T, DomainError>`；错误至少含 code、message、details，不能用异常文本作为业务分支。未知编程错误在应用边界捕获，报告失败且非零退出；不得伪装成公平告警。输入无效、旧版本、非房主、未评估、ban 未结束、不支持玩法、游戏失败要可区分。
 
-所有影响结果的输入均进入运行报告：数据集版本、taxonomy 版本、画像/评分/选曲/公平配置版本、referenceTime、玩家与歌曲 ID、命令和事件顺序。首期不用随机选曲；脚本若需要随机性必须注入种子并记录。排序不用随系统语言变化的 localeCompare。
+所有影响结果的输入均进入运行报告：数据集版本、taxonomy 版本、画像/评分/选曲/公平配置版本、referenceTime、玩家与歌曲 ID、命令和事件顺序。公平选曲不使用随机排序；可玩模式在冻结题组内用有种子的洗牌决定播放顺序，详见初赛补充。脚本若需要随机性必须注入种子并记录。排序不用随系统语言变化的 localeCompare。
 
 日志仅由 demo 输出；包返回结构化结果。报告不输出密钥或真实个人数据。默认内存运行，不自动持久化；JSON 输出通过 CLI 标准输出，调用者自行保存。临时产物不提交。
 
 ## 11. 明确暂缓的实现
 
-Web/REST/WebSocket、真实账户与房主身份认证、数据库、部署、QQ 数据、真实音频、真实 LLM 和 Karuta 协议均无首期实现。未来 server 持有 runtime，将已认证 actor 注入命令；web 只提交意图并显示结果；来源适配器将平台响应转标准证据；游戏适配器转换原协议。每条路线先补真实契约与验收，再开发，不提前写虚构端点或空实现。
+对 M1–M5 核心 Mock，Web/REST/WebSocket、真实音频和 Karuta 适配仍不属于验收内容；它们已纳入初赛补充的 D0–D4，不再作为无限期未决方向。真实账户、数据库、正式部署和 QQ 官方接入仍暂缓；真实 LLM 明确不在初赛范围。server 持有 runtime，将服务器验证的会话身份注入命令；web 只提交意图并显示结果；来源适配器将平台响应转标准证据；游戏适配器转换原协议。具体真实契约经 D0 核对后落地，不提前写虚构端点。
 
 首期 Mock actor 校验只能证明角色规则，不能宣称实现了联网认证。规则权重是试验值，受控 Demo 不能证明真实识别概率或真实派对公平。

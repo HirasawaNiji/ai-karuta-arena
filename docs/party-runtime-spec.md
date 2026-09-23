@@ -2,6 +2,8 @@
 
 依据 REQ-11–14；接口归属见[实现架构](implementation-architecture.md)，指标见[算法规格](algorithm-spec.md)。本文描述首期内存模拟流程，不代表已实现网络认证或正式 Karuta 协议。
 
+本文的演员注入、模拟计分和单局事件约束属于 M4/M5。[初赛补充](preliminary-demo.md) PRE-04–08 规定服务器会话身份、全员准备、题组锁定后的随机出题、多人规则、真实 1v1 引擎和赛事；D 阶段需在本状态控制上增加这些条件，不以 Mock 的正确 +1 覆盖经典歌牌规则。
+
 ## 1. 状态唯一入口
 
 `createPartyRuntime(dependencies, initialInput)` 返回 `dispatch(command, actor)` 和 `getSnapshot()`。来源、GameFactory、PartyHostAgent、固定时钟/ID 生成器通过依赖注入。只有 runtime 更新 PartyState；外部拿到深复制只读快照。首期逐条串行处理命令与事件，同一派对异步命令进行中返回 BUSY，不能并发读改同一状态。
@@ -83,6 +85,8 @@ actor 是 `{role: host | player | system, playerId?}`；Mock 中由 demo 注入�
 
 phase、有效性、版本和 ban 是硬条件。HostDecision、ready 字段或文案不能代替检查。任何 START_GAME/START_NEXT_ROUND 路径都调用同一 guard。getSnapshot 里的 ready 是显示结果，不是授权令牌。
 
+初赛真人模式在同一个 guard 中追加：本场参赛者全部在线/ready、素材预加载完成、question/recording/card 映射有效、引擎支持本场模式、对阵前置结果已满足（如为赛事）。题目或其素材/规则变化同样失效旧评估与确认；一个 Match 冻结一份 GameSession 输入，局中不根据领先情况换题。
+
 启动前先进入 starting 防重复调用。activeGameSession 保存通过检查的版本和输入副本；GameFactory/create/start 失败进入 error，清空确认和可开局评估。首期恢复方式是房主显式重新准备本局（REGENERATE_FROM_ERROR，仅在已 stop 且无活动实例后转 setup 再生成），不能自动重放可能已产生的游戏事件。
 
 ## 6. 主持动作支持表
@@ -121,6 +125,8 @@ onEvent 仅向 runtime 的内存事件队列追加事件，不在回调中重入
 ANSWER 先记录规范证据到 pendingGameplayEvidence。GAME_FINISHED 进入 settling，核对最终结果与已接收判定的一致性，原子归并证据、递增受影响玩家 profileVersion、记录 history 和已播放歌曲、清空旧确认及评估、提升 selectionVersion，然后进入 finished。不在 playing 中改变当前矩阵或题组。START_NEXT_ROUND 使用已结算画像，不再次合并同一批证据；下一次计算使用场景显式提供的新 referenceTime，必须不早于已处理事件的时间。
 
 Mock 正确 +1、错误/未作答 0，说明只是适配测试规则，非现有 Karuta 规则。getResult 的结果包含会话/玩家、逐题已判动作和总分；结果与事件不一致拒绝结算。重复 GAME_FINISHED 不再次加分/更新画像。END_PARTY 中途结束不提交 pending 证据；记录 aborted，避免半局结算口径不明。
+
+可玩初赛每个判定增加 questionId/recordingId/segmentKind 及对应 MatchId，避免把某个片段识别泛化到整首所有版本。多人依 PRE-04 按抢到牌数排名；1v1 依已核实的引擎规则提供 MatchResult，赛事组织器只消费结果一次并推进对阵。普通派对反馈用于下一局，赛事反馈写回个人记录但不改变该赛事冻结的选曲画像。
 
 ## 8. 固定场景执行与输出
 
