@@ -12,7 +12,9 @@
     "typecheck": "pnpm build && tsc -p tsconfig.test.json",
     "test": "pnpm build && vitest run",
     "lint": "eslint . && prettier --check .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "demo": "node scripts/run-demo.mjs",
+    "demo:check": "node scripts/check-demo.mjs"
   },
   "devDependencies": {
     "@amp/core": "workspace:*",
@@ -26,6 +28,7 @@
     "@amp/music-profile": "workspace:*",
     "@amp/adapters": "workspace:*",
     "@amp/playlist-engine": "workspace:*",
-    "@amp/party-runtime": "workspace:*"
+    "@amp/party-runtime": "workspace:*",
+    "@amp/demo": "workspace:*"
   }
 }
