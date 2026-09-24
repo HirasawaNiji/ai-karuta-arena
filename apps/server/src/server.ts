@@ -689,7 +689,8 @@ export function createApp(options: ServerOptions) {
         }
         continue;
       }
-      if (!s.challenge) {
+      // An unanswered/expired challenge must not permanently strand a live SSE.
+      if (!s.challenge || now() - s.challenge.issuedAt > 15000) {
         s.challenge = { token: id(), issuedAt: now() };
         for (const stream of s.streams)
           stream.write(

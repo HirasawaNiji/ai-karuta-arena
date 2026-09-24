@@ -79,4 +79,4 @@ M1–M5 的核心 Mock 已实现，`install / build / typecheck / test / lint / 
 
 ## 静音浏览器回归
 
-执行 `pnpm exec playwright install chromium` 后运行 `pnpm test:browser`，自动验证画像入场、双人两种局长、多人及四人淘汰流程，以及准备失效和中断重开。测试强制静音，使用明确标注的合成测试音，说明见 [浏览器回归](docs/browser-regression.md)。
+执行 `pnpm exec playwright install chromium` 后运行 `pnpm test:browser`，自动验证画像入场、双人两种局长、多人及四人淘汰流程，以及准备失效、过期心跳恢复和中断重开。测试强制静音，使用明确标注的合成测试音，说明见 [浏览器回归](docs/browser-regression.md)。
