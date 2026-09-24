@@ -33,7 +33,7 @@ export default tseslint.config(
                 'Import workspace packages through their public exports.',
             },
             {
-              group: ['**/apps/**', '**/packages/*/src/**'],
+              group: ['**/apps/**', '**/packages/*/src/**', '**/src/**'],
               message: 'Import public workspace exports.',
             },
           ],
@@ -57,7 +57,7 @@ export default tseslint.config(
                 'Profile and adapters depend only on the core public export.',
             },
             {
-              group: ['**/apps/**', '**/packages/**'],
+              group: ['**/apps/**', '**/packages/**', '**/src/**'],
               message: 'Do not bypass workspace package boundaries.',
             },
           ],
@@ -81,7 +81,7 @@ export default tseslint.config(
               message: 'Profile depends only on core.',
             },
             {
-              group: ['node:*', '**/apps/**', '**/packages/**'],
+              group: ['node:*', '**/apps/**', '**/packages/**', '**/src/**'],
               message:
                 'Profile calculations have no I/O or cross-package source imports.',
             },

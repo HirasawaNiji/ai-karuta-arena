@@ -54,6 +54,9 @@ it('enforces new package ownership and permits only the documented fixture subpa
     ['packages/music-profile/src/index.ts', '@amp/adapters/fixtures'],
     ['packages/music-profile/src/index.ts', 'node:fs'],
     ['packages/adapters/src/index.ts', '@amp/music-profile'],
+    ['packages/music-profile/src/index.ts', '../../core/src/index.js'],
+    ['packages/adapters/src/index.ts', '../../music-profile/src/index.js'],
+    ['tests/music-profile.test.ts', '../packages/core/src/index.js'],
     ['tests/music-profile.test.ts', '@amp/adapters/fixtures/private'],
     ['tests/music-profile.test.ts', '@amp/core/src/index.js'],
   ]) {
