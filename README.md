@@ -72,3 +72,7 @@ M1–M5 的核心 Mock 已实现，`install / build / typecheck / test / lint / 
 完整真人主线尚缺可信房间身份、手动画像界面、真实音频/引擎接入、多人/1v1 和赛事验收。QQ 官方能力与替代路径见[适配器状态](docs/adapter-status.md)。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
 
 仓库未选择许可证；引入外部代码、音频或图片时，须先确认其许可和使用范围。
+
+## 浏览器派对（D1）
+
+依次运行 `pnpm build`、`pnpm start`，打开 http://127.0.0.1:3210 。已实现创建/加入、手动偏好、大厅准备、选曲预评估与房主素材试听；默认 10 对 10，可选 15 对 15。真实对局将在 D2 接入，待核验素材不会被当成可玩题目。详见 [运行与验证说明](docs/d1-lobby.md)。

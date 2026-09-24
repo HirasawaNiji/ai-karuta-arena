@@ -147,3 +147,27 @@ it('keeps runtime adapters injected through core ports', async () => {
     expect(results[0]?.errorCount).toBe(0);
   }
 }, 30000);
+
+it('prevents browser imports of adapters and server internals', async () => {
+  const eslint = new ESLint({
+    overrideConfig: {
+      languageOptions: {
+        parserOptions: { disallowAutomaticSingleRunInference: true },
+      },
+    },
+  });
+  for (const dependency of [
+    '@amp/adapters',
+    '@amp/server',
+    '../../server/src/server.js',
+  ]) {
+    const results = await eslint.lintText("import '" + dependency + "';", {
+      filePath: 'apps/web/src/platform.ts',
+    });
+    expect(
+      results
+        .flatMap((r) => r.messages)
+        .some((m) => m.ruleId === 'no-restricted-imports'),
+    ).toBe(true);
+  }
+}, 30000);

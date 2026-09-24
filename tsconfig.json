@@ -18,6 +18,12 @@
     },
     {
       "path": "apps/demo"
+    },
+    {
+      "path": "./apps/server"
+    },
+    {
+      "path": "./apps/web"
     }
   ]
 }

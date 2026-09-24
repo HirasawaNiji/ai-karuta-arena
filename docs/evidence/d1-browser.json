@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "d1-browser-evidence-v1",
+  "date": "2026-09-24",
+  "browser": "Two isolated Chrome contexts",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "width": 360,
+      "height": 844
+    },
+    {
+      "width": 390,
+      "height": 844
+    },
+    {
+      "width": 430,
+      "height": 844
+    }
+  ],
+  "flows": {
+    "createJoin": "same room snapshot at revision 4",
+    "manualIntroUnscoped": {
+      "score": 0.65,
+      "confidence": 0.6
+    },
+    "skip": {
+      "reports": 0,
+      "confidence": 0,
+      "lobbyReady": false
+    },
+    "preAssessment": {
+      "requestedCount": 24,
+      "actualCount": 0,
+      "reasons": ["EMPTY_PLAYLIST", "SHORT_PLAYLIST"]
+    },
+    "changePreset": {
+      "preset": "standard",
+      "minimumCandidates": 36,
+      "bothReadyCleared": true,
+      "assessmentCleared": true
+    },
+    "horizontalOverflow": false,
+    "longTitle": "地球最後の告白を",
+    "audio": {
+      "id": "PJSK-079-A",
+      "sha256": "a1725b7718504a8a0880935d773cafdfc0f64bdbbdfcd2bd19ab9aafa2f6dfaa",
+      "nativePlayControlClicked": true,
+      "observedCurrentTime": 6.305706,
+      "rangeStatus": 206,
+      "contentRange": "bytes 0-1023/2120208",
+      "removedOnReturnToLobby": true
+    },
+    "reviewDraft": {
+      "exported": true,
+      "semanticReview": "pending"
+    },
+    "refresh": {
+      "sameMembers": true,
+      "bothOnline": true,
+      "bothReadyCleared": true,
+      "assessmentCleared": true
+    },
+    "finalBootstrap": {
+      "unauthenticatedSessionHandled": true,
+      "faviconPresent": true
+    }
+  },
+  "limits": [
+    "No human recognition or semantic review inferred",
+    "Background tab visibility automation timed out; QQ WebView and real-device lifecycle not verified",
+    "No D2 match, BAN/final assessment, audioReady or matchReady claimed"
+  ],
+  "artifacts": "Local output/playwright/d1-browser; screenshots and media are not committed"
+}

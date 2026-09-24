@@ -3,14 +3,21 @@ import { builtinModules } from 'node:module';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['**/dist/**', '**/node_modules/**', '**/coverage/**'] },
+  {
+    ignores: [
+      '**/dist/**',
+      '**/dist-types/**',
+      '**/node_modules/**',
+      '**/coverage/**',
+    ],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked.map((config) => ({
     ...config,
-    files: ['**/*.ts'],
+    files: ['**/*.{ts,tsx}'],
   })),
   {
-    files: ['**/*.ts'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parserOptions: {
         project: [
@@ -21,6 +28,8 @@ export default tseslint.config(
           './packages/playlist-engine/tsconfig.json',
           './packages/party-runtime/tsconfig.json',
           './apps/demo/tsconfig.json',
+          './apps/server/tsconfig.json',
+          './apps/web/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
@@ -132,6 +141,27 @@ export default tseslint.config(
         {
           selector: 'ImportExpression',
           message: 'Use static public dependencies.',
+        },
+      ],
+    },
+  },
+  {
+    files: ['apps/web/src/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '^@amp/(?!core$)',
+              message:
+                'Web uses public core contracts only; I/O adapters stay on the server.',
+            },
+            {
+              group: ['**/server/**', '**/packages/**'],
+              message: 'Do not import server or domain internals into web.',
+            },
+          ],
         },
       ],
     },

@@ -1,4 +1,4 @@
-export { DEFAULT_SCORING_CONFIG } from './defaults.js';
+export { DEFAULT_SCORING_CONFIG, MANUAL_SCORING_CONFIG } from './defaults.js';
 export {
   normalizeEvidence,
   type NormalizedEvidence,

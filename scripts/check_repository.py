@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TEXT_SUFFIXES = {".md", ".py", ".json", ".yml", ".yaml", ".ts", ".mjs"}
+TEXT_SUFFIXES = {".md", ".py", ".json", ".yml", ".yaml", ".ts", ".mjs", ".tsx", ".css", ".html"}
 TEXT_NAMES = {".editorconfig", ".gitattributes", ".gitignore", ".node-version", ".npmrc", ".prettierignore"}
 
 

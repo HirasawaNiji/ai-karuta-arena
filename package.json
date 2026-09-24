@@ -8,13 +8,14 @@
     "pnpm": "10.34.5"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -b && pnpm --filter @amp/web build",
     "typecheck": "pnpm build && tsc -p tsconfig.test.json",
     "test": "pnpm build && vitest run",
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "demo": "node scripts/run-demo.mjs",
-    "demo:check": "node scripts/check-demo.mjs"
+    "demo:check": "node scripts/check-demo.mjs",
+    "start": "node apps/server/dist/main.js"
   },
   "devDependencies": {
     "@amp/core": "workspace:*",
@@ -29,6 +30,7 @@
     "@amp/adapters": "workspace:*",
     "@amp/playlist-engine": "workspace:*",
     "@amp/party-runtime": "workspace:*",
-    "@amp/demo": "workspace:*"
+    "@amp/demo": "workspace:*",
+    "@amp/server": "workspace:*"
   }
 }

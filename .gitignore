@@ -25,3 +25,6 @@ build/
 coverage/
 *.log
 *.tsbuildinfo
+
+**/dist-types/
+.local/

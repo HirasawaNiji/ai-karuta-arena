@@ -45,3 +45,9 @@ export const DEFAULT_SCORING_CONFIG: ScoringConfig = ScoringConfigSchema.parse({
     topArtistConfidence: 0.6,
   },
 });
+
+export const MANUAL_SCORING_CONFIG: ScoringConfig = ScoringConfigSchema.parse({
+  ...DEFAULT_SCORING_CONFIG,
+  version: 'score-v2-manual',
+  manual: { heard: 0.25, familiar: 0.65, intro: 0.85, confidence: 0.6 },
+});

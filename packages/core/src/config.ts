@@ -35,6 +35,15 @@ const ConfidenceCurveSchema = z
 export const ScoringConfigSchema = z
   .strictObject({
     ...version,
+    manual: z
+      .strictObject({
+        heard: UnitIntervalSchema,
+        familiar: UnitIntervalSchema,
+        intro: UnitIntervalSchema,
+        confidence: UnitIntervalSchema,
+      })
+      .readonly()
+      .optional(),
     weights: FamiliarityWeightsSchema,
     playCountCap: PositiveSchema,
     recencyHalfLifeDays: PositiveSchema,
@@ -69,6 +78,13 @@ export const ScoringConfigSchema = z
       })
       .readonly(),
   })
+  .refine(
+    (value) =>
+      value.version === 'score-v2-manual'
+        ? value.manual !== undefined
+        : value.manual === undefined,
+    'Manual floors require the explicit score-v2-manual configuration',
+  )
   .readonly();
 const unitSum = (values: readonly number[]) =>
   Math.abs(values.reduce((sum, value) => sum + value, 0) - 1) <= 1e-12;

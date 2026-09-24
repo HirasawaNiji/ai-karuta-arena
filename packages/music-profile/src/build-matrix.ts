@@ -11,6 +11,7 @@ import {
   type PlayerMusicProfile,
   type ScoringConfig,
   type FamiliarityMatrix,
+  type Question,
 } from '@amp/core';
 import { scoreValidated } from './score-familiarity.js';
 import { compare } from './util.js';
@@ -20,8 +21,22 @@ export function buildFamiliarityMatrix(input: {
   readonly scoringConfig: ScoringConfig;
   readonly referenceTime: string;
   readonly matrixVersion: string;
+  readonly questionBySongId?: Readonly<Record<string, Question>>;
 }): FamiliarityMatrix {
   const catalog = CatalogSchema.parse(input.catalog);
+  for (const [songId, question] of Object.entries(
+    input.questionBySongId ?? {},
+  )) {
+    const stored = catalog.questions.find(
+      (q) => q.questionId === question.questionId,
+    );
+    if (
+      songId !== question.songId ||
+      !stored ||
+      JSON.stringify(stored) !== JSON.stringify(question)
+    )
+      throw new Error('Question map must use catalog questions');
+  }
   const scoringConfig = ScoringConfigSchema.parse(input.scoringConfig);
   const referenceTime = UtcTimestampSchema.parse(input.referenceTime);
   StableIdSchema.parse(input.matrixVersion);
@@ -65,6 +80,7 @@ export function buildFamiliarityMatrix(input: {
               scoringConfig,
               referenceTime,
               catalog.taxonomy,
+              input.questionBySongId?.[s.id],
             ),
           ]),
         ),
