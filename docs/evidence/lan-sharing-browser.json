@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-25",
+  "issue": 31,
+  "bundle": "index-CYn3qHuJ.js",
+  "muted": true,
+  "original": {
+    "secureContext": false,
+    "clipboardApi": "undefined",
+    "result": "TypeError from writeText; no manual fallback"
+  },
+  "httpAfterFix": {
+    "secureContext": false,
+    "clipboardApi": "undefined",
+    "manualCodeReadOnly": true,
+    "widths": [360, 390, 430],
+    "allWidthsSelectEntireCode": true,
+    "horizontalOverflow": false,
+    "errorVisible": false,
+    "falseSuccess": false
+  },
+  "clipboardPermissions": {
+    "secureContext": true,
+    "deniedState": "denied",
+    "deniedShowsFallback": true,
+    "allowedCopiesActualRoomCode": true,
+    "fallbackHiddenAfterSuccess": true,
+    "errorVisible": false
+  },
+  "scope": "Real Chrome HTTP non-loopback address and real browser permission overrides. No clipboard implementation stubs. Does not establish physical phone or QQ WebView acceptance."
+}
