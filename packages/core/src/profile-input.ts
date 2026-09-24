@@ -10,6 +10,76 @@ import {
 import { FamiliarityMatrixSchema } from './familiarity.js';
 import { PlayerMusicProfileSchema } from './profile.js';
 import { type MusicPreferences } from './player.js';
+import { type RecognitionScope } from './recognition.js';
+import { GameEventContextSchema } from './game.js';
+
+function checkScope(
+  catalog: Catalog,
+  songId: string,
+  scope: RecognitionScope | undefined,
+  context: z.RefinementCtx,
+  path: (string | number)[],
+) {
+  if (!scope) return;
+  const question =
+    scope.questionId === undefined
+      ? undefined
+      : catalog.questions.find((q) => q.questionId === scope.questionId);
+  const recordingId = scope.recordingId ?? question?.recordingId;
+  const recording = catalog.recordings.find(
+    (r) => r.recordingId === recordingId,
+  );
+  const asset = catalog.audioAssets.find(
+    (a) => a.assetId === recording?.audioAssetId,
+  );
+  const segment = scope.segment;
+  if (
+    (scope.questionId !== undefined &&
+      (!question || question.songId !== songId)) ||
+    !recording ||
+    recording.songId !== songId ||
+    (question && question.recordingId !== recordingId) ||
+    (segment &&
+      (!asset ||
+        segment.startMs > asset.durationMs ||
+        segment.durationMs > asset.durationMs - segment.startMs ||
+        (question &&
+          (question.startMs !== segment.startMs ||
+            question.durationMs !== segment.durationMs ||
+            question.segmentKind !== segment.kind))))
+  )
+    context.addIssue({
+      code: 'custom',
+      path,
+      message:
+        'Recognition scope does not match catalog song, recording or segment',
+    });
+}
+
+export const GameRecognitionContextSchema = z
+  .strictObject({
+    catalog: CatalogSchema,
+    context: GameEventContextSchema,
+  })
+  .superRefine(({ catalog, context: { event } }, ctx) => {
+    if ('recognitionScope' in event)
+      checkScope(catalog, event.songId, event.recognitionScope, ctx, [
+        'context',
+        'event',
+        'recognitionScope',
+      ]);
+    if (event.type === 'GAME_FINISHED')
+      for (const [i, judgement] of event.result.judgements.entries())
+        checkScope(catalog, judgement.songId, judgement.recognitionScope, ctx, [
+          'context',
+          'event',
+          'result',
+          'judgements',
+          i,
+          'recognitionScope',
+        ]);
+  })
+  .readonly();
 
 function checkReferences(
   catalog: Catalog,
@@ -24,6 +94,12 @@ function checkReferences(
   const songs = new Set<string>(catalog.songs.map((entry) => entry.id));
   const artists = new Set<string>(catalog.artists.map((entry) => entry.id));
   for (const [i, item] of items.entries()) {
+    if ('recognitionScope' in item)
+      checkScope(catalog, item.songId, item.recognitionScope, context, [
+        ...path,
+        i,
+        'recognitionScope',
+      ]);
     if (
       !players.has(item.playerId) ||
       ('songId' in item ? !songs.has(item.songId) : !artists.has(item.artistId))

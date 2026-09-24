@@ -8,6 +8,7 @@ import {
   UnitIntervalSchema,
 } from './ids.js';
 import { MusicPreferencesSchema } from './player.js';
+import { RecognitionScopeSchema } from './recognition.js';
 
 // UTC, seconds or milliseconds; no local timezone or sub-millisecond truncation.
 export const UtcTimestampSchema = z.iso
@@ -40,6 +41,7 @@ const recognition = (
     type: z.literal(type),
     eventId: EventIdSchema,
     occurredAt: UtcTimestampSchema,
+    recognitionScope: RecognitionScopeSchema.optional(),
   });
 const songEvidence = z.discriminatedUnion('type', [
   snapshot('favorite'),

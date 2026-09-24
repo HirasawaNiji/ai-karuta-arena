@@ -13,7 +13,12 @@ export default tseslint.config(
     files: ['**/*.ts'],
     languageOptions: {
       parserOptions: {
-        project: ['./tsconfig.test.json', './packages/core/tsconfig.json'],
+        project: [
+          './tsconfig.test.json',
+          './packages/core/tsconfig.json',
+          './packages/music-profile/tsconfig.json',
+          './packages/adapters/tsconfig.json',
+        ],
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -23,11 +28,72 @@ export default tseslint.config(
         {
           patterns: [
             {
-              group: ['@amp/*/*', '**/apps/**', '**/packages/*/src/**'],
+              regex: '^@amp/(?!adapters/fixtures$)[^/]+/',
               message:
                 'Import workspace packages through their public exports.',
             },
+            {
+              group: ['**/apps/**', '**/packages/*/src/**'],
+              message: 'Import public workspace exports.',
+            },
           ],
+        },
+      ],
+    },
+  },
+  {
+    files: [
+      'packages/music-profile/src/**/*.ts',
+      'packages/adapters/src/**/*.ts',
+    ],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '^@amp/(?!core$)',
+              message:
+                'Profile and adapters depend only on the core public export.',
+            },
+            {
+              group: ['**/apps/**', '**/packages/**'],
+              message: 'Do not bypass workspace package boundaries.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['packages/music-profile/src/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: builtinModules.map((name) => ({
+            name,
+            message: 'Profile calculations have no I/O.',
+          })),
+          patterns: [
+            {
+              regex: '^@amp/(?!core$)',
+              message: 'Profile depends only on core.',
+            },
+            {
+              group: ['node:*', '**/apps/**', '**/packages/**'],
+              message:
+                'Profile calculations have no I/O or cross-package source imports.',
+            },
+          ],
+        },
+      ],
+      'no-restricted-globals': ['error', 'fetch', 'process', 'require'],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ImportExpression',
+          message: 'Use static public dependencies.',
         },
       ],
     },

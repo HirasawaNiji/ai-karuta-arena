@@ -3,6 +3,12 @@
   "references": [
     {
       "path": "packages/core"
+    },
+    {
+      "path": "packages/music-profile"
+    },
+    {
+      "path": "packages/adapters"
     }
   ]
 }

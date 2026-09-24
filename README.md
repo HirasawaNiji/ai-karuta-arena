@@ -2,7 +2,7 @@
 
 AI Music Party / AI 音乐派对：根据参与者的音乐画像、证据与游戏反馈，生成兼顾熟悉覆盖、竞争性和多样性的游戏题组。Karuta 是首个游戏适配目标，QQ 音乐是可能的数据来源；领域模型不绑定某个平台、语言或音乐文化。
 
-当前已补齐 M1 工作区与公共契约（证据、画像、矩阵、选曲、派对及游戏接口），**尚无可运行的选曲或游戏应用**。初赛目标是玩家通过标签和熟悉歌曲建立画像，体验多人抢牌、经典 1v1 和简单淘汰赛；暂不接大模型，QQ 授权也不作为游玩前提。核心先完成无需 API Key 的本地 Mock 验证，再接现有歌牌引擎与真人房间。熟悉度采用规则评分，ban 后重评，覆盖不足时等待房主选择。产品主线见 [真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，核心进度见 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。周杰伦专场 #12 是 P3 副线，不是通用 Demo 的前置条件。
+当前已补齐 M1 公共契约与 M2 合成数据、Mock 来源、画像及熟悉度矩阵计算，**尚无可运行的选曲或游戏应用**。初赛目标是玩家通过标签和熟悉歌曲建立画像，体验多人抢牌、经典 1v1 和简单淘汰赛；暂不接大模型，QQ 授权也不作为游玩前提。核心先完成无需 API Key 的本地 Mock 验证，再接现有歌牌引擎与真人房间。熟悉度采用规则评分，ban 后重评，覆盖不足时等待房主选择。产品主线见 [真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，核心进度见 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。周杰伦专场 #12 是 P3 副线，不是通用 Demo 的前置条件。
 
 ## 需求与架构入口
 
@@ -19,7 +19,7 @@ AI Music Party / AI 音乐派对：根据参与者的音乐画像、证据与游
 | [来源映射](docs/source-map.md) | 修订 Prompt 四十九章到需求和验收的完整追溯 |
 | [开发路线图](docs/development-roadmap.md) | 分阶段任务、依赖与领取条件 |
 
-采用 pnpm TypeScript 轻量 Monorepo：先核对现有引擎接口，以单进程 CLI 验证画像、选曲、主持与 Mock 游戏反馈，再接 Web/单个服务端和现有 Karuta。已建立 core 工作区；按 D0、M1–M5、D1–D4 的依赖推进，小组循环赛为后续扩展。文档规定的公式与流程尚未通过业务实现验证。
+采用 pnpm TypeScript 轻量 Monorepo：先核对现有引擎接口，以单进程 CLI 验证画像、选曲、主持与 Mock 游戏反馈，再接 Web/单个服务端和现有 Karuta。已建立 core、music-profile 和 adapters 工作区；M2 评分链路已有业务测试，按 M3–M5 与 D0–D4 的依赖继续推进，小组循环赛为后续扩展。
 
 ## 开始工作
 
@@ -35,7 +35,7 @@ pnpm test
 pnpm lint
 ```
 
-`@amp/core` 公共出口指向构建产物；typecheck/test 会先构建，不依赖遗留 dist。已提供稳定 ID、开放分类、歌曲/艺人/玩家偏好、录音/题目/卡牌与目录引用校验；已补齐完整画像/证据/矩阵与配置的结构和引用校验；已补齐选曲/评估、派对状态/命令和游戏事件/接口；评分算法、运行时和 demo 尚未实现。完整 M1 验证范围见[契约验收](docs/m1-runtime-contracts.md)，前序记录见[基础验收](docs/m1-foundation.md)和[M1.4](docs/m1-evidence-contracts.md)。
+`@amp/core` 公共出口指向构建产物；typecheck/test 会先构建，不依赖遗留 dist。已提供稳定 ID、开放分类、歌曲/艺人/玩家偏好、录音/题目/卡牌与目录引用校验；已补齐完整画像/证据/矩阵与配置的结构和引用校验；已补齐选曲/评估、派对状态/命令和游戏事件/接口；M2 已实现证据归并、画像和 score-v1 计算；选曲、运行时和 demo 尚未实现。M2 使用与验证见[画像计算](docs/m2-profile-matrix.md)。完整 M1 验证范围见[契约验收](docs/m1-runtime-contracts.md)，前序记录见[基础验收](docs/m1-foundation.md)和[M1.4](docs/m1-evidence-contracts.md)。
 
 ```sh
 python scripts/check_repository.py
@@ -55,10 +55,12 @@ Python 文本检查仅需要 Python 3.11 或更新版本，无第三方依赖；
 | `docs/` | 项目状态、任务流程与 Checkpoint 模板 |
 | `scripts/` | 不依赖业务技术栈的仓库检查 |
 | `packages/core/` | 公共领域契约、边界 schema、目录引用校验 |
-| `tests/` | 契约边界、包依赖与类型检查 |
+| `packages/music-profile/` | 证据归并、八维画像、评分/矩阵、游戏反馈转换 |
+| `packages/adapters/` | 内存 Mock 来源及合成数据、覆盖清单 |
+| `tests/` | 契约边界、公式与链路回归、包依赖与类型检查 |
 
 ## 当前范围
 
-M1.1–M1.6 的工作区、公共契约及双系统检查范围已补齐，`install / build / typecheck / test / lint` 可用；`pnpm demo` 仍未提供。M2–M5 业务实现尚未完成。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
+M1.1–M1.6 的工作区、公共契约及双系统检查范围已补齐，`install / build / typecheck / test / lint` 可用；`pnpm demo` 仍未提供。M2 已提供实际来源到矩阵链路；M3–M5 业务实现尚未完成。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
 
 仓库未选择许可证；引入外部代码、音频或图片时，须先确认其许可和使用范围。
