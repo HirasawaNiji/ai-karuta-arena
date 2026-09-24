@@ -23,7 +23,7 @@ export interface MaterialPreview {
   durationMs: number;
   available: boolean;
   sha256: string;
-  status: 'pending';
+  status: 'pending' | 'verified';
 }
 export async function loadPendingMaterials(
   auditPath: string,

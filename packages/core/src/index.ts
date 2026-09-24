@@ -17,3 +17,6 @@ export * from './ports.js';
 export * from './recognition.js';
 export * from './onboarding.js';
 export * from './lobby.js';
+export * from './duel.js';
+
+export * from './duel-preparation.js';

@@ -8,3 +8,8 @@ export {
   type MockGameOptions,
 } from './mock-game.js';
 export { ManualPreferenceSource } from './sources/manual-preference-source.js';
+export {
+  KarutaDuelFactory,
+  createKarutaDuel,
+  shuffledQuestions,
+} from './karuta/duel-engine.js';

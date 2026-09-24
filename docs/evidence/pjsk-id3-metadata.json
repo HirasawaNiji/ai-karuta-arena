@@ -1,0 +1,947 @@
+{
+  "source": "Whitelisted embedded ID3 fields only; tags are not acoustic identity proof",
+  "clipStart": "User confirmed all package clips start at source recording 0 ms on 2026-09-25; original sources and generation scripts unavailable",
+  "records": [
+    {
+      "id": "PJSK-079-A",
+      "packageTitle": "「1」",
+      "audioSha256": "a1725b7718504a8a0880935d773cafdfc0f64bdbbdfcd2bd19ab9aafa2f6dfaa",
+      "album": "霽れを待つ/「1」",
+      "title": "「1」 (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&巡音ルカ)",
+      "artist": "164/Leo/need/巡音ルカ",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-080-A",
+      "packageTitle": "抜錨",
+      "audioSha256": "49607f3ec91c6a5ea506d1f3cd60578d28083b28e2e489e94bd5cef77def490d",
+      "album": "Leo/need SEKAI ALBUM vol.3",
+      "title": "抜錨 (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&巡音ルカ)",
+      "artist": "Leo/need",
+      "track": "8"
+    },
+    {
+      "id": "PJSK-081-A",
+      "packageTitle": "春嵐",
+      "audioSha256": "3fd73851a0f4d037e77917f30ac35775b685a6a5c5a614ce41fd51fa5aa6f0e9",
+      "title": "春嵐 (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&MEIKO)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "3",
+      "album": "Vivid BAD SQUAD SEKAI ALBUM vol.3"
+    },
+    {
+      "id": "PJSK-082-A",
+      "packageTitle": "地球最後の告白を",
+      "audioSha256": "a8aed47e0bd560d64b7c2abdf25e775ad6c9bd9edce477ca4a7980eb1797e588",
+      "album": "MORE MORE JUMP！ SEKAI Album Vol.1",
+      "title": "地球最後の告白を (feat. 桐谷遥&日野森雫&巡音ルカ)",
+      "artist": "堀江晶太/MORE MORE JUMP！/巡音ルカ",
+      "track": "11"
+    },
+    {
+      "id": "PJSK-083-A",
+      "packageTitle": "帝国少女",
+      "audioSha256": "081bf74c1736c30e04661d5bc29a75d82e6418683b9e41ef411a1b8bd660e7fe",
+      "track": "8",
+      "album": "Vivid BAD SQUAD SEKAI ALBUM vol.2",
+      "title": "帝国少女 (feat. 小豆沢こはね&白石杏&初音ミク)",
+      "artist": "Vivid BAD SQUAD"
+    },
+    {
+      "id": "PJSK-084-A",
+      "packageTitle": "独りんぼエンヴィー",
+      "audioSha256": "3f258da6aac9c48f9ce867f412b83c2590beca1785bc2716dc0ecc9fc8ab5f75",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.1",
+      "title": "独りんぼエンヴィー (feat. 宵崎奏, 暁山瑞希 & 初音ミク)",
+      "artist": "koyori/25時、ナイトコードで。/初音ミク/暁山瑞希/宵崎奏",
+      "track": "6"
+    },
+    {
+      "id": "PJSK-085-A",
+      "packageTitle": "悪役にキスシーンを",
+      "audioSha256": "f408b7633386498592b76f695c9b166ea88a19e681f21a1559d0ac2869055bb1",
+      "artist": "MORE MORE JUMP！/KAITO/40mP",
+      "track": "4",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.3",
+      "title": "悪役にキスシーンを (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&KAITO)"
+    },
+    {
+      "id": "PJSK-086-A",
+      "packageTitle": "悪ノ娘",
+      "audioSha256": "38b40e0736c9eca2626634f96568967ec98d0b841b29e94e0807fc8f6dffda30",
+      "artist": "mothy/鏡音リン",
+      "track": "1",
+      "album": "Evils Theater",
+      "title": "悪ノ娘 (feat. 鏡音リン)"
+    },
+    {
+      "id": "PJSK-087-A",
+      "packageTitle": "仮死化",
+      "audioSha256": "4e00320bf84c738d9c73f69ff950ddf3a3289be7b7e124f824089ca78c7b7104",
+      "artist": "Vivid BAD SQUAD",
+      "track": "2",
+      "album": "虚ろを扇ぐ/仮死化",
+      "title": "仮死化 (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&MEIKO)"
+    },
+    {
+      "id": "PJSK-088-A",
+      "packageTitle": "古書屋敷殺人事件",
+      "audioSha256": "c2cb431b28f3d295a32984b4ffcde86e5e8c2f6d78e122ae153b5bc3c7cb98f7",
+      "album": "ワンダーランズ×ショウタイム SEKAI ALBUM vol.3",
+      "title": "古書屋敷殺人事件 (feat. 天馬司&鳳えむ&草薙寧々&神代類&KAITO)",
+      "artist": "ワンダーランズ×ショウタイム",
+      "track": "6"
+    },
+    {
+      "id": "PJSK-089-A",
+      "packageTitle": "光線歌",
+      "audioSha256": "d5a9a33c6ad4c5492b3565793294fe68670eb63e011b98977e98506033f4fc51",
+      "album": "光線歌/アクセラレイト",
+      "title": "光線歌 (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&初音ミク)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-090-A",
+      "packageTitle": "化けの花",
+      "audioSha256": "5819b61ad14e2d3eec8985b6a7fde4fa426594b41ad899d0519fdb20f20cae7a",
+      "title": "化けの花 (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&KAITO)",
+      "artist": "25時、ナイトコードで。/KAITO",
+      "track": "2",
+      "album": "エンパープル/化けの花"
+    },
+    {
+      "id": "PJSK-091-A",
+      "packageTitle": "悔やむと書いてミライ",
+      "audioSha256": "caeeb9f97cd70cc338d0e74f39816ad957a73f854755f5de826140618375edfb",
+      "track": "1",
+      "album": "悔やむと書いてミライ/携帯恋話/ジャックポットサッドガール",
+      "title": "悔やむと書いてミライ (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&初音ミク)",
+      "artist": "まふまふ/25時、ナイトコードで。/初音ミク"
+    },
+    {
+      "id": "PJSK-092-A",
+      "packageTitle": "街",
+      "audioSha256": "45cc01766f840a186f6f76f5fc7c98ecc3466c21a3a3083f7cd8c6aea25fdd3c",
+      "artist": "Vivid BAD SQUAD",
+      "track": "2",
+      "album": "月光/街",
+      "title": "街 (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&鏡音リン)"
+    },
+    {
+      "id": "PJSK-093-A",
+      "packageTitle": "君の夜をくれ",
+      "audioSha256": "5ea118fbc58c5cd793d2c6a1284617dbe54e8a69312d62f0f7bef27ad83bceaa",
+      "track": "1",
+      "album": "君の夜をくれ/Iなんです",
+      "title": "君の夜をくれ (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&巡音ルカ)",
+      "artist": "古川本舗/25時、ナイトコードで。/巡音ルカ"
+    },
+    {
+      "id": "PJSK-094-A",
+      "packageTitle": "恋愛裁判",
+      "audioSha256": "f5e5a70c33813ab1074ae41cbdaf4adbd0409dd97df80214974b538bbf640d83",
+      "album": "MORE MORE JUMP！ SEKAI Album Vol.1",
+      "title": "恋愛裁判 (feat. 花里みのり&桃井愛莉&初音ミク)",
+      "artist": "40mP/MORE MORE JUMP！/初音ミク",
+      "track": "7"
+    },
+    {
+      "id": "PJSK-095-A",
+      "packageTitle": "劣等上等",
+      "audioSha256": "0c65b6ee5f07f7ffb828b5747c1800e7eb89ef6b9a393e93eed0bacff73c8d46",
+      "album": "「マジカルミライ2018」OFFICIAL ALBUM",
+      "title": "劣等上等",
+      "artist": "鏡音リン/鏡音レン/Giga",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-096-A",
+      "packageTitle": "烈火",
+      "audioSha256": "06ffae2b2e05a4145a234abb9f791a70ceeebe4698bd16df1b0cd0fa9c9196e0",
+      "album": "烈火/ULTRA C",
+      "title": "烈火 (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&巡音ルカ)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-097-A",
+      "packageTitle": "泥中に咲く",
+      "audioSha256": "3250f60dddbd731c3ed525e3b2744a63330e479ae139c2e4a0b994e001a05524",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.2",
+      "title": "泥中に咲く (feat. 宵崎奏&暁山瑞希&初音ミク)",
+      "artist": "25時、ナイトコードで。/初音ミク",
+      "track": "8"
+    },
+    {
+      "id": "PJSK-098-A",
+      "packageTitle": "青く駆けろ！",
+      "audioSha256": "baf51efc5089714c6072b21b557f46d55d77f5fd0a99ca19e38cca4569e3fa7e",
+      "album": "Leo/need SEKAI ALBUM vol.1",
+      "title": "青く駆けろ！",
+      "artist": "Leo/need/初音ミク/まらしぃ",
+      "track": "5"
+    },
+    {
+      "id": "PJSK-099-A",
+      "packageTitle": "熱異常",
+      "audioSha256": "0bca3cd58d528f2def43f64f26b0cc86f79aedda40c1d41ac3df6d7bfc866270",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.3",
+      "title": "熱異常 (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&KAITO)",
+      "artist": "25時、ナイトコードで。/KAITO",
+      "track": "10"
+    },
+    {
+      "id": "PJSK-100-A",
+      "packageTitle": "如月アテンション",
+      "audioSha256": "3f11e12ab691eb9c1465f8e3df63099910d0396713a1d10e7a37fd340a58a645",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.3",
+      "title": "如月アテンション (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&巡音ルカ)",
+      "artist": "MORE MORE JUMP！",
+      "track": "11"
+    },
+    {
+      "id": "PJSK-101-A",
+      "packageTitle": "少女A",
+      "audioSha256": "bea3550d1cc2b9c5a775a9a9af633858d91c9e17e4076894c2e03e23bc8f3043",
+      "title": "少女A",
+      "artist": "椎名もた/鏡音リン",
+      "track": "9",
+      "album": "生きる"
+    },
+    {
+      "id": "PJSK-102-A",
+      "packageTitle": "少女レイ",
+      "audioSha256": "1fb31c6644deff9be84f4f9653f19de901682481f78cd837ea9312d1518ab1bb",
+      "artist": "MORE MORE JUMP！",
+      "track": "3",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.2",
+      "title": "少女レイ (feat. 桐谷遥&日野森雫&初音ミク)"
+    },
+    {
+      "id": "PJSK-103-A",
+      "packageTitle": "神のまにまに",
+      "audioSha256": "860293f0b60f27ce394e17347758ad0660f279626625b1a44910ce07c3a2433e",
+      "artist": "ワンダーランズ×ショウタイム",
+      "track": "4",
+      "album": "ワンダーランズ×ショウタイム SEKAI ALBUM vol.2",
+      "title": "神のまにまに (feat. 天馬司&鳳えむ&草薙寧々&神代類&初音ミク)"
+    },
+    {
+      "id": "PJSK-104-A",
+      "packageTitle": "失敗作少女",
+      "audioSha256": "1cfbb58f4f33b605481f1227013e675a411ee8c65733c051b27b9f2b105729ce",
+      "album": "失敗作少女",
+      "title": "失敗作少女",
+      "artist": "25時、ナイトコードで。",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-105-A",
+      "packageTitle": "私は雨",
+      "audioSha256": "cbf32b0f5aa885c552ef7d7cd2b56382d01093fe8bd6b78eb850e6ffd7d68079",
+      "artist": "25時、ナイトコードで。",
+      "track": "2",
+      "album": "トワイライトライト/私は雨",
+      "title": "私は雨 (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&鏡音レン)"
+    },
+    {
+      "id": "PJSK-106-A",
+      "packageTitle": "透明なパレット",
+      "audioSha256": "94b03c5ae2a3bbf6f140a2effdf18eb34c6e0097e4babedc7d7bd98f9c7a8867",
+      "album": "透明なパレット",
+      "title": "透明なパレット",
+      "artist": "Leo/need/鏡音リン",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-107-A",
+      "packageTitle": "妄想感傷代償連盟",
+      "audioSha256": "3e188037d2111d186f5ec85e6caf48069055318a92841ffaed8eeb53268d9b93",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.2",
+      "title": "妄想感傷代償連盟 (feat. 宵崎奏&東雲絵名&初音ミク)",
+      "artist": "25時、ナイトコードで。/初音ミク",
+      "track": "4"
+    },
+    {
+      "id": "PJSK-108-A",
+      "packageTitle": "威風堂",
+      "audioSha256": "8343c20b9b79d3253b0b86f449ae9d1afa60b5823171971e1b36490e8e4634ea",
+      "title": "威風堂々 (feat. Fantasista SQUAD,KAITO) (Game size.)",
+      "artist": "KAITO/東雲彰人/青柳冬弥/天馬司/神代類",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-109-A",
+      "packageTitle": "下剋上",
+      "audioSha256": "9b97a59dd98abcf7a16cad84d553eadccb556f401eac693250845b6a2cbd7705",
+      "album": "ひつじがいっぴき/下剋上",
+      "title": "下剋上 (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&鏡音リン)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-110-A",
+      "packageTitle": "限りなく灰色へ",
+      "audioSha256": "c1e68779f75e89c7386a50aa5c0c6ac162546d8688b919e93fcf3b292283362e",
+      "album": "限りなく灰色へ/アイディスマイル",
+      "title": "限りなく灰色へ (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&鏡音リン)",
+      "artist": "すりぃ/25時、ナイトコードで。/鏡音リン",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-111-A",
+      "packageTitle": "携帯恋話",
+      "audioSha256": "01df3fc02cf9d46f5596f8cedbacf954ca95c4690fda71ee8914bbd72a0dc29a",
+      "album": "悔やむと書いてミライ/携帯恋話/ジャックポットサッドガール",
+      "title": "携帯恋話 (feat. 東雲絵名&暁山瑞希&初音ミク)",
+      "artist": "まふまふ/25時、ナイトコードで。/初音ミク",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-112-A",
+      "packageTitle": "心予報",
+      "audioSha256": "515fe142cae57355070d021df121c6fde1ff6fd18ea95e494d91f37dab2c48b4",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.2",
+      "title": "心予報 (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&初音ミク)",
+      "artist": "MORE MORE JUMP！",
+      "track": "4"
+    },
+    {
+      "id": "PJSK-113-A",
+      "packageTitle": "星空のメロディー",
+      "audioSha256": "7e70e30486d55705f533dcc9becf417f0bc63966ed9c8665cc8f2aae0acea58c",
+      "title": "星空のメロディー (feat. 天馬司&鳳えむ&草薙寧々&神代類&MEIKO)",
+      "artist": "ワンダーランズ×ショウタイム",
+      "track": "2",
+      "album": "88☆彡/星空のメロディー"
+    },
+    {
+      "id": "PJSK-114-A",
+      "packageTitle": "幸福刑",
+      "audioSha256": "d5abddfa12f74746922d34f7d5b004d7cb1012eb8fcf633dd12363e4af6396dd",
+      "album": "幸福刑(feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&MEIKO)",
+      "title": "幸福刑(feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&MEIKO)",
+      "artist": "ProSEAKIプロセカ/宵崎奏/朝比奈まふゆ/東雲絵名/暁山瑞希/MEIKO",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-115-A",
+      "packageTitle": "虚ろを扇ぐ",
+      "audioSha256": "9ad67621f7841b724111722234425782d86d279f01b63e9621d566cfda7f19cd",
+      "album": "虚ろを扇ぐ/仮死化",
+      "title": "虚ろを扇ぐ (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&KAITO)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-116-A",
+      "packageTitle": "演劇",
+      "audioSha256": "e283a6e79578699a00296e451c98025713a08b6ce661e1648609ec51321dd20e",
+      "album": "演劇/25時の情熱",
+      "title": "演劇 (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&巡音ルカ)",
+      "artist": "25時、ナイトコードで。/巡音ルカ",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-117-A",
+      "packageTitle": "踊れオーケストラ",
+      "audioSha256": "834e4c84bb6c29fb1c4a2e4ed654fc5aeb668ea07b08a553df78316e7d3816fa",
+      "album": "ワンダーランズ×ショウタイム SEKAI ALBUM vol.2",
+      "title": "踊れオーケストラ (feat. 天馬司&鳳えむ&草薙寧々&神代類&巡音ルカ)",
+      "artist": "ワンダーランズ×ショウタイム",
+      "track": "7"
+    },
+    {
+      "id": "PJSK-118-A",
+      "packageTitle": "幽霊東京",
+      "audioSha256": "7561b86f76702bf2a4c855f7994dab6e72969ce2f0a87a26283f0bfbc8af7b14",
+      "title": "幽霊東京",
+      "artist": "Ayase",
+      "track": "2",
+      "album": "夜撫でるメノウ / 幽霊東京"
+    },
+    {
+      "id": "PJSK-119-A",
+      "packageTitle": "余花にみとれて",
+      "audioSha256": "e4e2c6b824dcfe633abea0eda86a8badcc934cb087f0d062ac4adca7354a0bdd",
+      "title": "余花にみとれて",
+      "artist": "25時、ナイトコードで。/MEIKO/keeno",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-120-A",
+      "packageTitle": "月光",
+      "audioSha256": "b2bb62d4b2ba2eedf4b9ca8f33f5abbf0eb726b21c34ed76c44dad1bde357fc9",
+      "album": "月光/街",
+      "title": "月光 (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&MEIKO)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-121-A",
+      "packageTitle": "自傷無色",
+      "audioSha256": "b12b4ede7f2260c81a316f267e2824d927e905fc12df8eecc9939e835d9a672f",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.1",
+      "title": "自傷無色 (feat. 宵崎奏, 朝比奈まふゆ & 初音ミク)",
+      "artist": "ササノマリイ/25時、ナイトコードで。/初音ミク",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-122-A",
+      "packageTitle": "酔いどれ知らず",
+      "audioSha256": "5fd50292715e8889814ee80569b79bb84ad2bc4d673e09eeca02f89266733d7e",
+      "album": "酔いどれ知らず",
+      "title": "酔いどれ知らず (feat. MEIKO&小豆沢こはね&白石杏&東雲彰人&青柳冬弥)",
+      "artist": "Vivid BAD SQUAD/MEIKO/kanaria",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-123-A",
+      "packageTitle": "Awake Now",
+      "audioSha256": "bdba6b22402e75f7224a37c7279c00e2591ecaf2213e0ed66d98672e3e6d1528",
+      "title": "Awake Now (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&初音ミク)",
+      "artist": "雄之助/Vivid BAD SQUAD/初音ミク",
+      "track": "2",
+      "album": "Beat Eater/Awake Now"
+    },
+    {
+      "id": "PJSK-124-A",
+      "packageTitle": "blender",
+      "audioSha256": "7bdddf7631116c525d04e1d04ab38530b89406deb260faf3a664229274a8b1e2",
+      "title": "blender (feat. 青柳冬弥+MEIKO&小豆沢こはね&白石杏&東雲彰人)",
+      "artist": "Vivid BAD SQUAD/MEIKO/こめだわら/R Sound Design",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-125-A",
+      "packageTitle": "DAYBREAK FRONTLINE",
+      "audioSha256": "4261bad27c3c5fb0515f1161e353af7d2f31713ac07db3e90725be556bb200cd",
+      "album": "Vivid BAD SQUAD SEKAI ALBUM vol.2",
+      "title": "DAYBREAK FRONTLINE (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&初音ミク)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "7"
+    },
+    {
+      "id": "PJSK-126-A",
+      "packageTitle": "DNA",
+      "audioSha256": "ceab484161f75344395527b89029cfc53bcef6108308466d6e3d8fd5a3210d86",
+      "album": "D/N/A",
+      "title": "D/N/A【25時、ナイトコードで。 × 鏡音リン】",
+      "artist": "25時、ナイトコードで。/Azari/鏡音リン",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-127-A",
+      "packageTitle": "Flyer!",
+      "audioSha256": "0627d19b451b89bf3d4e68b08007e4a93b6bb2d76d538ddbf9040789fc8e6a68",
+      "title": "Flyer! (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&鏡音レン)",
+      "artist": "Vivid BAD SQUAD/鏡音レン",
+      "track": "2",
+      "album": "ミライ/Flyer!"
+    },
+    {
+      "id": "PJSK-128-A",
+      "packageTitle": "from Y to Y",
+      "audioSha256": "0d2b6bf45d30b884b5daa3ae8ea9640c82ae93d78ce2bb772b792c69ad8f9b06",
+      "album": "Leo/need SEKAI ALBUM vol.1",
+      "title": "from Y to Y",
+      "artist": "Leo/need/初音ミク/ジミーサムP",
+      "track": "9"
+    },
+    {
+      "id": "PJSK-129-A",
+      "packageTitle": "Hello,world!",
+      "audioSha256": "60071e24cf3809144da8c3998dcc1d88fd377ada934d6033a58ec1eff6573aa9",
+      "title": "Hello,world! (feat. 初音ミク&星乃一歌&天馬咲希&望月穗波&日野森志步)",
+      "artist": "Leo/need/初音ミク",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-130-A",
+      "packageTitle": "Iなんです",
+      "audioSha256": "e40b4923889ed95683bdfb1d76a9e0ee7f41ca64706c15f490b5a73baa83d6c5",
+      "album": "君の夜をくれ/Iなんです",
+      "title": "Iなんです (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&初音ミク)",
+      "artist": "25時、ナイトコードで。",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-131-A",
+      "packageTitle": "KING",
+      "audioSha256": "292be2f63e482e0022a027f6bd087407a5eb91f150fa2691e382b5d520a806a2",
+      "album": "KING",
+      "title": "KING",
+      "artist": "Crazy:B/天馬司/神代類",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-132-A",
+      "packageTitle": "needLe",
+      "audioSha256": "03dafffbbbe64fad66ea22a56eeda710c0cae70d9887c25cd03ebf4ff11c6b87",
+      "title": "needLe (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&初音ミク)",
+      "artist": "DECO*27/Leo/need/初音ミク",
+      "track": "1",
+      "album": "needLe/ステラ"
+    },
+    {
+      "id": "PJSK-133-A",
+      "packageTitle": "purpose",
+      "audioSha256": "01425e08a9adfac3c175c2b8d00395db1e161e7da720ac3c414f65001a027070",
+      "title": "purpose (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&鏡音リン)",
+      "artist": "doriko/Leo/need/鏡音リン",
+      "track": "2",
+      "album": "星を繋ぐ/purpose"
+    },
+    {
+      "id": "PJSK-134-A",
+      "packageTitle": "QUEEN Full ver",
+      "audioSha256": "3fff4725eaeaf37a16912d326602c6f7afc740069bd4c49d2c1aeb7282302c81",
+      "album": "【世界计划】QUEEN",
+      "title": "QUEEN Full ver.",
+      "artist": "MEIKO，凤笑梦，草薙宁宁/世界补充计划",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-135-A",
+      "packageTitle": "ray",
+      "audioSha256": "1eb6495489beaa2c822a609306899172e0495b861432d60bb4e24b93de9a213d",
+      "title": "ray (feat. 初音ミク,星乃一歌)",
+      "artist": "Leo/need/初音ミク",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-136-A",
+      "packageTitle": "Ready Steady",
+      "audioSha256": "dd2f08f76443523275558c501e47792537866fa8d8c18318aa37c71e9e328cdf",
+      "album": "Ready Steady/Forward",
+      "title": "Ready Steady (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&初音ミク)",
+      "artist": "Giga/Vivid BAD SQUAD/初音ミク",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-137-A",
+      "packageTitle": "STAGE OF SEKAI",
+      "audioSha256": "d8ca39cfa33af69582dcaeaad33b320d91b81f05618e0058d5b8366a22f76c9e",
+      "title": "STAGE OF SEKAI (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&鏡音レン)",
+      "artist": "Leo/need/鏡音レン",
+      "track": "1",
+      "album": "STAGE OF SEKAI/Peaky Peaky"
+    },
+    {
+      "id": "PJSK-138-A",
+      "packageTitle": "Supernova",
+      "audioSha256": "e2fa32579fc59db7906c0719b3257bc3c8f936034a0fe6620da592fee4499aec",
+      "artist": "MORE MORE JUMP！/KAITO",
+      "track": "1",
+      "album": "Supernova/キラー",
+      "title": "Supernova (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&KAITO)"
+    },
+    {
+      "id": "PJSK-139-A",
+      "packageTitle": "Voices",
+      "audioSha256": "11cb3fc19d23ddd0dba913a5e892cbb81cf6517236aeb8f934dc96fd7445ddfe",
+      "album": "Voices/the WALL",
+      "title": "Voices (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&鏡音リン)",
+      "artist": "Leo/need/鏡音リン/ゆよゆっぺ",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-140-A",
+      "packageTitle": "YY",
+      "audioSha256": "dc062f218fdfe5e98a36dfef77a5a89190464888ecabe62a502114f378dfab75",
+      "album": "Vivid BAD SQUAD SEKAI ALBUM vol.2",
+      "title": "YY (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&初音ミク)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "6"
+    },
+    {
+      "id": "PJSK-141-A",
+      "packageTitle": "アイドル新鋭隊",
+      "audioSha256": "b73042ff446251a0b79634e6abdfc96fcbff0de2c23fe280551c160c9e76b945",
+      "title": "アイドル新鋭隊 (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&初音ミク)",
+      "artist": "Mitchie M/MORE MORE JUMP！/初音ミク",
+      "track": "1",
+      "album": "アイドル新鋭隊/モア！ジャンプ！モア！"
+    },
+    {
+      "id": "PJSK-142-A",
+      "packageTitle": "アスノヨゾラ哨戒班",
+      "audioSha256": "3059a40010e6b304d26968d1529b89b93b9433f8745f6bdda96f32dcac3ec130",
+      "album": "Leo/need SEKAI ALBUM vol.1",
+      "title": "アスノヨゾラ哨戒班",
+      "artist": "Leo/need/Orangestar",
+      "track": "4"
+    },
+    {
+      "id": "PJSK-143-A",
+      "packageTitle": "アトラクトライト",
+      "audioSha256": "aca347e6416e4c42f5b34fa94942adb1e923612b7b7ebb6fa89a008652fa4700",
+      "track": "11",
+      "album": "Leo/need SEKAI ALBUM vol.2",
+      "title": "アトラクトライト (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&鏡音レン)",
+      "artist": "Leo/need/*Luna"
+    },
+    {
+      "id": "PJSK-144-A",
+      "packageTitle": "イフ",
+      "audioSha256": "31dbec9956704246d69543ae1840a4ac69d2df9b9cb92bd13e21f3089740698e",
+      "track": "1",
+      "album": "イフ/パラソルサイダー",
+      "title": "イフ (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&初音ミク)",
+      "artist": "MORE MORE JUMP！"
+    },
+    {
+      "id": "PJSK-145-A",
+      "packageTitle": "エイリアンエイリアン",
+      "audioSha256": "98f4d147f71b9f9dbb4ea1670dca516d4e3fdd0cd0b6882a61cc66cd8eec1b77",
+      "album": "ワンダーランズ×ショウタイム SEKAI ALBUM vol.2",
+      "title": "エイリアンエイリアン (feat. 鳳えむ&草薙寧々&初音ミク)",
+      "artist": "ワンダーランズ×ショウタイム",
+      "track": "6"
+    },
+    {
+      "id": "PJSK-146-A",
+      "packageTitle": "エンパープル",
+      "audioSha256": "d1ac1c5b1f3a5bcd5a4b234ce799fd3adee7a27d151a58acd3b0c924e07a03a5",
+      "title": "エンパープル",
+      "artist": "25時、ナイトコードで。/宵崎奏/朝比奈まふゆ/東雲絵名/暁山瑞希/鏡音リン/はるまきごはん",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-147-A",
+      "packageTitle": "オーバーライド",
+      "audioSha256": "0d86172510bb7e5c855466747c3a92cebac4267faf4ece150954a914e6e1a09b",
+      "title": "オーバーライド (Game size.)",
+      "artist": "MORE MORE JUMP！/鏡音リン/花里みのり/桐谷遥/桃井愛莉/日野森雫",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-148-A",
+      "packageTitle": "からくりピエロ",
+      "audioSha256": "cf2ec1ce3d62cd2eaaa4fb8c3bbc8d4bf5fc494c426a489428fee44f7c6b5dd1",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.2",
+      "title": "からくりピエロ (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&初音ミク)",
+      "artist": "MORE MORE JUMP！",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-149-A",
+      "packageTitle": "きゅうくらりん",
+      "audioSha256": "e20d554e6bf0175eec34d91b59b7867a463684b8a62eb2616c47acaa17a4592d",
+      "artist": "MORE MORE JUMP！/MEIKO/いよわ",
+      "track": "1",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.3",
+      "title": "きゅうくらりん (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&MEIKO)"
+    },
+    {
+      "id": "PJSK-150-A",
+      "packageTitle": "キティ",
+      "audioSha256": "d5b2ed1714c6a793419e2ba279f02f4a3cbe4d5b7e0fb37c1ac56e96c9240cea",
+      "artist": "25時、ナイトコードで。/鏡音レン",
+      "track": "2",
+      "album": "ザムザ/キティ",
+      "title": "キティ (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&鏡音レン)"
+    },
+    {
+      "id": "PJSK-151-A",
+      "packageTitle": "キャットラビング",
+      "audioSha256": "d4d54746b05e532063e3100731517b250f8fc00ca1aa1bb3cf9a73b85e92ccb6",
+      "title": "キャットラビング",
+      "artist": "25時、ナイトコードで。/巡音ルカ/宵崎奏/東雲絵名/香椎モイミ",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-152-A",
+      "packageTitle": "さよならプリンセス",
+      "audioSha256": "995328365f6f07cda937c0a696ff9aaad510f8c30f96496e988d200812b5644b",
+      "track": "5",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.3",
+      "title": "さよならプリンセス (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&初音ミク)",
+      "artist": "MORE MORE JUMP！"
+    },
+    {
+      "id": "PJSK-153-A",
+      "packageTitle": "サイバーパンクデッドボーイ",
+      "audioSha256": "af90513ba799010d618020baba377f8686be3b79b669d7836ac94edd648f2522",
+      "title": "サイバーパンクデッドボーイ (feat. 神代類&鏡音リン&天馬司&鳳えむ&草薙寧々)",
+      "artist": "マイキP/ワンダーランズ×ショウタイム/鏡音リン",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-154-A",
+      "packageTitle": "サマータイムレコード",
+      "audioSha256": "f025f6a0ed902722c9e0d79685c5f7d20d8a8028b4c9823e4d1a946682f63381",
+      "title": "サマータイムレコード",
+      "artist": "じん/IA",
+      "track": "13",
+      "album": "メカクシティレコーズ"
+    },
+    {
+      "id": "PJSK-155-A",
+      "packageTitle": "ザムザ",
+      "audioSha256": "77cea3d7c70797786fffc873814a967b9fcba4e0d6c139b7a11616fa137f7826",
+      "album": "ザムザ/キティ",
+      "title": "ザムザ (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&KAITO)",
+      "artist": "25時、ナイトコードで。/KAITO",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-156-A",
+      "packageTitle": "ジェヘナ",
+      "audioSha256": "48ebf61080fa84fc50f1eb572c64d2fd9c37d3fda7e37627a092753a00392517",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.2",
+      "title": "ジェヘナ (feat. 東雲絵名&暁山瑞希&初音ミク)",
+      "artist": "25時、ナイトコードで。/初音ミク",
+      "track": "6"
+    },
+    {
+      "id": "PJSK-157-A",
+      "packageTitle": "シネマ",
+      "audioSha256": "2dadaadd4a70a5d5cc6ceb6ca771cdfb314f63ea632f7bb3fdc59645840dfd01",
+      "album": "RAD DOGS/シネマ",
+      "title": "シネマ (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&KAITO)",
+      "artist": "Ayase/Vivid BAD SQUAD/KAITO",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-158-A",
+      "packageTitle": "シャルル",
+      "audioSha256": "a1b6fcd44fea7a5cef305a14bed2cdf65c232b54515b499b917afc49919ca1f1",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.1",
+      "title": "シャルル (feat. 東雲絵名 & 暁山瑞希)",
+      "artist": "須田景凪/25時、ナイトコードで。",
+      "track": "2"
+    },
+    {
+      "id": "PJSK-159-A",
+      "packageTitle": "すれすれ",
+      "audioSha256": "e3df4e9f5eedf3aa700846fa317a596fce531db4b3253b1355016bbe00397e0d",
+      "title": "すれすれ",
+      "artist": "Leo/need/天馬咲希/MEIKO/星乃一歌/望月穗波/日野森志歩",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-160-A",
+      "packageTitle": "ステラ",
+      "audioSha256": "f5e5278f1ab80bc121cbebcc5243596354b15a685218e73bf4e5173c9aa0ad92",
+      "artist": "じん/Leo/need/初音ミク",
+      "track": "2",
+      "album": "needLe/ステラ",
+      "title": "ステラ (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&初音ミク)"
+    },
+    {
+      "id": "PJSK-161-A",
+      "packageTitle": "スマイルシンフォニー",
+      "audioSha256": "4029f4fbc21b68b11cad9160c2bcfdc09962e0599c484b01830ecf90172b1bd4",
+      "track": "1",
+      "album": "スマイル*シンフォニー",
+      "title": "スマイル*シンフォニー",
+      "artist": "ワンダーランズ×ショウタイム"
+    },
+    {
+      "id": "PJSK-162-A",
+      "packageTitle": "タイムマシン",
+      "audioSha256": "c0b29d7b802bb82b6c4f04cb85fab9cb4615ce7de2d87ddae72d90503173f2c4",
+      "album": "Leo/need SEKAI ALBUM vol.1",
+      "title": "タイムマシン",
+      "artist": "Leo/need/初音ミク/40mP/164",
+      "track": "8"
+    },
+    {
+      "id": "PJSK-163-A",
+      "packageTitle": "チームメイト",
+      "audioSha256": "9829d78ac30083b0768f8ffaa953489fb48111f6757ca6e269b087bb0c1b36b8",
+      "title": "チームメイト (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&鏡音レン)",
+      "artist": "MORE MORE JUMP！/鏡音レン",
+      "track": "1",
+      "album": "チームメイト/はぐ"
+    },
+    {
+      "id": "PJSK-164-A",
+      "packageTitle": "てらてら",
+      "audioSha256": "44d241f0fcb6cbbed0d45eab838a1c528d8561309fe856e5a1a3fd189b3627be",
+      "artist": "Leo/need/初音ミク",
+      "track": "2",
+      "album": "オーダーメイド/てらてら",
+      "title": "てらてら (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&初音ミク)"
+    },
+    {
+      "id": "PJSK-165-A",
+      "packageTitle": "とても素敵な六月でした",
+      "audioSha256": "60245f9ee63dbb21dd7de475861f271d083c49bfca8109419eef0aee2653540a",
+      "title": "とても素敵な六月でした (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&初音ミク)",
+      "artist": "25時、ナイトコードで。",
+      "track": "1",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.3"
+    },
+    {
+      "id": "PJSK-166-A",
+      "packageTitle": "にっこり^^調査隊のテーマ",
+      "audioSha256": "feb4ec927df456119f4a24b2dd894d265b2580d2153cbb5c4af442873b3c0a88",
+      "track": "2",
+      "album": "ショウタイム・ルーラー/にっこり^^調査隊のテーマ",
+      "title": "にっこり^^調査隊のテーマ (feat. 天馬司&鳳えむ&草薙寧々&神代類&初音ミク)",
+      "artist": "ワンダーランズ×ショウタイム/初音ミク/天馬司/鳳えむ/草薙寧々/神代類"
+    },
+    {
+      "id": "PJSK-167-A",
+      "packageTitle": "バグ",
+      "audioSha256": "0b427c8fe1166de2aec5e21113b70ed68be0867bcf5e3697c49d74e81cd0e5bb",
+      "artist": "かいりきベア/25時、ナイトコードで。/鏡音レン",
+      "track": "2",
+      "album": "ノマド/バグ",
+      "title": "バグ (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&鏡音レン)"
+    },
+    {
+      "id": "PJSK-168-A",
+      "packageTitle": "ひつじがいっぴき",
+      "audioSha256": "896a205bff6c9063183473598e8a097b676980f77f536926a5b9c9a74a7cebfa",
+      "title": "ひつじがいっぴき (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&MEIKO)",
+      "artist": "Vivid BAD SQUAD",
+      "track": "1",
+      "album": "ひつじがいっぴき/下剋上"
+    },
+    {
+      "id": "PJSK-169-A",
+      "packageTitle": "ヒバナ -Reloaded-",
+      "audioSha256": "3035c2f1accec6201b19155b290f08b2fe2afd16cec1120de91d258c68ea4dc4",
+      "album": "Leo/need SEKAI ALBUM vol.1",
+      "title": "ヒバナ -Reloaded-",
+      "artist": "Leo/need/初音ミク/DECO*27",
+      "track": "3"
+    },
+    {
+      "id": "PJSK-170-A",
+      "packageTitle": "ベノム",
+      "audioSha256": "610a45cd334b1b52bff80cf4fec6a451b9af101c9731b19f1db9269be23d67d0",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.1",
+      "title": "ベノム (feat. 東雲絵名 & 暁山瑞希)",
+      "artist": "かいりきベア/25時、ナイトコードで。",
+      "track": "12"
+    },
+    {
+      "id": "PJSK-171-A",
+      "packageTitle": "ぼくのかみさま",
+      "audioSha256": "f95b62170ccf76465a97e42564caf3b7924ac30b33cd0a3fb24e643aa773911e",
+      "title": "ぼくのかみさま",
+      "artist": "ワンダーランズ×ショウタイム/草薙寧々/鏡音レン/天馬司/鳳えむ/神代類",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-172-A",
+      "packageTitle": "ボッカデラベリタ",
+      "audioSha256": "62ddfd2926b0f5fe35c271ae75c98d55ae5a82c22737777fd7d095a5012c593c",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.1",
+      "title": "ボッカデラベリタ (feat. 朝比奈まふゆ & 暁山瑞希)",
+      "artist": "柊キライ/25時、ナイトコードで。",
+      "track": "8"
+    },
+    {
+      "id": "PJSK-173-A",
+      "packageTitle": "ミライ",
+      "audioSha256": "9f7c7c10de251daddf49058710e5cf2fccad765334d392e1ac722eb454b705cf",
+      "artist": "Vivid BAD SQUAD",
+      "track": "1",
+      "album": "ミライ/Flyer!",
+      "title": "ミライ (feat. 小豆沢こはね&白石杏&東雲彰人&青柳冬弥&巡音ルカ)"
+    },
+    {
+      "id": "PJSK-174-A",
+      "packageTitle": "メランコリック",
+      "audioSha256": "13458925f3cddd949f19b838f2d94989b8335cb3b6b7a042120db4af3955d271",
+      "album": "MORE MORE JUMP！ SEKAI ALBUM vol.3",
+      "title": "メランコリック (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&鏡音リン)",
+      "artist": "MORE MORE JUMP！",
+      "track": "3"
+    },
+    {
+      "id": "PJSK-175-A",
+      "packageTitle": "メリュー",
+      "audioSha256": "d51ce2608101d85bc9168eae3089a03a4f720adeca44aa9fb6bb060cd12d9588",
+      "album": "25時、ナイトコードで。 SEKAI ALBUM vol.2",
+      "title": "メリュー (feat. 宵崎奏&朝比奈まふゆ&初音ミク)",
+      "artist": "25時、ナイトコードで。/初音ミク",
+      "track": "5"
+    },
+    {
+      "id": "PJSK-176-A",
+      "packageTitle": "モア！ジャンプ！モア！",
+      "audioSha256": "c8f9fb73e5a814818da1ef9726c0d364ef12d24cf8a2df0045e33889d47d8055",
+      "track": "2",
+      "album": "アイドル新鋭隊/モア！ジャンプ！モア！",
+      "title": "モア！ジャンプ！モア！ (feat. 花里みのり&桐谷遥&桃井愛莉&日野森雫&初音ミク)",
+      "artist": "ナユタン星人/MORE MORE JUMP！/初音ミク"
+    },
+    {
+      "id": "PJSK-177-A",
+      "packageTitle": "モザイクロール (Reloaded)",
+      "audioSha256": "7d283ae613d475e64a760bc24b06e1af5edc964632beb5917e3e8aae77e70010",
+      "track": "10",
+      "album": "Leo/need SEKAI ALBUM vol.3",
+      "title": "モザイクロール (Reloaded) (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&KAITO)",
+      "artist": "Leo/need"
+    },
+    {
+      "id": "PJSK-178-A",
+      "packageTitle": "モニタリング",
+      "audioSha256": "f1779f160f4c05a61d3802bed27f89def714753084c25b45bb3f36711cccd8ba",
+      "album": "モニタリング",
+      "title": "モニタリング",
+      "artist": "DECO*27/初音ミク",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-179-A",
+      "packageTitle": "リモコン",
+      "audioSha256": "7a423896e9a8f58a6b14ef1f19160667f3b016b975702cc41038585883021fc5",
+      "track": "3",
+      "album": "ワンダーランズ×ショウタイム SEKAI ALBUM vol.2",
+      "title": "リモコン (feat. 鳳えむ&草薙寧々&鏡音リン&鏡音レン)",
+      "artist": "ワンダーランズ×ショウタイム"
+    },
+    {
+      "id": "PJSK-180-A",
+      "packageTitle": "レグルス",
+      "audioSha256": "3e65b904c7ce5fbf75346f14287154f80d4d8b9c78e8fe11fbf46a3c553dec8d",
+      "title": "レグルス (feat. 望月穗波&KAITO&星乃一歌&天馬咲希&日野森志步)",
+      "artist": "Leo/need/KAITO/ゆうゆ",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-181-A",
+      "packageTitle": "ロウワー",
+      "audioSha256": "b01c49f4c86b251e561fa9df76cc489aad2518f7af41a2b345a7d99ef23fe87e",
+      "album": "ロウワー/トリコロージュ",
+      "title": "ロウワー (feat. 宵崎奏&朝比奈まふゆ&東雲絵名&暁山瑞希&MEIKO)",
+      "artist": "25時、ナイトコードで。/MEIKO",
+      "track": "1"
+    },
+    {
+      "id": "PJSK-182-A",
+      "packageTitle": "ロストエンファウンド",
+      "audioSha256": "9c795eee5f9d69810402a00e196611c48bc1624d97b059931cccd5473682a96b",
+      "album": "Leo/need SEKAI ALBUM vol.2",
+      "title": "ロストエンファウンド (feat. 星乃一歌&天馬咲希&望月穂波&日野森志歩&初音ミク)",
+      "artist": "Leo/need",
+      "track": "6"
+    },
+    {
+      "id": "PJSK-183-A",
+      "packageTitle": "ロストワンの号哭",
+      "audioSha256": "df11da3fa394a9d06a01f061fe45cee494f6fc06565d05a4a4fa33208e91770b",
+      "track": "1",
+      "album": "Leo/need SEKAI ALBUM vol.2",
+      "title": "ロストワンの号哭 (feat. 星乃一歌&日野森志歩&鏡音リン)",
+      "artist": "Leo/need/鏡音リン"
+    },
+    {
+      "id": "PJSK-184-A",
+      "packageTitle": "化けの花",
+      "audioSha256": "c0ad5f16177824cb100ecd265d81b7790841ff155a92a4b16f9393c3875d6725",
+      "title": "化けの花",
+      "artist": "暁山瑞希/KAITO/宵崎奏/朝比奈まふゆ/東雲絵名/25時、ナイトコードで。",
+      "track": "1"
+    }
+  ]
+}
