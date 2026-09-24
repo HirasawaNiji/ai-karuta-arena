@@ -151,6 +151,8 @@ buildFamiliarityMatrix(profiles, songs, config, referenceTime): FamiliarityMatri
 
 `SelectionRequest` 包含 players、profiles、candidateSongs、完整 matrix、requestedCount、bannedSongIds、excludedHistorySongIds、availability、selectionConfig、fairnessConfig、selectionVersion、gameType、roundNumber。profiles 只供上下文多样性/探索偏好计算；歌曲熟悉度始终取 matrix。
 
+M1.5 的具体 schema 将 catalog/profiles/matrix/referenceTime/scoringConfig 收在 profileContext 中，玩家取 matrix.playerIds，候选用 candidateSongIds 引用 catalog.songs；availability 显式覆盖每个候选。实际布局与校验边界见[完整 M1 契约](m1-runtime-contracts.md)。
+
 `SelectionResult` 包含 selectedSongIds（有序）、steps、requestedCount、actualCount、excludedCounts（按原因）、unfilledCoverage、objectiveSummary、fairnessAssessment、inputVersions。每个 step 保存加入前后 K(u)、补缺收益、四项边际增益、软比例贡献、综合增益和同分决胜依据。被 ban 后保留原选择步骤作为历史，另生成当前题组评估，不能伪造一次新选择的贡献。
 
 `FairnessAssessment` 包含 selectionVersion、matrixVersion、完整 fairnessConfig 与版本、requestedCount、actualCount、validity、passed、playerMetrics、maxCoverageGap、reasons。playerMetrics 包含 K/C/F/L 四项；无玩家或空题组的比例与差距用 null，不用 NaN 或虚构的零。

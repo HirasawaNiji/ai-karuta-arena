@@ -29,7 +29,7 @@
 
 退出条件：core 契约可导入、无业务算法假实现，AC-01 和 AC-02 契约部分通过，build/typecheck/test/lint/Python/diff 检查通过。M1 不声称选曲或完整游戏可用。
 
-M1.4 的实际入口、原始导入与规范集合边界见[证据契约验收](m1-evidence-contracts.md)。它不实现 M2 的去重或评分。
+M1.4 的实际入口、原始导入与规范集合边界见[证据契约验收](m1-evidence-contracts.md)。它不实现 M2 的去重或评分。M1.5 的具体输入布局、状态与 Mock 端口边界及 M1.6 验证见[完整 M1 契约验收](m1-runtime-contracts.md)。
 
 ## 3. M2：模拟来源、证据、画像与矩阵
 
@@ -131,4 +131,4 @@ Issue #4 始终追踪整个 Mock 里程碑。阶段 PR 待审时可在 Checkpoin
 
 ## M1 子范围交付
 
-M1.1–M1.3 与该子范围 CI 的实现和检查见[基础验收](m1-foundation.md)。M1 拆为基础契约与完整业务契约两次可审查交付；M1.4–M1.5 尚未实现，M1.6 的完整检查需随后覆盖全部契约。Issue #4 第一项在完整 M1 接受前保持未勾选。D0 发现与用户素材授权见[引擎核对](karuta-engine-audit.md)，真实适配不可用 Mock 接口代替。
+M1.1–M1.3 与该子范围 CI 的实现和检查见[基础验收](m1-foundation.md)，M1.4 见[证据契约](m1-evidence-contracts.md)，M1.5/M1.6 见[完整契约验收](m1-runtime-contracts.md)。M1 分阶段提交；完整检查、审核和合并后，Issue #4 只勾选第一项，接着进入 M2。D0 发现与用户素材授权见[引擎核对](karuta-engine-audit.md)，真实适配不可用 Mock 接口代替。
