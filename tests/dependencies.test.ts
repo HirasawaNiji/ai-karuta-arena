@@ -81,3 +81,34 @@ it('enforces new package ownership and permits only the documented fixture subpa
     expect(results[0]?.errorCount).toBe(0);
   }
 }, 30000);
+
+it('keeps playlist-engine independent of profile calculations, adapters and I/O', async () => {
+  const eslint = new ESLint({
+    overrideConfig: {
+      languageOptions: {
+        parserOptions: { disallowAutomaticSingleRunInference: true },
+      },
+    },
+  });
+  for (const dependency of [
+    '@amp/music-profile',
+    '@amp/adapters/fixtures',
+    '@amp/party-runtime',
+    'node:fs',
+    '../../music-profile/src/index.js',
+  ]) {
+    const results = await eslint.lintText("import '" + dependency + "';", {
+      filePath: 'packages/playlist-engine/src/index.ts',
+    });
+    expect(
+      results
+        .flatMap((r) => r.messages)
+        .some((m) => m.ruleId === 'no-restricted-imports'),
+      dependency,
+    ).toBe(true);
+  }
+  const valid = await eslint.lintText("import '@amp/core';", {
+    filePath: 'packages/playlist-engine/src/index.ts',
+  });
+  expect(valid[0]?.errorCount).toBe(0);
+}, 30000);

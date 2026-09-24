@@ -18,6 +18,7 @@ export default tseslint.config(
           './packages/core/tsconfig.json',
           './packages/music-profile/tsconfig.json',
           './packages/adapters/tsconfig.json',
+          './packages/playlist-engine/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
@@ -66,24 +67,27 @@ export default tseslint.config(
     },
   },
   {
-    files: ['packages/music-profile/src/**/*.ts'],
+    files: [
+      'packages/music-profile/src/**/*.ts',
+      'packages/playlist-engine/src/**/*.ts',
+    ],
     rules: {
       'no-restricted-imports': [
         'error',
         {
           paths: builtinModules.map((name) => ({
             name,
-            message: 'Profile calculations have no I/O.',
+            message: 'Pure domain calculations have no I/O.',
           })),
           patterns: [
             {
               regex: '^@amp/(?!core$)',
-              message: 'Profile depends only on core.',
+              message: 'Pure domain calculations depend only on core.',
             },
             {
               group: ['node:*', '**/apps/**', '**/packages/**', '**/src/**'],
               message:
-                'Profile calculations have no I/O or cross-package source imports.',
+                'Pure domain calculations have no I/O or cross-package source imports.',
             },
           ],
         },
