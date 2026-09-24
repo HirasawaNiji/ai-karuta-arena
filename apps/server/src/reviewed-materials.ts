@@ -1,6 +1,6 @@
-import { readFile, mkdir } from 'node:fs/promises';
+import { readFile, mkdir, link, rm } from 'node:fs/promises';
 import { resolve, sep } from 'node:path';
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { execFile } from 'node:child_process';
 import {
   CatalogSchema,
@@ -120,50 +120,77 @@ export async function loadReviewedMaterials(input: {
       segmentKind: 'intro',
       answerCardId: card.cardId,
     });
-    const root = resolve(input.cacheDirectory),
-      target = resolve(root, hash + '-intro-v1.mp3');
-    if (!target.startsWith(root + sep)) throw new Error('Invalid cache path');
-    // Strip ID3 titles/artists and cut the evaluated question only; original files stay untouched.
-    await new Promise<void>((done, reject) =>
-      execFile(
-        input.ffmpeg,
-        [
-          '-hide_banner',
-          '-loglevel',
-          'error',
-          '-y',
-          '-i',
-          file,
-          '-t',
-          String(question.durationMs / 1000),
-          '-map',
-          '0:a:0',
-          '-map_metadata',
-          '-1',
-          '-vn',
-          '-ac',
-          '2',
-          '-ar',
-          '44100',
-          '-codec:a',
-          'libmp3lame',
-          '-b:a',
-          '128k',
-          '-id3v2_version',
-          '0',
-          '-write_id3v1',
-          '0',
-          '-write_xing',
-          '0',
-          target,
-        ],
-        { windowsHide: true, timeout: 30000 },
-        (error) =>
-          error
-            ? reject(new Error('生成对局音频失败，请检查 ffmpeg 配置'))
-            : done(),
-      ),
+    const root = resolve(input.cacheDirectory);
+    const temporary = resolve(
+      root,
+      hash + '-intro-v1.' + randomUUID() + '.tmp.mp3',
     );
+    if (!temporary.startsWith(root + sep))
+      throw new Error('Invalid cache path');
+    let target: string;
+    try {
+      // Strip ID3 titles/artists and cut the evaluated question only; original files stay untouched.
+      await new Promise<void>((done, reject) =>
+        execFile(
+          input.ffmpeg,
+          [
+            '-hide_banner',
+            '-loglevel',
+            'error',
+            '-y',
+            '-i',
+            file,
+            '-t',
+            String(question.durationMs / 1000),
+            '-map',
+            '0:a:0',
+            '-map_metadata',
+            '-1',
+            '-vn',
+            '-ac',
+            '2',
+            '-ar',
+            '44100',
+            '-codec:a',
+            'libmp3lame',
+            '-b:a',
+            '128k',
+            '-id3v2_version',
+            '0',
+            '-write_id3v1',
+            '0',
+            '-write_xing',
+            '0',
+            temporary,
+          ],
+          { windowsHide: true, timeout: 30000 },
+          (error) =>
+            error
+              ? reject(new Error('生成对局音频失败，请检查 ffmpeg 配置'))
+              : done(),
+        ),
+      );
+      const output = await readFile(temporary);
+      if (output.length === 0) throw new Error('生成的对局音频为空');
+      const outputHash = createHash('sha256').update(output).digest('hex');
+      target = resolve(root, hash + '-intro-v1-' + outputHash + '.mp3');
+      // Publish complete, immutable bytes without replacing files held by other rooms.
+      // A hard link also keeps concurrent publishers from overwriting one another.
+      try {
+        await link(temporary, target);
+      } catch (error) {
+        if (
+          !(error instanceof Error) ||
+          !('code' in error) ||
+          error.code !== 'EEXIST'
+        )
+          throw error;
+        if (!(await readFile(target)).equals(output))
+          throw new Error('已有对局音频缓存内容不匹配', { cause: error });
+      }
+    } finally {
+      await rm(temporary, { force: true });
+    }
     catalog = CatalogSchema.parse({
       ...catalog,
       catalogVersion:
