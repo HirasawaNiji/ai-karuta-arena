@@ -40,3 +40,44 @@ it('enforces core independence and public workspace exports', async () => {
   });
   expect(valid[0]?.errorCount).toBe(0);
 }, 30_000);
+
+it('enforces new package ownership and permits only the documented fixture subpath', async () => {
+  const eslint = new ESLint({
+    overrideConfig: {
+      languageOptions: {
+        parserOptions: { disallowAutomaticSingleRunInference: true },
+      },
+    },
+  });
+  for (const [file, dependency] of [
+    ['packages/music-profile/src/index.ts', '@amp/adapters'],
+    ['packages/music-profile/src/index.ts', '@amp/adapters/fixtures'],
+    ['packages/music-profile/src/index.ts', 'node:fs'],
+    ['packages/adapters/src/index.ts', '@amp/music-profile'],
+    ['packages/music-profile/src/index.ts', '../../core/src/index.js'],
+    ['packages/adapters/src/index.ts', '../../music-profile/src/index.js'],
+    ['tests/music-profile.test.ts', '../packages/core/src/index.js'],
+    ['tests/music-profile.test.ts', '@amp/adapters/fixtures/private'],
+    ['tests/music-profile.test.ts', '@amp/core/src/index.js'],
+  ]) {
+    const results = await eslint.lintText("import '" + dependency + "';", {
+      filePath: file!,
+    });
+    expect(
+      results
+        .flatMap((r) => r.messages)
+        .some((m) => m.ruleId === 'no-restricted-imports'),
+      dependency,
+    ).toBe(true);
+  }
+  for (const [file, dependency] of [
+    ['packages/music-profile/src/index.ts', '@amp/core'],
+    ['packages/adapters/src/index.ts', '@amp/core'],
+    ['tests/music-profile.test.ts', '@amp/adapters/fixtures'],
+  ]) {
+    const results = await eslint.lintText("import '" + dependency + "';", {
+      filePath: file!,
+    });
+    expect(results[0]?.errorCount).toBe(0);
+  }
+}, 30000);

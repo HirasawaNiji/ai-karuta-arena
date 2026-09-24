@@ -14,3 +14,4 @@ export * from './game.js';
 export * from './selection.js';
 export * from './party.js';
 export * from './ports.js';
+export * from './recognition.js';

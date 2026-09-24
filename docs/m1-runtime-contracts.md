@@ -2,6 +2,8 @@
 
 范围：补齐 M1.5 的选曲、评估、派对、游戏和接口，沿用已有双系统 CI 完成 M1.6。前序基础见 [M1.1–M1.3](m1-foundation.md) 与 [M1.4](m1-evidence-contracts.md)。实时验收记录在 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4) 和本阶段 PR。
 
+本文记录 M1 交付时的范围；后续实际来源、画像与评分见 [M2 交付](m2-profile-matrix.md)。
+
 ## 交付与模块边界
 
 | 模块 | 实际内容 |

@@ -14,6 +14,7 @@ import {
   uniqueValues,
 } from './ids.js';
 import { EventIdSchema, UtcTimestampSchema } from './evidence.js';
+import { RecognitionScopeSchema } from './recognition.js';
 import { contractIssue, sameData, sameIds } from './contract-validation.js';
 
 export const GameSessionInputSchema = z
@@ -43,6 +44,7 @@ export const JudgementSchema = z
     songId: SongIdSchema,
     playerId: PlayerIdSchema,
     outcome: z.enum(['correct', 'wrong']),
+    recognitionScope: RecognitionScopeSchema.optional(),
     occurredAt: UtcTimestampSchema,
   })
   .readonly();
@@ -186,12 +188,14 @@ export const GameEventSchema = z
       ...answer,
       type: z.literal('ANSWER_CORRECT'),
       judgementId: JudgementIdSchema,
+      recognitionScope: RecognitionScopeSchema.optional(),
     }),
     z.strictObject({
       ...envelope,
       ...answer,
       type: z.literal('ANSWER_WRONG'),
       judgementId: JudgementIdSchema,
+      recognitionScope: RecognitionScopeSchema.optional(),
     }),
     z.strictObject({
       ...envelope,

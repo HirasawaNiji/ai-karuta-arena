@@ -1,0 +1,47 @@
+import { ScoringConfigSchema, type ScoringConfig } from '@amp/core';
+
+/** Experimental Mock baseline; not a calibrated recognition probability. */
+export const DEFAULT_SCORING_CONFIG: ScoringConfig = ScoringConfigSchema.parse({
+  schemaVersion: 1,
+  version: 'score-v1',
+  weights: {
+    prior: 0.05,
+    favorite: 0.15,
+    playlist: 0.05,
+    playCount: 0.3,
+    recency: 0.15,
+    topSong: 0.1,
+    selfReport: 0.35,
+    artistAffinity: 0.1,
+    genreAffinity: 0.05,
+    languageAffinity: 0.05,
+  },
+  playCountCap: 50,
+  recencyHalfLifeDays: 180,
+  correctHalfLifeDays: 365,
+  wrongHalfLifeDays: 90,
+  correctFloor: 0.9,
+  wrongPenalty: 0.15,
+  confidence: {
+    favorite: 0.5,
+    playlist: 0.3,
+    topSong: 0.6,
+    selfReport: 0.6,
+    playCount: { base: 0.4, gain: 0.4 },
+    recency: { base: 0.4, gain: 0.4 },
+    recognition: { base: 0.5, gain: 0.45 },
+    recognitionHalfLifeDays: 365,
+    affinityMultiplier: 0.25,
+    sufficientThreshold: 0.5,
+  },
+  profile: {
+    favoriteStrength: 1,
+    playlistStrength: 0.4,
+    topSongStrength: 0.8,
+    inferredWeightDivisor: 3,
+    confidenceSongDivisor: 10,
+    inferredConfidenceCap: 0.7,
+    topArtistWeight: 0.8,
+    topArtistConfidence: 0.6,
+  },
+});
