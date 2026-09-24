@@ -301,3 +301,91 @@ export function createStressFixture(
   );
   return { catalog, rawData, groups: { common, rhythm, classical }, variant };
 }
+
+type Fixture = { catalog: Catalog; rawData: readonly RawUserMusicData[] };
+/** Explicit zero reports keep unfamiliar songs supported, independently of simulated answers. */
+export function createNoCommonFixture(): Fixture {
+  const base = createStressFixture();
+  const rawData = base.rawData.map((raw, i) =>
+    RawUserMusicDataSchema.parse({
+      ...raw,
+      evidence: base.catalog.songs.map((song) => {
+        const known = (
+          i < 6 ? base.groups.common : base.groups.classical
+        ).includes(song.id);
+        const envelope = {
+          evidenceId: 'isolated:' + i + ':' + song.id,
+          playerId: raw.userId,
+          songId: song.id,
+          sourceId: MOCK_SOURCE_ID,
+          observedAt: MOCK_REFERENCE_TIME,
+        };
+        return known
+          ? {
+              ...envelope,
+              type: 'warmup_correct',
+              eventId: 'isolated-event:' + i + ':' + song.id,
+              occurredAt: MOCK_REFERENCE_TIME,
+            }
+          : { ...envelope, type: 'self_report', familiarity: 0 };
+      }),
+    }),
+  );
+  return {
+    catalog: CatalogSchema.parse({
+      ...base.catalog,
+      catalogVersion: 'stress-no-common-v1',
+    }),
+    rawData,
+  };
+}
+export function expandNoCommonFixture(
+  fixture: Fixture,
+  forMinority: boolean,
+): Fixture {
+  const template = fixture.catalog.songs.find((s) =>
+    s.genres.some((g) => g === 'genre:classical'),
+  )!;
+  const catalog = CatalogSchema.parse({
+    ...fixture.catalog,
+    catalogVersion: forMinority ? 'minority-expanded' : 'majority-expanded',
+    songs: [
+      ...fixture.catalog.songs,
+      ...Array.from({ length: 3 }, (_, i) => ({
+        ...template,
+        id: 'new-song:' + i,
+        title: 'Synthetic expansion ' + i,
+      })),
+    ],
+  });
+  const rawData = fixture.rawData.map((raw, i) =>
+    RawUserMusicDataSchema.parse({
+      ...raw,
+      snapshotId: 'expanded:' + raw.snapshotId,
+      evidence: [
+        ...raw.evidence,
+        ...catalog.songs
+          .filter((s) => s.id.startsWith('new-song:'))
+          .map((song) => {
+            const known = forMinority ? i === 6 : i < 6;
+            const envelope = {
+              evidenceId: 'expanded:' + i + ':' + song.id,
+              playerId: raw.userId,
+              songId: song.id,
+              sourceId: MOCK_SOURCE_ID,
+              observedAt: MOCK_REFERENCE_TIME,
+            };
+            return known
+              ? {
+                  ...envelope,
+                  type: 'warmup_correct',
+                  eventId: 'expanded-event:' + i + ':' + song.id,
+                  occurredAt: MOCK_REFERENCE_TIME,
+                }
+              : { ...envelope, type: 'self_report', familiarity: 0 };
+          }),
+      ],
+    }),
+  );
+  return { catalog, rawData };
+}

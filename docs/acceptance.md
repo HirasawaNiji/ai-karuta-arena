@@ -1,8 +1,8 @@
 # 首期验收矩阵
 
-状态：AC-01 与 AC-02 的 M1 契约部分已有检查，见[完整 M1 契约验收](m1-runtime-contracts.md)；算法、运行时及集成业务场景尚未执行。需求定义见 [requirements.md](requirements.md)，任务依赖见 [development-roadmap.md](development-roadmap.md)。受控 Mock 通过不代表真实派对公平性、真实音乐平台或正式联网游戏已验证。
+状态：M1–M5 已实现，AC-01–20 已有契约、计算、状态和实际 CLI 的分层验证；证据映射见本文末节及 [M5 Demo](m5-demo.md)。需求定义见 [requirements.md](requirements.md)，任务依赖见 [development-roadmap.md](development-roadmap.md)。受控 Mock 通过不代表真实派对公平性、真实音乐平台或正式联网游戏已验证。
 
-实施级测试归属与顺序见[工作单](implementation-plan.md)；手算公式、精度与数据变体见[算法规格](algorithm-spec.md)，权限/版本/事件不变量见[运行规格](party-runtime-spec.md)。这些细化补充原 AC，不表示场景已执行或通过。
+实施级测试归属与顺序见[工作单](implementation-plan.md)；手算公式、精度与数据变体见[算法规格](algorithm-spec.md)，权限/版本/事件不变量见[运行规格](party-runtime-spec.md)。这些细化补充原 AC；实际执行范围和限制以本文证据表、关联 PR 的准确提交及 CI 结果为准。
 
 AC-01–20 验收 M1–M5 核心 Mock。[初赛补充中的 PAD-01–10](preliminary-demo.md)另外验收手动画像、可播放题目、真实多人/1v1 和淘汰赛；两组不能互相冒充。初赛暂停 LLM 接入，QQ 不可用时必须仍能完成真人演示。score-v1 保留核心回归，score-v2-manual 按新增识别范围和自报规则验证。
 
@@ -35,10 +35,39 @@ AC-09 是可行输入的受控算例，不假定现实中的六名音游玩家�
 
 ## 分层验证与交付证据
 
-- 文档阶段（本任务）：原 Prompt 四十九章完整映射、需求 ID 与验收关联、Markdown 链接存在、Python 仓库检查和 `git diff --check`；不执行或宣称应用测试。
+- 前期文档阶段：原 Prompt 四十九章完整映射、需求 ID 与验收关联、Markdown 链接存在、Python 仓库检查和 `git diff --check`；不执行或宣称应用测试。
 - 领域/算法阶段：Vitest 单元测试，固定时钟、小矩阵与阈值边界；验证公开行为和可核算结果，避免只镜像实现代码。
 - 状态阶段：版本变化、ban 流程、房主确认和开局的状态转换测试；不能只验证主持文案包含某句话。
 - 集成阶段：真实调用所有 Mock 模块的 Demo 闭环；固定场景核对结构化输出，禁止把预制文本当集成通过。
 - 未来真实接入：官方授权、平台数据契约、音频许可和浏览器/多人流程分别验收。Mock 成功不能替代这些证据。
 
 实现任务在对应 Issue/PR 中记录执行命令、结果、提交号及未运行检查。证据只保存不含私人画像、密钥或凭据的输出；人工接受并合并后才将对应任务标为 Ranked。
+
+## M1–M5 执行证据映射
+
+以下为固定合成输入的核心验收，不包含 PAD 真人验收。路径均相对仓库；完整测试随 pnpm test 执行，进程层随 pnpm demo:check 执行。PR 记录确切 head 和 Windows/Linux CI；不从历史文档推断当前远端状态。
+
+| AC | 可重复执行的证据 |
+| --- | --- |
+| 01 | tests/core.test.ts 的开放分类/艺人/语言/目录引用；tests/music-profile.test.ts 的任意分类 ID、地域与语言分离 |
+| 02 | tests/music-profile.test.ts 的 Mock 来源到规范证据/画像/矩阵；tests/demo.test.ts 的六种真实计算画像及元数据 |
+| 03 | tests/music-profile.test.ts 的手算、次数饱和、时间衰减、正确下限/错误惩罚；feedback CLI 的前后 cell 与同时刻无反馈对照 |
+| 04 | tests/music-profile.test.ts 的未知/可信度独立与非答题事件；tests/party-events.test.ts 和 feedback CLI 的未作答不记错、版本不变 |
+| 05 | tests/playlist-assessment.test.ts 的 3/12 覆盖和恰好一半低可信度 |
+| 06 | 同一评估测试的等号、两侧量化、5 首向上取整及覆盖差距边界 |
+| 07 | tests/playlist-selection.test.ts 的三人四曲手算：第二首必须 s3，逐步增益重新计算 |
+| 08 | 同一选曲测试的乱序稳定性、量化收益/ID 决胜；tests/demo.test.ts 的完整报告逐字节确定性 |
+| 09 | tests/playlist-integration.test.ts 和 stress:feasible CLI：七人都为 9/12 |
+| 10 | 同一集成测试与 stress:missing-catalog CLI：少数玩家覆盖/可信度/差距与短局告警，START_GAME 暂停 |
+| 11 | tests/playlist-selection.test.ts 的同质画像无强制配额；公共 createNoCommonFixture 和 ban CLI 的无共同曲输入 |
+| 12 | tests/playlist-selection.test.ts 的零覆盖不能被高目标值掩盖；独立评估多玩家最低覆盖检查 |
+| 13 | tests/party-runtime.test.ts 与 ban CLI：禁歌时拦截开局，禁掉少数主场后重评，重选仍保留 bans |
+| 14 | tests/party-runtime.test.ts、party-updates.test.ts 的成员/歌曲/玩法/画像/时间及同名配置内容逐项失效；ban CLI 两次显式模拟房主确认与旧版本拒绝 |
+| 15 | ban:expand-minority 和 ban:expand-majority 实际 UPDATE_CATALOG / REFRESH_PROFILES / REGENERATE；成功和失败各一支，另有未实现玩法拒绝及 END_PARTY |
+| 16 | tests/runtime-contracts.test.ts、playlist-selection.test.ts、party-runtime.test.ts 的空轴/非法输入/空题组与缩短局；缺库 CLI 保留原 N 与实际 M |
+| 17 | tests/party-runtime.test.ts 的主持白名单、system/非房主拒绝、过期确认和伪 ready；两种开局命令共用 runtime canStart |
+| 18 | tests/party-events.test.ts 的顺序/ID/载荷/结果核对、错误不污染；feedback CLI 两局、新矩阵、结束事件重放幂等 |
+| 19 | mixed 的 84 首、六种画像和覆盖 manifest；stress 正/负两种输入；输出明确 synthetic 与 simulated_host |
+| 20 | scripts/check-demo.mjs 真正调用 pnpm demo，检查全部/单场景 JSON、文本、退出码和无凭据环境；双系统 CI 在显式 build 前执行，再运行完整工具链 |
+
+真实 QQ、LLM、音频、联机抢牌与浏览器交互均未作为以上检查的一部分。后续产品必须执行 [PAD-01–10](preliminary-demo.md)，不能用此表替代。

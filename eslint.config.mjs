@@ -20,6 +20,7 @@ export default tseslint.config(
           './packages/adapters/tsconfig.json',
           './packages/playlist-engine/tsconfig.json',
           './packages/party-runtime/tsconfig.json',
+          './apps/demo/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
