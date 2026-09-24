@@ -76,6 +76,7 @@ function App() {
   const [query, setQuery] = useState('');
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
+  const [manualCopyCode, setManualCopyCode] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [connected, setConnected] = useState(false);
   const [loaded, setLoaded] = useState(false);
@@ -435,14 +436,48 @@ function App() {
               <button
                 onClick={() =>
                   void action(async () => {
-                    await platform.copyRoom(room.roomId);
-                    setNotice('房间码已复制，请发给朋友。');
+                    const copied = await platform.copyRoom(room.roomId);
+                    setManualCopyCode(copied ? null : room.roomId);
+                    setNotice(
+                      copied
+                        ? '房间码已复制，请发给朋友。'
+                        : '请在房间码下方手动复制，再发给朋友。',
+                    );
                   })
                 }
               >
                 复制房间码
               </button>
             </div>
+            {manualCopyCode === room.roomId && (
+              <section
+                className="message"
+                role="group"
+                aria-label="手动复制房间码"
+              >
+                <p>
+                  当前浏览器暂不能自动复制。点选下方房间码，长按复制后发给朋友。
+                </p>
+                <label>
+                  待复制的房间码
+                  <input
+                    readOnly
+                    value={room.roomId}
+                    onFocus={(event) => event.currentTarget.select()}
+                    onClick={(event) => {
+                      const input = event.currentTarget;
+                      requestAnimationFrame(() => input.select());
+                    }}
+                  />
+                </label>
+                <button
+                  className="text-button"
+                  onClick={() => setManualCopyCode(null)}
+                >
+                  收起房间码
+                </button>
+              </section>
+            )}
             {tournamentActive && (
               <p className="muted small">
                 赛事进行中，偏好与规则已固定；请进入听歌抢牌查看赛程。

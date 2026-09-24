@@ -8,7 +8,14 @@ export const platform = {
     hostShare: false,
   },
   async copyRoom(code: string) {
-    await navigator.clipboard.writeText(code);
+    try {
+      if (!navigator.clipboard?.writeText) return false;
+      await navigator.clipboard.writeText(code);
+      return true;
+    } catch {
+      // HTTP LAN pages and denied clipboard permission still support manual sharing.
+      return false;
+    }
   },
   pauseAudio() {
     document.querySelectorAll('audio').forEach((audio) => audio.pause());
