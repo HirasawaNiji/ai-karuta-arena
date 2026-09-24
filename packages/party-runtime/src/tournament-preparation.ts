@@ -1,5 +1,4 @@
 import {
-  CatalogSchema,
   DUEL_PRESETS,
   DUEL_RULES,
   TournamentCommandSchema,
@@ -20,6 +19,7 @@ import {
   type DuelPreparationController,
 } from './duel-preparation.js';
 import { type LobbyPreparationContext } from './lobby.js';
+import { supplementCatalog } from './material-pool.js';
 
 export function createTournamentPreparation(deps: {
   context: () => LobbyPreparationContext;
@@ -219,43 +219,7 @@ export function createTournamentPreparation(deps: {
         let refreshed = frozen!;
         if (cmd.type === 'refresh_pool') {
           // Existing recordings remain fixed. Only newly reviewed songs may supplement the pool.
-          const merge = <T>(
-            old: readonly T[],
-            fresh: readonly T[],
-            key: (value: T) => string,
-          ) => [
-            ...old,
-            ...fresh.filter(
-              (value) => !old.some((existing) => key(existing) === key(value)),
-            ),
-          ];
-          const old = frozen!.catalog;
-          const catalog = CatalogSchema.parse({
-            ...old,
-            catalogVersion:
-              old.catalogVersion +
-              ':pool:' +
-              (tournament.snapshot().poolVersion + 1),
-            songs: merge(old.songs, live.catalog.songs, (s) => s.id),
-            artists: merge(old.artists, live.catalog.artists, (a) => a.id),
-            audioAssets: merge(
-              old.audioAssets,
-              live.catalog.audioAssets,
-              (a) => a.assetId,
-            ),
-            recordings: merge(
-              old.recordings,
-              live.catalog.recordings,
-              (r) => r.recordingId,
-            ),
-            questions: merge(
-              old.questions,
-              live.catalog.questions,
-              (q) => q.questionId,
-            ),
-            cards: merge(old.cards, live.catalog.cards, (c) => c.cardId),
-            taxonomy: merge(old.taxonomy, live.catalog.taxonomy, (t) => t.id),
-          });
+          const catalog = supplementCatalog(frozen!.catalog, live.catalog);
           const questions = { ...frozen!.questions };
           for (const [song, q] of Object.entries(live.questions)) {
             if (
@@ -303,6 +267,26 @@ export function createTournamentPreparation(deps: {
     snapshot,
     dispatch,
     active,
+    checkRefresh(id: PlayerId, cmd: TournamentCommand) {
+      const old = actions.get(cmd.actionId);
+      if (old) {
+        if (old !== JSON.stringify([id, cmd])) throw new Error('动作 ID 冲突');
+        return false;
+      }
+      if (actions.size >= 4000) throw new Error('操作过多，请重新创建房间');
+      const room = deps.room?.() ?? deps.context().room;
+      const view = snapshot(id);
+      if (
+        cmd.type !== 'refresh_pool' ||
+        room.hostId !== id ||
+        !room.members.some((m) => m.id === id && m.online) ||
+        view.version !== cmd.expectedVersion ||
+        view.state?.status !== 'active' ||
+        view.state.matches.some((m) => m.status === 'playing')
+      )
+        throw new Error('仅在线房主可在比赛间隙刷新当前版本题库');
+      return true;
+    },
     prepare(
       id: PlayerId,
       command: DuelPreparationCommand,

@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-09-25",
+  "implementation": "cbd02f7 (runtime supplement/audit edits followed original preview build)",
+  "method": "Four independent Chrome sessions; current audio hash matched visible card; real clock; no score injection; Chrome --mute-audio enabled before final.",
+  "results": [
+    {
+      "session": "host",
+      "nickname": "房主小乐",
+      "status": "completed",
+      "champion": "好友78",
+      "matches": [
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友78", "房主小乐"],
+          "winner": "好友78",
+          "scores": [6, 0]
+        },
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友48", "好友39"],
+          "winner": "好友48",
+          "scores": [10, 0]
+        },
+        {
+          "round": 2,
+          "status": "completed",
+          "players": ["好友78", "好友48"],
+          "winner": "好友78",
+          "scores": [8, 0]
+        }
+      ],
+      "exposed": 37,
+      "available": 68,
+      "frozenProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 1
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 1
+        }
+      ],
+      "currentProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 2
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 3
+        }
+      ],
+      "overflow": false,
+      "championVisible": true
+    },
+    {
+      "session": "two",
+      "nickname": "好友39",
+      "status": "completed",
+      "champion": "好友78",
+      "matches": [
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友78", "房主小乐"],
+          "winner": "好友78",
+          "scores": [6, 0]
+        },
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友48", "好友39"],
+          "winner": "好友48",
+          "scores": [10, 0]
+        },
+        {
+          "round": 2,
+          "status": "completed",
+          "players": ["好友78", "好友48"],
+          "winner": "好友78",
+          "scores": [8, 0]
+        }
+      ],
+      "exposed": 37,
+      "available": 68,
+      "frozenProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 1
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 1
+        }
+      ],
+      "currentProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 2
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 3
+        }
+      ],
+      "overflow": false,
+      "championVisible": true
+    },
+    {
+      "session": "three",
+      "nickname": "好友78",
+      "status": "completed",
+      "champion": "好友78",
+      "matches": [
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友78", "房主小乐"],
+          "winner": "好友78",
+          "scores": [6, 0]
+        },
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友48", "好友39"],
+          "winner": "好友48",
+          "scores": [10, 0]
+        },
+        {
+          "round": 2,
+          "status": "completed",
+          "players": ["好友78", "好友48"],
+          "winner": "好友78",
+          "scores": [8, 0]
+        }
+      ],
+      "exposed": 37,
+      "available": 68,
+      "frozenProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 1
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 1
+        }
+      ],
+      "currentProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 2
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 3
+        }
+      ],
+      "overflow": false,
+      "championVisible": true
+    },
+    {
+      "session": "four",
+      "nickname": "好友48",
+      "status": "completed",
+      "champion": "好友78",
+      "matches": [
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友78", "房主小乐"],
+          "winner": "好友78",
+          "scores": [6, 0]
+        },
+        {
+          "round": 1,
+          "status": "completed",
+          "players": ["好友48", "好友39"],
+          "winner": "好友48",
+          "scores": [10, 0]
+        },
+        {
+          "round": 2,
+          "status": "completed",
+          "players": ["好友78", "好友48"],
+          "winner": "好友78",
+          "scores": [8, 0]
+        }
+      ],
+      "exposed": 37,
+      "available": 68,
+      "frozenProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 1
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 1
+        }
+      ],
+      "currentProfiles": [
+        {
+          "name": "房主小乐",
+          "version": 1
+        },
+        {
+          "name": "好友48",
+          "version": 2
+        },
+        {
+          "name": "好友39",
+          "version": 1
+        },
+        {
+          "name": "好友78",
+          "version": 3
+        }
+      ],
+      "overflow": false,
+      "championVisible": true
+    }
+  ],
+  "limitations": [
+    "No human listening recognition acceptance",
+    "No QQ WebView physical-device acceptance",
+    "Original preview does not validate later hot-reload changes"
+  ],
+  "latestBuild": {
+    "bundle": "index-CNiScy7P.js",
+    "service": "independent latest compiled server",
+    "muted": true,
+    "widths": [360, 390, 430],
+    "horizontalOverflow": false,
+    "reviewedPoolReload": {
+      "beforeVersion": 1,
+      "afterVersion": 2,
+      "available": 105
+    },
+    "forfeit": {
+      "emptyReasonDisabled": true,
+      "explicitReasonConfirmed": true,
+      "actorAndLoserAndMatchAudited": true,
+      "completedMatches": 1
+    },
+    "profileTabDisabledDuringTournament": true
+  },
+  "validation": {
+    "baselineFull": 518,
+    "finalFull": {
+      "passed": 518,
+      "failed": 1,
+      "reason": "Package public export changed during test execution; stale dist"
+    },
+    "affectedRerun": {
+      "materialPool": 1,
+      "passed": true
+    },
+    "supplementRegression": {
+      "tests": 6,
+      "passed": true
+    },
+    "humanListening": false,
+    "qqWebView": false
+  }
+}

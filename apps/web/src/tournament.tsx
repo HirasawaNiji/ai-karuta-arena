@@ -132,107 +132,120 @@ export function TournamentPanel({
                 ? ' · 已明确允许跨场重复'
                 : ' · 默认不重复播放'}
             </p>
-            <div className="bracket">
-              {[...new Set(state.matches.map((m) => m.round))].map((round) => (
-                <section key={round}>
-                  <h3>
-                    {round === Math.log2(state.entrants.length)
-                      ? '决赛'
-                      : round === Math.log2(state.entrants.length) - 1
-                        ? '半决赛'
-                        : '八强赛'}
-                  </h3>
-                  {state.matches
-                    .filter((m) => m.round === round)
-                    .map((m) => (
-                      <article className="bracket-match" key={m.matchId}>
-                        <strong>
-                          {m.playerIds.length
-                            ? m.playerIds.map(name).join(' vs ')
-                            : '等待前置比赛胜者'}
-                        </strong>
-                        <p>
-                          {labels[m.status]}
-                          {m.attempt > 1
-                            ? ' · 第 ' + m.attempt + ' 次对局'
-                            : ''}
-                          {m.winnerId ? ' · ' + name(m.winnerId) + ' 晋级' : ''}
-                        </p>
-                        {m.scores && (
-                          <p className="muted small">
-                            抢牌得分{' '}
-                            {m.playerIds
-                              .map((p) => name(p) + ' ' + (m.scores?.[p] ?? 0))
-                              .join(' / ')}
-                            ；胜负按清空手牌判定
-                          </p>
-                        )}
-                        {state.status === 'active' && (
-                          <>
-                            {host &&
-                              [
-                                'ready',
-                                'preparing',
-                                'awaiting_tiebreak',
-                                'aborted',
-                              ].includes(m.status) && (
-                                <button
-                                  disabled={
-                                    busy ||
-                                    playing ||
-                                    state.matches.some(
-                                      (other) =>
-                                        other.status === 'preparing' &&
-                                        other.matchId !== m.matchId,
-                                    )
-                                  }
-                                  onClick={() =>
-                                    void command({
-                                      type: 'open_match',
-                                      matchId: m.matchId,
-                                    })
-                                  }
-                                >
-                                  {m.status === 'preparing'
-                                    ? '重新选歌'
-                                    : m.status === 'awaiting_tiebreak'
-                                      ? '安排加赛'
-                                      : '安排本场'}
-                                </button>
-                              )}
-                            {!['pending', 'playing', 'completed'].includes(
-                              m.status,
-                            ) &&
-                              m.playerIds
-                                .filter((p) => host || p === playerId)
-                                .map((p) => (
-                                  <button
-                                    className="text-button"
-                                    key={p}
-                                    disabled={busy}
-                                    onClick={() => {
-                                      setReason('');
-                                      setConfirmation({
-                                        type: 'forfeit',
-                                        matchId: m.matchId,
-                                        loserId: p,
-                                        reason: '',
-                                        confirmed: true,
-                                      });
-                                    }}
-                                  >
-                                    {p === playerId
-                                      ? '本人弃权'
-                                      : '记录 ' + name(p) + ' 弃权'}
-                                  </button>
-                                ))}
-                          </>
-                        )}
-                      </article>
-                    ))}
-                </section>
-              ))}
-            </div>
+            <details key={playing ? 'playing' : 'between'} open={!playing}>
+              <summary>
+                查看完整对阵（
+                {state.matches.filter((m) => m.status === 'completed').length}/
+                {state.matches.length} 场已完成）
+              </summary>
+              <div className="bracket">
+                {[...new Set(state.matches.map((m) => m.round))].map(
+                  (round) => (
+                    <section key={round}>
+                      <h3>
+                        {round === Math.log2(state.entrants.length)
+                          ? '决赛'
+                          : round === Math.log2(state.entrants.length) - 1
+                            ? '半决赛'
+                            : '八强赛'}
+                      </h3>
+                      {state.matches
+                        .filter((m) => m.round === round)
+                        .map((m) => (
+                          <article className="bracket-match" key={m.matchId}>
+                            <strong>
+                              {m.playerIds.length
+                                ? m.playerIds.map(name).join(' vs ')
+                                : '等待前置比赛胜者'}
+                            </strong>
+                            <p>
+                              {labels[m.status]}
+                              {m.attempt > 1
+                                ? ' · 第 ' + m.attempt + ' 次对局'
+                                : ''}
+                              {m.winnerId
+                                ? ' · ' + name(m.winnerId) + ' 晋级'
+                                : ''}
+                            </p>
+                            {m.scores && (
+                              <p className="muted small">
+                                抢牌得分{' '}
+                                {m.playerIds
+                                  .map(
+                                    (p) => name(p) + ' ' + (m.scores?.[p] ?? 0),
+                                  )
+                                  .join(' / ')}
+                                ；胜负按清空手牌判定
+                              </p>
+                            )}
+                            {state.status === 'active' && (
+                              <>
+                                {host &&
+                                  [
+                                    'ready',
+                                    'preparing',
+                                    'awaiting_tiebreak',
+                                    'aborted',
+                                  ].includes(m.status) && (
+                                    <button
+                                      disabled={
+                                        busy ||
+                                        playing ||
+                                        state.matches.some(
+                                          (other) =>
+                                            other.status === 'preparing' &&
+                                            other.matchId !== m.matchId,
+                                        )
+                                      }
+                                      onClick={() =>
+                                        void command({
+                                          type: 'open_match',
+                                          matchId: m.matchId,
+                                        })
+                                      }
+                                    >
+                                      {m.status === 'preparing'
+                                        ? '重新选歌'
+                                        : m.status === 'awaiting_tiebreak'
+                                          ? '安排加赛'
+                                          : '安排本场'}
+                                    </button>
+                                  )}
+                                {!['pending', 'playing', 'completed'].includes(
+                                  m.status,
+                                ) &&
+                                  m.playerIds
+                                    .filter((p) => host || p === playerId)
+                                    .map((p) => (
+                                      <button
+                                        className="text-button"
+                                        key={p}
+                                        disabled={busy}
+                                        onClick={() => {
+                                          setReason('');
+                                          setConfirmation({
+                                            type: 'forfeit',
+                                            matchId: m.matchId,
+                                            loserId: p,
+                                            reason: '',
+                                            confirmed: true,
+                                          });
+                                        }}
+                                      >
+                                        {p === playerId
+                                          ? '本人弃权'
+                                          : '记录 ' + name(p) + ' 弃权'}
+                                      </button>
+                                    ))}
+                              </>
+                            )}
+                          </article>
+                        ))}
+                    </section>
+                  ),
+                )}
+              </div>
+            </details>
             {state.status === 'active' && host && !playing && (
               <div className="tournament-controls">
                 {view.availableCount <
@@ -315,7 +328,9 @@ export function TournamentPanel({
                 <summary>赛事处理记录（{state.audit.length}）</summary>
                 {state.audit.map((a, i) => (
                   <p className="small" key={i}>
-                    {name(a.actorId)} · {a.loserId ? name(a.loserId) + ' 弃权 · ' : ''}{a.reason} · {a.at}
+                    {name(a.actorId)} ·{' '}
+                    {a.loserId ? name(a.loserId) + ' 弃权 · ' : ''}
+                    {a.reason} · {a.at}
                   </p>
                 ))}
               </details>

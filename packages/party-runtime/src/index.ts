@@ -25,3 +25,5 @@ export {
   createTournamentPreparation,
   type TournamentPreparationController,
 } from './tournament-preparation.js';
+
+export { supplementCatalog, reviewedQuestions } from './material-pool.js';

@@ -45,6 +45,12 @@ export interface ServerOptions {
   materials?: readonly MaterialPreview[];
   mediaFiles?: ReadonlyMap<string, string>;
   questionAudioFiles?: ReadonlyMap<string, string>;
+  /** Trusted local loader only; no browser-supplied paths or manifests. */
+  reloadTournamentMaterials?: () => Promise<{
+    catalog: Catalog;
+    verifiedQuestionIds: readonly string[];
+    questionAudioFiles: ReadonlyMap<string, string>;
+  }>;
   webDirectory?: string;
   now?: () => number;
 }
@@ -58,6 +64,7 @@ export function createApp(options: ServerOptions) {
       multi: MultiplayerPreparationController;
       tournament: TournamentPreparationController;
       touched: number;
+      questionAudioFiles: Map<string, string>;
     }
   >();
   type Session = {
@@ -162,15 +169,27 @@ export function createApp(options: ServerOptions) {
       return send(res, 403, { error: '不接受跨站请求' });
     if (req.method === 'GET' && path === '/api/health')
       return send(res, 200, { status: 'ok', mode: 'D4-tournament' });
-    if (req.method === 'GET' && path === '/api/catalog')
+    if (req.method === 'GET' && path === '/api/catalog') {
+      let catalog = options.catalog;
+      let playableSongIds = catalog.questions
+        .filter((q) => options.verifiedQuestionIds?.includes(q.questionId))
+        .map((q) => q.songId);
+      try {
+        const context = rooms
+          .get(authenticate(req).roomId)!
+          .lobby.preparationContext();
+        catalog = context.catalog;
+        playableSongIds = Object.values(context.questions).map((q) => q.songId);
+      } catch {
+        /* Public entry catalog. */
+      }
       return send(res, 200, {
-        songs: options.catalog.songs,
-        playableSongIds: options.catalog.questions
-          .filter((q) => options.verifiedQuestionIds?.includes(q.questionId))
-          .map((q) => q.songId),
-        tags: options.catalog.taxonomy.filter((t) => t.id !== 'lang:unknown'),
-        artists: options.catalog.artists,
+        songs: catalog.songs,
+        playableSongIds,
+        tags: catalog.taxonomy.filter((t) => t.id !== 'lang:unknown'),
+        artists: catalog.artists,
       });
+    }
     if (
       req.method === 'POST' &&
       (path === '/api/rooms' || /^\/api\/rooms\/[A-F0-9]{6}\/join$/.test(path))
@@ -235,7 +254,14 @@ export function createApp(options: ServerOptions) {
           onChange: () => broadcast(roomId),
           onCompleted: (r, events) => lobby.settleGame(r.game, events, true),
         });
-        rooms.set(roomId, { lobby, duel, multi, tournament, touched: now() });
+        rooms.set(roomId, {
+          lobby,
+          duel,
+          multi,
+          tournament,
+          touched: now(),
+          questionAudioFiles: new Map(options.questionAudioFiles),
+        });
         establish(res, roomId, playerId);
         return;
       }
@@ -360,6 +386,33 @@ export function createApp(options: ServerOptions) {
         if (room.lobby.snapshot().mode !== 'tournament')
           throw new Error('请切换到淘汰赛模式');
         const cmd = TournamentCommandSchema.parse(await body(req));
+        if (
+          cmd.type === 'refresh_pool' &&
+          room.tournament.checkRefresh(session.playerId, cmd)
+        ) {
+          if (!options.reloadTournamentMaterials)
+            throw new Error('管理员尚未配置题库刷新来源');
+          const refreshed = await options.reloadTournamentMaterials();
+          // Loading is asynchronous: reject stale requests before changing room data.
+          if (!room.tournament.checkRefresh(session.playerId, cmd))
+            return send(
+              res,
+              200,
+              room.tournament.dispatch(session.playerId, cmd),
+            );
+          for (const qid of refreshed.verifiedQuestionIds) {
+            if (!refreshed.questionAudioFiles.has(qid))
+              throw new Error('新增核验片段不可用');
+          }
+          room.lobby.supplementMaterials(
+            refreshed.catalog,
+            refreshed.verifiedQuestionIds,
+          );
+          for (const [qid, file] of refreshed.questionAudioFiles) {
+            if (!room.questionAudioFiles.has(qid))
+              room.questionAudioFiles.set(qid, file);
+          }
+        }
         const result = room.tournament.dispatch(session.playerId, cmd);
         if (!room.tournament.active()) room.lobby.releaseWaiting();
         broadcast(session.roomId);
@@ -412,9 +465,7 @@ export function createApp(options: ServerOptions) {
           session.playerId,
           tournamentAudio[1]!,
         );
-        const file = q
-          ? options.questionAudioFiles?.get(q.questionId)
-          : undefined;
+        const file = q ? room.questionAudioFiles.get(q.questionId) : undefined;
         if (!file) return send(res, 404, { error: '当前片段不可用' });
         return audio(req, res, file);
       }

@@ -6,12 +6,14 @@ import { resolve } from 'node:path';
 import { loadReviewedMaterials } from './reviewed-materials.js';
 import { createApp } from './server.js';
 
-const material = await loadPendingMaterials(
-  fileURLToPath(
-    new URL('../../../docs/evidence/d0-pjsk-materials.json', import.meta.url),
-  ),
-  process.env.AMP_MATERIAL_DIR,
-);
+const loadMaterial = () =>
+  loadPendingMaterials(
+    fileURLToPath(
+      new URL('../../../docs/evidence/d0-pjsk-materials.json', import.meta.url),
+    ),
+    process.env.AMP_MATERIAL_DIR,
+  );
+const material = await loadMaterial();
 const reviewPath =
   process.env.AMP_REVIEWED_MATERIALS ??
   (process.env.AMP_MATERIAL_DIR
@@ -39,6 +41,22 @@ const reviewed = reviewPath
     };
 const app = createApp({
   ...reviewed,
+  ...(reviewPath
+    ? {
+        reloadTournamentMaterials: async () => {
+          const fresh = await loadMaterial();
+          return loadReviewedMaterials({
+            catalog: fresh.catalog,
+            files: fresh.files,
+            manifestPath: reviewPath,
+            cacheDirectory: resolve(
+              process.env.AMP_AUDIO_CACHE ?? '.local/duel-audio',
+            ),
+            ffmpeg: process.env.FFMPEG_PATH ?? 'ffmpeg',
+          });
+        },
+      }
+    : {}),
   materials: material.previews.map((m) => ({
     ...m,
     artist:

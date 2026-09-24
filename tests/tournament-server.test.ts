@@ -11,7 +11,27 @@ import { duelCatalog } from './fixtures/duel.js';
 
 it('authenticates tournament scheduling, binds preparation to a match, and protects spectator/audio authority', async () => {
   const catalog = duelCatalog();
+  let reloads = 0;
+  let failReload = false;
+  let finishReload: (() => void) | undefined;
+  let pauseReload = false;
+  const fresh = duelCatalog(true, 45);
   const app = createApp({
+    reloadTournamentMaterials: async () => {
+      reloads++;
+      if (failReload) throw new Error('核验文件哈希已变化');
+      if (pauseReload)
+        await new Promise<void>((r) => {
+          finishReload = r;
+        });
+      return {
+        catalog: fresh,
+        verifiedQuestionIds: fresh.questions.map((q) => q.questionId),
+        questionAudioFiles: new Map(
+          fresh.questions.map((q) => [q.questionId, 'test-only.mp3']),
+        ),
+      };
+    },
     catalog,
     verifiedQuestionIds: catalog.questions.map((q) => q.questionId),
   });
@@ -115,6 +135,64 @@ it('authenticates tournament scheduling, binds preparation to a match, and prote
     const guest = [...cookies.keys()].find((p) => p !== host)!;
     expect((await cmd({ type: 'create', size: 4 }, guest)).status).toBe(400);
     expect((await cmd({ type: 'create', size: 4 })).status).toBe(200);
+    expect((await cmd({ type: 'refresh_pool' }, guest)).status).toBe(400);
+    expect(reloads).toBe(0);
+    const before = await view();
+    failReload = true;
+    expect((await cmd({ type: 'refresh_pool' })).status).toBe(400);
+    expect(await view()).toEqual(before);
+    failReload = false;
+    const refreshCommand = {
+      type: 'refresh_pool',
+      actionId: randomUUID(),
+      expectedVersion: before.version,
+    };
+    expect(
+      (
+        await request(
+          '/api/tournament/command',
+          cookies.get(host),
+          refreshCommand,
+        )
+      ).status,
+    ).toBe(200);
+    expect((await view()).availableCount).toBe(45);
+    expect((await view()).state!.entrants).toEqual(before.state!.entrants);
+    expect(
+      (
+        (await request('/api/catalog', cookies.get(host)).then((r) =>
+          r.json(),
+        )) as { playableSongIds: string[] }
+      ).playableSongIds,
+    ).toHaveLength(45);
+    expect(
+      (
+        (await request('/api/catalog').then((r) => r.json())) as {
+          playableSongIds: string[];
+        }
+      ).playableSongIds,
+    ).toHaveLength(40);
+    expect(
+      (
+        await request(
+          '/api/tournament/command',
+          cookies.get(host),
+          refreshCommand,
+        )
+      ).status,
+    ).toBe(200);
+    expect(reloads).toBe(2);
+    pauseReload = true;
+    const delayed = cmd({ type: 'refresh_pool' });
+    while (!finishReload) await new Promise((r) => setTimeout(r, 5));
+    expect((await cmd({ type: 'allow_repeats', confirmed: true })).status).toBe(
+      200,
+    );
+    const changed = await view();
+    finishReload();
+    expect((await delayed).status).toBe(400);
+    expect(await view()).toEqual(changed);
+    pauseReload = false;
     const match = (await view()).state!.matches[0]!;
     expect(
       (await cmd({ type: 'open_match', matchId: match.matchId })).status,
@@ -158,6 +236,8 @@ it('authenticates tournament scheduling, binds preparation to a match, and prote
     expect((await prepare(audio, { type: 'start' })).status).toBe(200);
     const game = (await view()).preparation!.game!;
     expect(game.phase).toBe('loading');
+    expect((await cmd({ type: 'refresh_pool' })).status).toBe(400);
+    expect(reloads).toBe(3);
     expect(JSON.stringify(await view())).not.toMatch(
       /seed|questionId|recordingId/,
     );

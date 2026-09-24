@@ -124,6 +124,13 @@ function App() {
     return () => document.removeEventListener('visibilitychange', pause);
   }, []);
   const roomId = entry?.room.roomId;
+  const tournamentActive = tournament?.state?.status === 'active';
+  const poolVersion = tournament?.state?.poolVersion;
+  useEffect(() => {
+    void api<Library>('/api/catalog')
+      .then(setLibrary)
+      .catch(() => setError('曲库同步失败，请刷新'));
+  }, [roomId, poolVersion]);
   useEffect(() => {
     if (!roomId) return;
     const events = new EventSource('/api/events');
@@ -436,13 +443,19 @@ function App() {
                 复制房间码
               </button>
             </div>
+            {tournamentActive && (
+              <p className="muted small">
+                赛事进行中，偏好与规则已固定；请进入听歌抢牌查看赛程。
+              </p>
+            )}
             <nav className="steps" aria-label="派对进度">
               <button
-                disabled={[
-                  duel?.game,
-                  multi?.game,
-                  tournament?.preparation?.game,
-                ].some((g) => g && !['completed', 'aborted'].includes(g.phase))}
+                disabled={
+                  tournamentActive ||
+                  [duel?.game, multi?.game, tournament?.preparation?.game].some(
+                    (g) => g && !['completed', 'aborted'].includes(g.phase),
+                  )
+                }
                 aria-current={screen === 'profile' ? 'step' : undefined}
                 onClick={() => {
                   platform.pauseAudio();
@@ -637,7 +650,9 @@ function App() {
                       <span className="pill">
                         {room.mode === 'multiplayer'
                           ? '多人同场'
-                          : room.mode === 'tournament' ? '好友淘汰赛' : '1v1 预评估'}
+                          : room.mode === 'tournament'
+                            ? '好友淘汰赛'
+                            : '1v1 预评估'}
                       </span>
                     </div>
                     <div className="members">
@@ -667,7 +682,12 @@ function App() {
                     </div>
                     <button
                       className={me?.lobbyReady ? 'full' : 'primary full'}
-                      disabled={busy || !connected || me?.waitingForNextMatch}
+                      disabled={
+                        busy ||
+                        !connected ||
+                        tournamentActive ||
+                        me?.waitingForNextMatch
+                      }
                       onClick={() =>
                         void action(async () =>
                           command({ type: 'ready', ready: !me?.lobbyReady }),
@@ -757,7 +777,9 @@ function App() {
                         (mode) => (
                           <button
                             key={mode}
-                            disabled={!host || busy || !connected}
+                            disabled={
+                              !host || busy || !connected || tournamentActive
+                            }
                             aria-pressed={room.mode === mode}
                             onClick={() =>
                               void action(async () =>
@@ -788,7 +810,9 @@ function App() {
                         Object.entries(DUEL_PRESETS).map(([id, p]) => (
                           <button
                             key={id}
-                            disabled={!host || busy || !connected}
+                            disabled={
+                              !host || busy || !connected || tournamentActive
+                            }
                             aria-pressed={room.preset === id}
                             onClick={() =>
                               void action(async () =>
@@ -829,6 +853,7 @@ function App() {
                     <small className="muted">试验评分，不是识别概率。</small>
                     <button
                       className="text-button full"
+                      disabled={tournamentActive}
                       onClick={() => setScreen('profile')}
                     >
                       修改音乐偏好
