@@ -2,6 +2,8 @@ import process from 'node:process';
 import console from 'node:console';
 import { fileURLToPath } from 'node:url';
 import { loadPendingMaterials } from './materials.js';
+import { resolve } from 'node:path';
+import { loadReviewedMaterials } from './reviewed-materials.js';
 import { createApp } from './server.js';
 
 const material = await loadPendingMaterials(
@@ -10,9 +12,46 @@ const material = await loadPendingMaterials(
   ),
   process.env.AMP_MATERIAL_DIR,
 );
+const reviewPath =
+  process.env.AMP_REVIEWED_MATERIALS ??
+  (process.env.AMP_MATERIAL_DIR
+    ? fileURLToPath(
+        new URL(
+          '../../../docs/evidence/pjsk-intro-review.json',
+          import.meta.url,
+        ),
+      )
+    : undefined);
+const reviewed = reviewPath
+  ? await loadReviewedMaterials({
+      catalog: material.catalog,
+      files: material.files,
+      manifestPath: reviewPath,
+      cacheDirectory: resolve(
+        process.env.AMP_AUDIO_CACHE ?? '.local/duel-audio',
+      ),
+      ffmpeg: process.env.FFMPEG_PATH ?? 'ffmpeg',
+    })
+  : {
+      catalog: material.catalog,
+      verifiedQuestionIds: [],
+      questionAudioFiles: new Map<string, string>(),
+    };
 const app = createApp({
-  catalog: material.catalog,
-  materials: material.previews,
+  ...reviewed,
+  materials: material.previews.map((m) => ({
+    ...m,
+    artist:
+      reviewed.catalog.songs
+        .find((s) => s.id === m.id)
+        ?.artistIds.map(
+          (id) => reviewed.catalog.artists.find((a) => a.id === id)?.name ?? id,
+        )
+        .join(' / ') ?? m.artist,
+    status: reviewed.catalog.questions.some((q) => q.songId === m.id)
+      ? ('verified' as const)
+      : ('pending' as const),
+  })),
   mediaFiles: material.files,
   webDirectory: fileURLToPath(new URL('../../web/dist/', import.meta.url)),
 });

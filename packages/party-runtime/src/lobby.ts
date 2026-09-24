@@ -1,5 +1,8 @@
 import {
   CatalogSchema,
+  RawUserMusicDataSchema,
+  type GameEvent,
+  type DuelResult,
   GameTypeSchema,
   PlayerIdSchema,
   LobbyEntrySchema,
@@ -17,6 +20,7 @@ import {
   type Question,
 } from '@amp/core';
 import {
+  gameplayEvidence,
   buildPlayerProfile,
   buildFamiliarityMatrix,
   MANUAL_SCORING_CONFIG,
@@ -28,6 +32,12 @@ import {
   DEFAULT_FAIRNESS_CONFIG,
 } from '@amp/playlist-engine';
 
+export interface LobbyPreparationContext {
+  readonly room: LobbySnapshot;
+  readonly catalog: Catalog;
+  readonly profiles: readonly PlayerMusicProfile[];
+  readonly questions: Readonly<Record<string, Question>>;
+}
 export interface LobbyDependencies {
   readonly catalog: Catalog;
   /** Only semantically reviewed questions; decoding audio alone cannot populate this list. */
@@ -54,6 +64,7 @@ export function createLobby(
     lobbyReady: boolean;
     profile: PlayerMusicProfile;
     raw: RawUserMusicData;
+    feedback: RawUserMusicData[];
   };
   const members = new Map<PlayerId, Member>();
   let preset: LobbySnapshot['preset'] = 'quick';
@@ -123,6 +134,7 @@ export function createLobby(
       lobbyReady: false,
       profile,
       raw,
+      feedback: [],
     });
     invalidate();
   }
@@ -168,7 +180,7 @@ export function createLobby(
       startBlocker:
         playableCount < DUEL_PRESETS[preset].minimumCandidates
           ? '已核验可玩素材不足，请先完成素材核验。'
-          : '当前支持入场与选曲预评估；双方禁歌、最终准备和听歌抢牌正在接入。',
+          : '请进入听歌抢牌，完成双方选歌、禁歌和最终准备。',
     });
   }
   function self(id: PlayerId): LobbySelf {
@@ -192,7 +204,7 @@ export function createLobby(
       const profile = buildPlayerProfile(
         {
           catalog: catalog(),
-          rawData: [raw],
+          rawData: [raw, ...m.feedback],
           scoringConfig: MANUAL_SCORING_CONFIG,
           referenceTime: at,
         },
@@ -267,6 +279,73 @@ export function createLobby(
     return snapshot();
   }
   join(hostId, nickname);
-  return { join, setOnline, dispatch, snapshot, self };
+  // Trusted composition input: never expose profiles/question mappings over HTTP.
+  function preparationContext(): LobbyPreparationContext {
+    return structuredClone({
+      room: snapshot(),
+      catalog: catalog(),
+      profiles: [...members.values()].map((m) => m.profile),
+      questions,
+    });
+  }
+  const settled = new Set<string>();
+  function settleDuel(result: DuelResult, events: readonly GameEvent[]) {
+    if (
+      result.game.status !== 'completed' ||
+      settled.has(result.game.session.gameSessionId)
+    )
+      return;
+    const at = result.game.endedAt;
+    const evidence = events.flatMap((event) => {
+      const e = gameplayEvidence({
+        catalog: catalog(),
+        session: result.game.session,
+        event,
+        sourceId: 'runtime:gameplay',
+        observedAt: at,
+      });
+      return e ? [e] : [];
+    });
+    // Build every profile before committing any feedback.
+    const updates = [...members.values()].map((m) => {
+      const raw = RawUserMusicDataSchema.parse({
+        schemaVersion: 1,
+        sourceId: 'runtime:gameplay',
+        userId: m.id,
+        snapshotId:
+          'feedback:' + result.game.session.gameSessionId + ':' + m.id,
+        observedAt: at,
+        evidence: evidence.filter((e) => e.playerId === m.id),
+        declaredPreferences: emptyPreferences(),
+      });
+      const feedback = [...m.feedback, raw];
+      const profile = buildPlayerProfile(
+        {
+          catalog: catalog(),
+          rawData: [m.raw, ...feedback],
+          referenceTime: at,
+          scoringConfig: MANUAL_SCORING_CONFIG,
+        },
+        m.id,
+        m.profile,
+      );
+      return { m, feedback, profile };
+    });
+    for (const { m, feedback, profile } of updates) {
+      m.feedback = feedback;
+      m.profile = profile;
+    }
+    settled.add(result.game.session.gameSessionId);
+    invalidate();
+  }
+  return {
+    join,
+    setOnline,
+    dispatch,
+    snapshot,
+    self,
+    preparationContext,
+    settleDuel,
+  };
 }
 export type LobbyController = ReturnType<typeof createLobby>;

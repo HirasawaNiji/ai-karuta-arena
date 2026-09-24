@@ -5,6 +5,7 @@ import tseslint from 'typescript-eslint';
 export default tseslint.config(
   {
     ignores: [
+      '**/.local/**',
       '**/dist/**',
       '**/dist-types/**',
       '**/node_modules/**',

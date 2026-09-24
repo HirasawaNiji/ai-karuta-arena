@@ -11,12 +11,20 @@ import {
   PlayerIdSchema,
   LobbyEntrySchema,
   LobbyCommandSchema,
+  DuelPreparationCommandSchema,
+  DuelActionSchema,
+  HeartbeatReplySchema,
   type Catalog,
   type PlayerId,
 } from '@amp/core';
-import { ManualPreferenceSource } from '@amp/adapters';
+import { KarutaDuelFactory, ManualPreferenceSource } from '@amp/adapters';
 import { MANUAL_SCORING_CONFIG } from '@amp/music-profile';
-import { createLobby, type LobbyController } from '@amp/party-runtime';
+import {
+  createDuelPreparation,
+  createLobby,
+  type DuelPreparationController,
+  type LobbyController,
+} from '@amp/party-runtime';
 import { type MaterialPreview } from './materials.js';
 
 export interface ServerOptions {
@@ -24,18 +32,25 @@ export interface ServerOptions {
   verifiedQuestionIds?: readonly string[];
   materials?: readonly MaterialPreview[];
   mediaFiles?: ReadonlyMap<string, string>;
+  questionAudioFiles?: ReadonlyMap<string, string>;
   webDirectory?: string;
   now?: () => number;
 }
 export function createApp(options: ServerOptions) {
   const now = options.now ?? Date.now;
-  const rooms = new Map<string, { lobby: LobbyController; touched: number }>();
+  const rooms = new Map<
+    string,
+    { lobby: LobbyController; duel: DuelPreparationController; touched: number }
+  >();
   type Session = {
     roomId: string;
     playerId: PlayerId;
     expires: number;
     lastSeen: number;
     streams: Set<ServerResponse>;
+    lastPong: number;
+    challenge: { token: string; issuedAt: number } | null;
+    rttSamples: number[];
   };
   const sessions = new Map<string, Session>();
   const id = () => randomBytes(24).toString('hex');
@@ -64,7 +79,11 @@ export function createApp(options: ServerOptions) {
       if (s.roomId === roomId)
         for (const stream of s.streams)
           stream.write(
-            'data: ' + JSON.stringify(room.lobby.snapshot()) + '\n\n',
+            'data: ' +
+              JSON.stringify(room.lobby.snapshot()) +
+              '\n\nevent: duel\ndata: ' +
+              JSON.stringify(room.duel.snapshot(s.playerId)) +
+              '\n\n',
           );
   }
   async function body(req: IncomingMessage): Promise<unknown> {
@@ -90,6 +109,9 @@ export function createApp(options: ServerOptions) {
       expires: now() + 6 * 60 * 60 * 1000,
       lastSeen: now(),
       streams: new Set(),
+      lastPong: now(),
+      challenge: null,
+      rttSamples: [],
     });
     res.setHeader(
       'Set-Cookie',
@@ -110,10 +132,13 @@ export function createApp(options: ServerOptions) {
     )
       return send(res, 403, { error: '不接受跨站请求' });
     if (req.method === 'GET' && path === '/api/health')
-      return send(res, 200, { status: 'ok', mode: 'D1-preparation' });
+      return send(res, 200, { status: 'ok', mode: 'D2-duel' });
     if (req.method === 'GET' && path === '/api/catalog')
       return send(res, 200, {
         songs: options.catalog.songs,
+        playableSongIds: options.catalog.questions
+          .filter((q) => options.verifiedQuestionIds?.includes(q.questionId))
+          .map((q) => q.songId),
         tags: options.catalog.taxonomy.filter((t) => t.id !== 'lang:unknown'),
         artists: options.catalog.artists,
       });
@@ -153,7 +178,16 @@ export function createApp(options: ServerOptions) {
               'snapshot:' + id(),
             ),
         });
-        rooms.set(roomId, { lobby, touched: now() });
+        const duel = createDuelPreparation({
+          context: lobby.preparationContext,
+          factory: new KarutaDuelFactory(),
+          now,
+          nextId: id,
+          seed: () => randomBytes(4).readUInt32LE(),
+          onChange: () => broadcast(roomId),
+          onCompleted: lobby.settleDuel,
+        });
+        rooms.set(roomId, { lobby, duel, touched: now() });
         establish(res, roomId, playerId);
         return;
       }
@@ -208,6 +242,12 @@ export function createApp(options: ServerOptions) {
           Connection: 'keep-alive',
         });
         session.streams.add(res);
+        session.challenge = { token: id(), issuedAt: now() };
+        res.write(
+          'event: heartbeat\ndata: ' +
+            JSON.stringify({ token: session.challenge.token }) +
+            '\n\n',
+        );
         broadcast(session.roomId);
         res.on('close', () => {
           session.streams.delete(res);
@@ -249,6 +289,66 @@ export function createApp(options: ServerOptions) {
         broadcast(session.roomId);
         return send(res, 200, state);
       }
+      if (req.method === 'GET' && path === '/api/duel')
+        return send(res, 200, room.duel.snapshot(session.playerId));
+      if (req.method === 'POST' && path === '/api/heartbeat') {
+        const reply = HeartbeatReplySchema.parse(await body(req));
+        const challenge = session.challenge;
+        if (
+          !challenge ||
+          challenge.token !== reply.token ||
+          now() - challenge.issuedAt > 15000
+        )
+          return send(res, 409, { error: '心跳已过期' });
+        session.rttSamples = [
+          ...session.rttSamples,
+          now() - challenge.issuedAt,
+        ].slice(-5);
+        session.challenge = null;
+        session.lastPong = now();
+        room.lobby.setOnline(session.playerId, reply.visible);
+        room.duel.tick();
+        broadcast(session.roomId);
+        return send(res, 200, { ok: true });
+      }
+      if (req.method === 'POST' && path === '/api/duel/prepare') {
+        const cmd = DuelPreparationCommandSchema.parse(await body(req));
+        if (
+          cmd.type === 'start' &&
+          [...sessions.values()]
+            .filter((s) => s.roomId === session.roomId)
+            .some((s) => now() - s.lastPong > 15000 || s.rttSamples.length < 1)
+        )
+          throw new Error('等待双方连接确认后再开局');
+        return send(res, 200, room.duel.dispatch(session.playerId, cmd));
+      }
+      if (req.method === 'POST' && path === '/api/duel/action') {
+        const cmd = DuelActionSchema.parse(await body(req));
+        const samples = [...session.rttSamples].sort((a, b) => a - b);
+        return send(
+          res,
+          200,
+          room.duel.action(
+            session.playerId,
+            cmd,
+            samples[Math.floor(samples.length / 2)] ?? 0,
+          ),
+        );
+      }
+      const roundAudio = new RegExp('^/api/duel/audio/([A-Za-z0-9:-]+)$').exec(
+        path,
+      );
+      if (req.method === 'GET' && roundAudio) {
+        if (session.playerId !== room.lobby.snapshot().hostId)
+          return send(res, 403, { error: '音频仅由共享音箱播放' });
+        room.duel.tick();
+        const question = room.duel.currentQuestion(roundAudio[1]!);
+        const file = question
+          ? options.questionAudioFiles?.get(question.questionId)
+          : undefined;
+        if (!file) return send(res, 404, { error: '当前片段不可用' });
+        return audio(req, res, file);
+      }
       if (session.playerId !== room.lobby.snapshot().hostId)
         return send(res, 403, { error: '仅房主可核验素材' });
       if (req.method === 'GET' && path === '/api/materials')
@@ -258,33 +358,7 @@ export function createApp(options: ServerOptions) {
         const file = options.mediaFiles?.get(media[1]!);
         if (!file)
           return send(res, 404, { error: '本地试听文件未安装或校验失败' });
-        const size = (await stat(file)).size;
-        const range = req.headers.range;
-        if (range) {
-          const match = /^bytes=(\d+)-(\d*)$/.exec(range);
-          const start = match ? Number(match[1]) : -1;
-          const end = match?.[2] ? Number(match[2]) : size - 1;
-          if (start < 0 || start >= size || end < start || end >= size) {
-            res.writeHead(416, { 'Content-Range': 'bytes */' + size });
-            res.end();
-            return;
-          }
-          res.writeHead(206, {
-            'Content-Type': 'audio/mpeg',
-            'Accept-Ranges': 'bytes',
-            'Content-Range': 'bytes ' + start + '-' + end + '/' + size,
-            'Content-Length': end - start + 1,
-          });
-          createReadStream(file, { start, end }).pipe(res);
-          return;
-        }
-        res.writeHead(200, {
-          'Content-Type': 'audio/mpeg',
-          'Accept-Ranges': 'bytes',
-          'Content-Length': size,
-        });
-        createReadStream(file).pipe(res);
-        return;
+        return audio(req, res, file);
       }
       return send(res, 404, { error: '接口不存在' });
     }
@@ -318,6 +392,39 @@ export function createApp(options: ServerOptions) {
     }
     send(res, 404, { error: '页面不存在' });
   }
+  async function audio(
+    req: IncomingMessage,
+    res: ServerResponse,
+    file: string,
+  ) {
+    res.setHeader('Cache-Control', 'no-store');
+    const size = (await stat(file)).size;
+    const range = req.headers.range;
+    if (range) {
+      const match = /^bytes=(\d+)-(\d*)$/.exec(range);
+      const start = match ? Number(match[1]) : -1;
+      const end = match?.[2] ? Number(match[2]) : size - 1;
+      if (start < 0 || start >= size || end < start || end >= size) {
+        res.writeHead(416, { 'Content-Range': 'bytes */' + size });
+        res.end();
+        return;
+      }
+      res.writeHead(206, {
+        'Content-Type': 'audio/mpeg',
+        'Accept-Ranges': 'bytes',
+        'Content-Range': 'bytes ' + start + '-' + end + '/' + size,
+        'Content-Length': end - start + 1,
+      });
+      createReadStream(file, { start, end }).pipe(res);
+      return;
+    }
+    res.writeHead(200, {
+      'Content-Type': 'audio/mpeg',
+      'Accept-Ranges': 'bytes',
+      'Content-Length': size,
+    });
+    createReadStream(file).pipe(res);
+  }
   const server = createServer((req, res) => {
     void route(req, res).catch((error) => {
       if (!res.headersSent)
@@ -343,8 +450,16 @@ export function createApp(options: ServerOptions) {
         }
         continue;
       }
-      for (const stream of s.streams) stream.write(': heartbeat\n\n');
-      if (!s.streams.size && now() - s.lastSeen > 15000) {
+      if (!s.challenge) {
+        s.challenge = { token: id(), issuedAt: now() };
+        for (const stream of s.streams)
+          stream.write(
+            'event: heartbeat\ndata: ' +
+              JSON.stringify({ token: s.challenge.token }) +
+              '\n\n',
+          );
+      }
+      if (now() - s.lastPong > 15000) {
         try {
           rooms.get(s.roomId)?.lobby.setOnline(s.playerId, false);
           broadcast(s.roomId);
@@ -353,15 +468,24 @@ export function createApp(options: ServerOptions) {
         }
       }
     }
+    for (const r of rooms.values()) r.duel.tick();
     for (const [id, r] of rooms)
       if (now() - r.touched > 6 * 60 * 60 * 1000) rooms.delete(id);
   }, 5000);
   timer.unref();
-  server.on('close', () => clearInterval(timer));
+  const gameTimer = setInterval(() => {
+    for (const r of rooms.values()) r.duel.tick();
+  }, 50);
+  gameTimer.unref();
+  server.on('close', () => {
+    clearInterval(timer);
+    clearInterval(gameTimer);
+  });
   return {
     server,
     close: async () => {
       clearInterval(timer);
+      clearInterval(gameTimer);
       for (const s of sessions.values())
         for (const stream of s.streams) stream.end();
       await new Promise<void>((resolve, reject) =>
@@ -370,3 +494,9 @@ export function createApp(options: ServerOptions) {
     },
   };
 }
+
+export { loadPendingMaterials } from './materials.js';
+export {
+  loadReviewedMaterials,
+  type MaterialReview,
+} from './reviewed-materials.js';

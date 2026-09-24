@@ -121,7 +121,11 @@ export function advanceProgress(
         p.songId = null;
         break;
       case 'GAME_FINISHED':
-        valid(!p.roundId && p.songs.length === session.songIds.length);
+        valid(
+          !p.roundId &&
+            (session.gameType !== 'mock-karuta' ||
+              p.songs.length === session.songIds.length),
+        );
         check(
           event.result.startedAt === p.startedAt &&
             canonical(event.result.playedSongIds) === canonical(p.songs) &&

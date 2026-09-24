@@ -9,3 +9,8 @@ export {
   type LobbyController,
   type LobbyDependencies,
 } from './lobby.js';
+
+export {
+  createDuelPreparation,
+  type DuelPreparationController,
+} from './duel-preparation.js';

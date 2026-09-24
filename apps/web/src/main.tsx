@@ -4,17 +4,20 @@ import {
   DUEL_PRESETS,
   ManualPreferencesSchema,
   type Catalog,
+  type DuelPreparationView,
   type LobbySnapshot,
   type LobbySelf,
   type LobbyCommand,
   type ManualPreferences,
 } from '@amp/core';
+import { DuelPanel } from './duel.js';
 import { platform } from './platform.js';
 import './style.css';
 
 type Entry = { playerId: string; room: LobbySnapshot };
 type Library = Pick<Catalog, 'songs' | 'artists'> & {
   tags: Catalog['taxonomy'];
+  playableSongIds: readonly string[];
 };
 type Preview = {
   id: string;
@@ -23,7 +26,7 @@ type Preview = {
   durationMs: number;
   available: boolean;
   sha256: string;
-  status: 'pending';
+  status: 'pending' | 'verified';
 };
 async function api<T>(path: string, data?: unknown): Promise<T> {
   const response = await fetch(
@@ -51,12 +54,13 @@ const levels = {
   intro: '前奏就能认出',
 } as const;
 function App() {
+  const [duel, setDuel] = useState<DuelPreparationView | null>(null);
   const [entry, setEntry] = useState<Entry | null>(null);
   const [library, setLibrary] = useState<Library | null>(null);
   const [nickname, setNickname] = useState('');
   const [code, setCode] = useState('');
   const [mode, setMode] = useState<'create' | 'join'>('create');
-  const [screen, setScreen] = useState<'profile' | 'lobby' | 'review'>(
+  const [screen, setScreen] = useState<'profile' | 'lobby' | 'review' | 'duel'>(
     'profile',
   );
   const [tags, setTags] = useState<string[]>([]);
@@ -116,6 +120,23 @@ function App() {
   useEffect(() => {
     if (!roomId) return;
     const events = new EventSource('/api/events');
+    void api<DuelPreparationView>('/api/duel')
+      .then(setDuel)
+      .catch(() => {});
+    events.addEventListener('duel', (event) =>
+      setDuel(
+        JSON.parse((event as MessageEvent<string>).data) as DuelPreparationView,
+      ),
+    );
+    events.addEventListener('heartbeat', (event) => {
+      const challenge = JSON.parse((event as MessageEvent<string>).data) as {
+        token: string;
+      };
+      void api('/api/heartbeat', {
+        token: challenge.token,
+        visible: !document.hidden,
+      }).catch(() => {});
+    });
     events.onopen = () => setConnected(true);
     events.onerror = () => {
       setConnected(false);
@@ -137,6 +158,7 @@ function App() {
     events.addEventListener('ended', () => {
       events.close();
       setEntry(null);
+      setDuel(null);
       setNotice('房间已结束或已退出。');
     });
     return () => {
@@ -346,7 +368,7 @@ function App() {
                 </button>
               </form>
               <p className="muted small">
-                当前可体验入场、偏好与选曲预评估。真实抢牌对局正在接入。
+                建立音乐偏好，与好友选歌、禁歌，开启双人听歌局。
               </p>
               <div className="platform-note">
                 QQ 音乐场景原型 ·
@@ -386,6 +408,10 @@ function App() {
             </div>
             <nav className="steps" aria-label="派对进度">
               <button
+                disabled={
+                  duel?.phase === 'match' &&
+                  !['completed', 'aborted'].includes(duel.game?.phase ?? '')
+                }
                 aria-current={screen === 'profile' ? 'step' : undefined}
                 onClick={() => {
                   platform.pauseAudio();
@@ -395,6 +421,10 @@ function App() {
                 01 音乐偏好
               </button>
               <button
+                disabled={
+                  duel?.phase === 'match' &&
+                  !['completed', 'aborted'].includes(duel.game?.phase ?? '')
+                }
                 aria-current={screen === 'lobby' ? 'step' : undefined}
                 onClick={() => {
                   platform.pauseAudio();
@@ -403,9 +433,26 @@ function App() {
               >
                 02 好友大厅
               </button>
-              <span>03 听歌抢牌 · 待接入</span>
+              <button
+                aria-current={screen === 'duel' ? 'step' : undefined}
+                onClick={() => setScreen('duel')}
+              >
+                03 听歌抢牌
+              </button>
             </nav>
-            {screen === 'profile' ? (
+            {screen === 'duel' ? (
+              duel && entry && library ? (
+                <DuelPanel
+                  room={room}
+                  playerId={entry.playerId}
+                  songs={library.songs}
+                  view={duel}
+                  onView={setDuel}
+                />
+              ) : (
+                <p>正在加载对局…</p>
+              )
+            ) : screen === 'profile' ? (
               <div className="content-grid">
                 <section className="panel">
                   <div className="section-title">
@@ -435,7 +482,7 @@ function App() {
                   <h2>挑几首熟悉的歌</h2>
                   <p className="muted small">
                     推荐 3–5
-                    首。现有曲包的录音版本待核验；未指定录音的“前奏就能认出”按歌曲级熟悉处理。
+                    首。未指定录音的“前奏就能认出”按歌曲级熟悉处理；对局只使用已核验的前奏题目。
                   </p>
                   <label className="search">
                     搜索歌曲
@@ -459,7 +506,10 @@ function App() {
                                 (a) => a.id === s.artistIds[0],
                               )?.name
                             }{' '}
-                            · 待核验
+                            ·{' '}
+                            {library?.playableSongIds.includes(s.id)
+                              ? '已核验前奏'
+                              : '待核验'}
                           </small>
                         </div>
                         <label className="level">
@@ -737,7 +787,7 @@ function App() {
                       <h3>{m.title}</h3>
                       <p className="muted small">
                         {m.id} · {m.artist} · {(m.durationMs / 1000).toFixed(1)}{' '}
-                        秒 · 待核验
+                        秒 · {m.status === 'verified' ? '已核验前奏' : '待核验'}
                       </p>
                       {m.available ? (
                         <>
