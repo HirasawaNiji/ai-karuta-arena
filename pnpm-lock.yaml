@@ -17,6 +17,9 @@ importers:
       '@amp/music-profile':
         specifier: workspace:*
         version: link:packages/music-profile
+      '@amp/party-runtime':
+        specifier: workspace:*
+        version: link:packages/party-runtime
       '@amp/playlist-engine':
         specifier: workspace:*
         version: link:packages/playlist-engine
@@ -59,6 +62,18 @@ importers:
       '@amp/core':
         specifier: workspace:*
         version: link:../core
+
+  packages/party-runtime:
+    dependencies:
+      '@amp/core':
+        specifier: workspace:*
+        version: link:../core
+      '@amp/music-profile':
+        specifier: workspace:*
+        version: link:../music-profile
+      '@amp/playlist-engine':
+        specifier: workspace:*
+        version: link:../playlist-engine
 
   packages/playlist-engine:
     dependencies:

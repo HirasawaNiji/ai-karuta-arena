@@ -25,6 +25,7 @@
     "vitest": "5.0.1",
     "@amp/music-profile": "workspace:*",
     "@amp/adapters": "workspace:*",
-    "@amp/playlist-engine": "workspace:*"
+    "@amp/playlist-engine": "workspace:*",
+    "@amp/party-runtime": "workspace:*"
   }
 }
