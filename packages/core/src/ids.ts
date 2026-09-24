@@ -45,3 +45,19 @@ export function uniqueValues<T extends z.ZodType>(schema: T) {
     )
     .readonly();
 }
+
+export const PositiveCountSchema = SafeCountSchema.min(1);
+export const PartyIdSchema = StableIdSchema.brand<'PartyId'>();
+export type PartyId = z.infer<typeof PartyIdSchema>;
+export const CommandIdSchema = StableIdSchema.brand<'CommandId'>();
+export type CommandId = z.infer<typeof CommandIdSchema>;
+export const GameSessionIdSchema = StableIdSchema.brand<'GameSessionId'>();
+export type GameSessionId = z.infer<typeof GameSessionIdSchema>;
+export const RoundIdSchema = StableIdSchema.brand<'RoundId'>();
+export type RoundId = z.infer<typeof RoundIdSchema>;
+export const ActionIdSchema = StableIdSchema.brand<'ActionId'>();
+export type ActionId = z.infer<typeof ActionIdSchema>;
+export const JudgementIdSchema = StableIdSchema.brand<'JudgementId'>();
+export type JudgementId = z.infer<typeof JudgementIdSchema>;
+export const GameTypeSchema = StableIdSchema.brand<'GameType'>();
+export type GameType = z.infer<typeof GameTypeSchema>;

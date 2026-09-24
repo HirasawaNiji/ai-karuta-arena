@@ -29,7 +29,7 @@
 
 退出条件：core 契约可导入、无业务算法假实现，AC-01 和 AC-02 契约部分通过，build/typecheck/test/lint/Python/diff 检查通过。M1 不声称选曲或完整游戏可用。
 
-M1.4 的实际入口、原始导入与规范集合边界见[证据契约验收](m1-evidence-contracts.md)。它不实现 M2 的去重或评分。
+M1.4 的实际入口、原始导入与规范集合边界见[证据契约验收](m1-evidence-contracts.md)。它不实现 M2 的去重或评分。M1.5 的具体输入布局、状态与 Mock 端口边界及 M1.6 验证见[完整 M1 契约验收](m1-runtime-contracts.md)。
 
 ## 3. M2：模拟来源、证据、画像与矩阵
 

@@ -28,6 +28,6 @@ PlayerMusicProfile 的 provenance 必须覆盖已有偏好键；推断来源必�
 
 测试覆盖来源混入、未来/无效时间、重复证据、非法引用、画像/矩阵身份、未知与缺项、陈旧版本、同名配置变化、解释不连续、配置范围和只读公共类型。执行命令仍为 README 的 build/typecheck/test/lint 与 Python 仓库检查；确切结果以对应 PR 与 CI 为准。
 
-下一步是 M1.5 的选曲/评估、派对状态、命令/事件及 Mock 来源/主持/游戏端口，按 [D0 核对](karuta-engine-audit.md) 保留真实引擎差异；再完成全 M1.6 验收。完整 M1 尚未完成，不勾选 #4 第一项；尚无 pnpm demo。
+后续 [M1.5/M1.6](m1-runtime-contracts.md) 已补齐选曲/评估、派对状态、命令/事件及来源/主持/游戏端口与全阶段检查范围，按 [D0 核对](karuta-engine-audit.md) 保留真实引擎差异。全 M1 审核合并后进入 M2；尚无 pnpm demo。
 
 产品主线为 [真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，覆盖核心 #4、D0 #11 与 D1–D4。周杰伦专场 #12 为 P3 副线，不是核心或通用 Demo 的前置条件。

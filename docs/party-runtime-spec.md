@@ -22,6 +22,8 @@
 | activeGameSession、gameHistory | 正在运行的冻结局输入、已结算游戏记录 |
 | processedEventIds、pendingGameplayEvidence | 当前事件去重和待结算证据 |
 
+M1.5 已提供这些状态和命令的边界 schema，具体字段绑定见[完整 M1 契约](m1-runtime-contracts.md)；这不表示 runtime 或 canStart 已实现。ready 仅用于 prepared 的显示状态，进入 starting 时置为 awaiting_host_choice。matrix 在初始化前和反馈结算失效后可以为 null。
+
 初始 selectionVersion=0、题组空、assessment=null、phase=setup、banPhase=closed。主流程为加载 → 选择 → prepared → starting → playing → settling → finished → 下一轮选择。ended 为终态。
 
 ## 2. 评估上下文与版本
