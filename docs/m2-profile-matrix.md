@@ -1,5 +1,7 @@
 # M2 画像与熟悉度计算
 
+本文记录 M2 交付时的范围，后续实际选曲/评估见 [M3 交付](m3-fair-selection.md)。
+
 范围是 Issue #4 的 M2.1–M2.6。现在可以从内存来源取得原始证据，归并后生成八维画像，再计算完整熟悉度矩阵。实现入口为 `@amp/music-profile`、`@amp/adapters` 和公开数据出口 `@amp/adapters/fixtures`。选曲器、派对运行时、最终 CLI 和真人产品仍分别在 M3–M5 / D0–D4；本阶段不提供 `pnpm demo`。
 
 ## 真实调用链
