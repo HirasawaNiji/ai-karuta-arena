@@ -2,7 +2,7 @@
 
 AI Music Party / AI 音乐派对：根据参与者的音乐画像、证据与游戏反馈，生成兼顾熟悉覆盖、竞争性和多样性的游戏题组。Karuta 是首个游戏适配目标，QQ 音乐是可能的数据来源；领域模型不绑定某个平台、语言或音乐文化。
 
-当前已完成 M1–M5 核心与可运行的无密钥 CLI Demo：画像、选曲、禁歌/房主确认、Mock 游戏与反馈都可实际演示。**真人浏览器产品仍待 D0–D4**。初赛目标是玩家通过标签和熟悉歌曲建立画像，体验多人抢牌、经典 1v1 和简单淘汰赛；暂不接大模型，QQ 授权也不作为游玩前提。核心先完成无需 API Key 的本地 Mock 验证，再接现有歌牌引擎与真人房间。熟悉度采用规则评分，ban 后重评，覆盖不足时等待房主选择。产品主线见 [真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，核心进度见 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。周杰伦专场 #12 是 P3 副线，不是通用 Demo 的前置条件。
+当前已完成 M1–M5 核心与可运行的无密钥 CLI Demo：画像、选曲、禁歌/房主确认、Mock 游戏与反馈都可实际演示。D1 入场和 D2 双人真实对局已实现并完成自动浏览器验收，D3 多人和 D4 单淘汰仍待交付。初赛目标是玩家通过标签和熟悉歌曲建立画像，体验多人抢牌、经典 1v1 和简单淘汰赛；暂不接大模型，QQ 授权也不作为游玩前提。核心先完成无需 API Key 的本地 Mock 验证，再接现有歌牌引擎与真人房间。熟悉度采用规则评分，ban 后重评，覆盖不足时等待房主选择。产品主线见 [真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，核心进度见 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。周杰伦专场 #12 是 P3 副线，不是通用 Demo 的前置条件。
 
 ## 需求与架构入口
 
@@ -69,10 +69,10 @@ Python 文本检查仅需要 Python 3.11 或更新版本，无第三方依赖；
 
 M1–M5 的核心 Mock 已实现，`install / build / typecheck / test / lint / demo` 可用。`pnpm demo` 默认运行 mixed、stress、ban、feedback；也可用 `--scenario` 单选。合成数据不含音频，无任何平台/LLM Key 也能运行。JSON 模式保留实际告警和明确的模拟房主动作；支持 `pnpm demo:check` 进行进程级验证。
 
-完整真人主线尚缺可信房间身份、手动画像界面、真实音频/引擎接入、多人/1v1 和赛事验收。QQ 官方能力与替代路径见[适配器状态](docs/adapter-status.md)。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
+可信房间身份、手动画像界面、105 首前奏素材和真实 1v1 已接入。完整主线尚缺多人模式、淘汰赛与现场真人验收。QQ 官方能力与替代路径见[适配器状态](docs/adapter-status.md)。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
 
 仓库未选择许可证；引入外部代码、音频或图片时，须先确认其许可和使用范围。
 
 ## 浏览器派对（D1 / D2）
 
-依次运行 `pnpm build`、`pnpm start`，打开 http://127.0.0.1:3210 。已实现创建/加入、手动偏好、大厅准备、选曲预评估与房主素材试听；默认 10 对 10，可选 15 对 15。本分支已接入选歌、BAN、最终重评、10/15 张真实裁决和共享音箱；素材目录配置与完整操作见 [D2 说明](docs/d2-duel.md)。105 首管理员核验的前奏可按清单加载，待核验素材不会被当成可玩题目。D2 的浏览器验收继续进行；多人/赛事待后续交付。
+依次运行 `pnpm build`、`pnpm start`，打开 http://127.0.0.1:3210 。已实现创建/加入、手动偏好、大厅准备、选曲预评估与房主素材试听；默认 10 对 10，可选 15 对 15。已接入选歌、BAN、最终重评、10/15 张真实裁决和共享音箱；素材目录配置与完整操作见 [D2 说明](docs/d2-duel.md)。105 首管理员核验的前奏可按清单加载，待核验素材不会被当成可玩题目。D2 两种局长已通过双浏览器真实素材结算；多人/赛事待后续交付，QQ WebView 与现场真人听辨尚未验收。

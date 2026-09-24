@@ -14,3 +14,10 @@ export const platform = {
     document.querySelectorAll('audio').forEach((audio) => audio.pause());
   },
 };
+
+/** getRandomValues remains available on a local HTTP demo; randomUUID requires a secure context. */
+export function newActionId(): string {
+  return Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) =>
+    b.toString(16).padStart(2, '0'),
+  ).join('');
+}

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { newActionId } from './platform.js';
 import {
   DUEL_PRESETS,
   type DuelPreparationView,
@@ -56,6 +57,7 @@ export function DuelPanel({
     game = view.game;
   useEffect(() => {
     if (!game) return;
+    setClock(Date.now());
     const timer = setInterval(() => setClock(Date.now()), 250);
     return () => clearInterval(timer);
   }, [game?.gameSessionId]);
@@ -70,7 +72,7 @@ export function DuelPanel({
       onView(
         await api<DuelPreparationView>('/api/duel/prepare', {
           ...intent,
-          actionId: crypto.randomUUID(),
+          actionId: newActionId(),
           expectedVersion: current.current.version,
         }),
       );
@@ -91,7 +93,7 @@ export function DuelPanel({
     try {
       await api('/api/duel/action', {
         ...intent,
-        actionId: crypto.randomUUID(),
+        actionId: newActionId(),
         gameSessionId: snapshot.gameSessionId,
         selectionVersion: snapshot.selectionVersion,
         roundToken: snapshot.round.token,
@@ -103,7 +105,7 @@ export function DuelPanel({
   useEffect(() => {
     setSelected([]);
     setError('');
-  }, [view.phase, view.version]);
+  }, [view.phase, view.version, view.game?.round?.token]);
   useEffect(() => {
     const interrupt = () => {
       if (!document.hidden) return;
@@ -113,7 +115,7 @@ export function DuelPanel({
       if (v.game && !['completed', 'aborted'].includes(v.game.phase))
         void api('/api/duel/prepare', {
           type: 'interrupt',
-          actionId: crypto.randomUUID(),
+          actionId: newActionId(),
           expectedVersion: v.version,
         }).catch(() => {});
     };

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-24T16:49:25.909Z",
+  "environment": {
+    "browser": "host Chrome via Playwright CLI",
+    "contexts": 2,
+    "origin": "local HTTP",
+    "realDevice": false,
+    "qqWebView": false
+  },
+  "materials": {
+    "enabled": 105,
+    "excluded": ["PJSK-184-A"],
+    "durationMs": 10000,
+    "source": "pjsk-intro-review.json"
+  },
+  "matches": [
+    {
+      "preset": "quick",
+      "initialHands": [10, 10],
+      "finalRound": 17,
+      "phase": "completed",
+      "outcome": "empty_hand",
+      "winner": "host",
+      "remainingHands": [0, 3],
+      "scores": [5, 0],
+      "bothClientsAgree": true
+    },
+    {
+      "preset": "standard",
+      "initialHands": [15, 15],
+      "finalRound": 27,
+      "phase": "completed",
+      "outcome": "empty_hand",
+      "winner": "host",
+      "remainingHands": [0, 3],
+      "scores": [8, 0],
+      "bothClientsAgree": true
+    }
+  ],
+  "negative": {
+    "audioRequestAborted": {
+      "phase": "aborted",
+      "winner": null,
+      "round": 3
+    },
+    "nonAnsweringGuest": {
+      "profileVersion": 1,
+      "songEvidenceCount": 0
+    }
+  },
+  "layout": [
+    {
+      "viewport": 360,
+      "document": 360,
+      "finalCards": 30
+    },
+    {
+      "viewport": 390,
+      "document": 390,
+      "finalCards": 30
+    },
+    {
+      "viewport": 430,
+      "document": 430,
+      "finalCards": 30
+    }
+  ],
+  "qaBoundary": "Automated visible-card clicks identify only the currently served audio by SHA256 against sanitized local clips; no future answer endpoint, seed, score mutation or clock acceleration. This is not human musical recognition.",
+  "checks": {
+    "tests": 497,
+    "testFiles": 19,
+    "build": true,
+    "testTypecheck": true,
+    "eslint": true,
+    "prettier": true
+  },
+  "artifacts": [
+    {
+      "name": "real-standard-result.png",
+      "sha256": "35debbaf958b25b8678dff65c264d53f07ef2cbbf3c9f64d002b7961a3ecc65d",
+      "location": "local output/playwright/d2-browser; not committed"
+    },
+    {
+      "name": "final-standard-playing.png",
+      "sha256": "38ecf25bf463bc181746cbeedf4243e443c00d8d472f3fc913114c498ee3f25d",
+      "location": "local output/playwright/d2-browser; not committed"
+    },
+    {
+      "name": "playback-failure.png",
+      "sha256": "e2a740e2ca81e66e83c9be8bb3a164737baa1dd3c3ba29d721e46310bb848569",
+      "location": "local output/playwright/d2-browser; not committed"
+    },
+    {
+      "name": "real-quick-result.yml",
+      "sha256": "35a26e8c546020a4f84c122e5eb6bfd8387415cbef01f027e1e0d2f0d9058fd9",
+      "location": "local output/playwright/d2-browser; not committed"
+    }
+  ]
+}
