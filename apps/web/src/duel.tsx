@@ -124,7 +124,7 @@ export function DuelPanel({
       source.current = null;
       const v = current.current;
       if (v.game && !['completed', 'aborted'].includes(v.game.phase))
-        void api('/api/duel/prepare', {
+        void prepareRequest({
           type: 'interrupt',
           actionId: newActionId(),
           expectedVersion: v.version,

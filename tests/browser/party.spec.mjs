@@ -5,6 +5,7 @@ import {
   prepareDuel,
   play,
   view,
+  responseStatus,
   confirm,
   assertNoOverflow,
 } from './helpers.mjs';
@@ -81,11 +82,10 @@ test('three clients complete multiplayer with wrong-answer lock and tied ranks',
     const state = await view(host.page, '/api/multiplayer');
     // The guest's real browser session cannot read the shared speaker's audio.
     expect(
-      (
-        await wrong.context.request.get(
-          baseURL + '/api/multiplayer/audio/' + state.game.round.token,
-        )
-      ).status(),
+      await responseStatus(
+        wrong.page,
+        '/api/multiplayer/audio/' + state.game.round.token,
+      ),
     ).toBe(403);
     expect(JSON.stringify(state)).not.toMatch(/questionId|recordingId|seed/);
     await expect
@@ -203,7 +203,7 @@ test('four clients play both semifinals and final with an eliminated organizer',
   }
 });
 
-test('failed audio interrupts both clients without changing profiles', async ({
+test('failed audio leaves profiles unchanged and permits a fresh completed duel', async ({
   browser,
   baseURL,
 }) => {
@@ -222,6 +222,29 @@ test('failed audio interrupts both clients without changing profiles', async ({
         1,
       );
     }
+    const host = r.clients[0];
+    const interrupted = (await view(host.page, '/api/duel')).game.gameSessionId;
+    await host.page.unroute('**/api/duel/audio/**');
+    await host.page
+      .getByRole('button', { name: '再来一局', exact: true })
+      .click();
+    const reset = await view(host.page, '/api/duel');
+    expect(reset.readyPlayerIds).toEqual([]);
+    expect(reset.canStart).toBe(false);
+    await prepareDuel(r.clients);
+    const result = await play(host, host, '/api/duel');
+    expect(result.game.gameSessionId).not.toBe(interrupted);
+    expect(result.game.winnerId).toBe(host.id);
+    for (const c of r.clients)
+      await expect(
+        c.page.getByRole('heading', {
+          name: '测试好友0 清空手牌，获胜！',
+          exact: true,
+        }),
+      ).toBeVisible();
+    expect(
+      (await view(host.page, '/api/profile')).profile.profileVersion,
+    ).toBeGreaterThan(1);
     expect(r.errors).toEqual([]);
   } finally {
     await r.close();
