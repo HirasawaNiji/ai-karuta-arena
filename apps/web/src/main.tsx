@@ -5,12 +5,15 @@ import {
   ManualPreferencesSchema,
   type Catalog,
   type DuelPreparationView,
+  type MultiplayerPreparationView,
+  MULTIPLAYER_RULES,
   type LobbySnapshot,
   type LobbySelf,
   type LobbyCommand,
   type ManualPreferences,
 } from '@amp/core';
 import { DuelPanel } from './duel.js';
+import { MultiplayerPanel } from './multiplayer.js';
 import { platform } from './platform.js';
 import './style.css';
 
@@ -54,6 +57,7 @@ const levels = {
   intro: '前奏就能认出',
 } as const;
 function App() {
+  const [multi, setMulti] = useState<MultiplayerPreparationView | null>(null);
   const [duel, setDuel] = useState<DuelPreparationView | null>(null);
   const [entry, setEntry] = useState<Entry | null>(null);
   const [library, setLibrary] = useState<Library | null>(null);
@@ -120,6 +124,16 @@ function App() {
   useEffect(() => {
     if (!roomId) return;
     const events = new EventSource('/api/events');
+    void api<MultiplayerPreparationView>('/api/multiplayer')
+      .then(setMulti)
+      .catch(() => {});
+    events.addEventListener('multiplayer', (event) =>
+      setMulti(
+        JSON.parse(
+          (event as MessageEvent<string>).data,
+        ) as MultiplayerPreparationView,
+      ),
+    );
     void api<DuelPreparationView>('/api/duel')
       .then(setDuel)
       .catch(() => {});
@@ -159,6 +173,7 @@ function App() {
       events.close();
       setEntry(null);
       setDuel(null);
+      setMulti(null);
       setNotice('房间已结束或已退出。');
     });
     return () => {
@@ -368,7 +383,7 @@ function App() {
                 </button>
               </form>
               <p className="muted small">
-                建立音乐偏好，与好友选歌、禁歌，开启双人听歌局。
+                建立音乐偏好，与好友选歌、禁歌，开启双人或多人听歌局。
               </p>
               <div className="platform-note">
                 QQ 音乐场景原型 ·
@@ -392,7 +407,10 @@ function App() {
                 </h1>
                 <p className="muted">
                   房间 <strong>{room.roomId}</strong> · {room.members.length} /
-                  8 人 · {preset.handSize} 对 {preset.handSize}
+                  8 人 ·{' '}
+                  {room.mode === 'multiplayer'
+                    ? '多人 · 12 题'
+                    : preset.handSize + ' 对 ' + preset.handSize}
                 </p>
               </div>
               <button
@@ -408,10 +426,9 @@ function App() {
             </div>
             <nav className="steps" aria-label="派对进度">
               <button
-                disabled={
-                  duel?.phase === 'match' &&
-                  !['completed', 'aborted'].includes(duel.game?.phase ?? '')
-                }
+                disabled={[duel?.game, multi?.game].some(
+                  (g) => g && !['completed', 'aborted'].includes(g.phase),
+                )}
                 aria-current={screen === 'profile' ? 'step' : undefined}
                 onClick={() => {
                   platform.pauseAudio();
@@ -421,10 +438,9 @@ function App() {
                 01 音乐偏好
               </button>
               <button
-                disabled={
-                  duel?.phase === 'match' &&
-                  !['completed', 'aborted'].includes(duel.game?.phase ?? '')
-                }
+                disabled={[duel?.game, multi?.game].some(
+                  (g) => g && !['completed', 'aborted'].includes(g.phase),
+                )}
                 aria-current={screen === 'lobby' ? 'step' : undefined}
                 onClick={() => {
                   platform.pauseAudio();
@@ -441,7 +457,19 @@ function App() {
               </button>
             </nav>
             {screen === 'duel' ? (
-              duel && entry && library ? (
+              room.mode === 'multiplayer' ? (
+                multi && entry && library ? (
+                  <MultiplayerPanel
+                    room={room}
+                    playerId={entry.playerId}
+                    songs={library.songs}
+                    view={multi}
+                    onView={setMulti}
+                  />
+                ) : (
+                  <p>正在加载多人对局…</p>
+                )
+              ) : duel && entry && library ? (
                 <DuelPanel
                   room={room}
                   playerId={entry.playerId}
@@ -578,7 +606,11 @@ function App() {
                   <div className="panel">
                     <div className="section-title">
                       <h2>这一场，和谁一起听</h2>
-                      <span className="pill">1v1 预评估</span>
+                      <span className="pill">
+                        {room.mode === 'multiplayer'
+                          ? '多人同场'
+                          : '1v1 预评估'}
+                      </span>
                     </div>
                     <div className="members">
                       {room.members.map((m, i) => (
@@ -595,7 +627,11 @@ function App() {
                             </small>
                           </div>
                           <span className={m.lobbyReady ? 'ready' : 'muted'}>
-                            {m.lobbyReady ? '已准备' : '未准备'}
+                            {m.waitingForNextMatch
+                              ? '下一局加入'
+                              : m.lobbyReady
+                                ? '已准备'
+                                : '未准备'}
                           </span>
                           <span className="sr-only">成员 {i + 1}</span>
                         </div>
@@ -603,14 +639,18 @@ function App() {
                     </div>
                     <button
                       className={me?.lobbyReady ? 'full' : 'primary full'}
-                      disabled={busy || !connected}
+                      disabled={busy || !connected || me?.waitingForNextMatch}
                       onClick={() =>
                         void action(async () =>
                           command({ type: 'ready', ready: !me?.lobbyReady }),
                         )
                       }
                     >
-                      {me?.lobbyReady ? '取消准备' : '我已完成入场，准备好了'}
+                      {me?.waitingForNextMatch
+                        ? '等待下一局'
+                        : me?.lobbyReady
+                          ? '取消准备'
+                          : '我已完成入场，准备好了'}
                     </button>
                     <p className="muted small">
                       入场准备不代表最终开局确认；人员、偏好或规则变化后需要重新准备。
@@ -628,7 +668,11 @@ function App() {
                         <span>待核验歌曲</span>
                       </div>
                       <div>
-                        <b>{preset.minimumCandidates}</b>
+                        <b>
+                          {room.mode === 'multiplayer'
+                            ? MULTIPLAYER_RULES.questionCount
+                            : preset.minimumCandidates}
+                        </b>
                         <span>本局最少候选</span>
                       </div>
                     </div>
@@ -665,6 +709,7 @@ function App() {
                         busy ||
                         !connected ||
                         !host ||
+                        room.mode === 'multiplayer' ||
                         room.members.length !== 2 ||
                         room.members.some((m) => !m.online || !m.lobbyReady)
                       }
@@ -680,33 +725,56 @@ function App() {
                   <section className="panel">
                     <h2>这一局怎么听</h2>
                     <div className="preset-list">
-                      {Object.entries(DUEL_PRESETS).map(([id, p]) => (
+                      {(['duel', 'multiplayer'] as const).map((mode) => (
                         <button
-                          key={id}
+                          key={mode}
                           disabled={!host || busy || !connected}
-                          aria-pressed={room.preset === id}
+                          aria-pressed={room.mode === mode}
                           onClick={() =>
                             void action(async () =>
-                              command({
-                                type: 'preset',
-                                preset: id as LobbySnapshot['preset'],
-                              }),
+                              command({ type: 'mode', mode }),
                             )
                           }
                         >
                           <strong>
-                            {p.label} · {p.handSize} 对 {p.handSize}
+                            {mode === 'duel' ? '双人经典抢牌' : '多人同场抢牌'}
                           </strong>
                           <small>
-                            每人选 {p.selectPerPlayer} · BAN {p.banPerPlayer} ·
-                            不追加空牌
+                            {mode === 'duel'
+                              ? '先清空手牌获胜'
+                              : '2–8 人 · 12 题 · 同分并列'}
                           </small>
                         </button>
                       ))}
                     </div>
+                    <div className="preset-list">
+                      {room.mode === 'duel' &&
+                        Object.entries(DUEL_PRESETS).map(([id, p]) => (
+                          <button
+                            key={id}
+                            disabled={!host || busy || !connected}
+                            aria-pressed={room.preset === id}
+                            onClick={() =>
+                              void action(async () =>
+                                command({
+                                  type: 'preset',
+                                  preset: id as LobbySnapshot['preset'],
+                                }),
+                              )
+                            }
+                          >
+                            <strong>
+                              {p.label} · {p.handSize} 对 {p.handSize}
+                            </strong>
+                            <small>
+                              每人选 {p.selectPerPlayer} · BAN {p.banPerPlayer}{' '}
+                              · 不追加空牌
+                            </small>
+                          </button>
+                        ))}
+                    </div>
                     <p className="muted small">
-                      默认同一现场共享音箱。双方 BAN 后仍需按最终 20 / 30
-                      张重评与准备。
+                      默认同一现场共享音箱。禁歌后重新评估，全员确认最终歌牌再开始。
                     </p>
                     <h3>我的音乐画像</h3>
                     <p>{self ? reports.length + ' 首歌曲自报' : '正在加载'}</p>

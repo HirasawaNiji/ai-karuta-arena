@@ -861,3 +861,36 @@ footer {
     min-height: 52px;
   }
 }
+
+.multiplayer-panel .duel-score {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+}
+.multiplayer-panel .duel-score > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 540px) {
+  .app-shell:has(.multiplayer-active) .room-heading,
+  .app-shell:has(.multiplayer-active) footer {
+    display: none;
+  }
+  .app-shell:has(.multiplayer-active) .steps {
+    margin: 0 0 12px;
+    padding: 0;
+    border: 0;
+  }
+  .app-shell:has(.multiplayer-active) .steps button {
+    padding: 10px 6px;
+  }
+  .multiplayer-active {
+    padding: 14px;
+  }
+  .multiplayer-active .song-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .multiplayer-active .song-card {
+    padding: 8px;
+    font-size: 13px;
+  }
+}

@@ -13,14 +13,22 @@ import {
   LobbyCommandSchema,
   DuelPreparationCommandSchema,
   DuelActionSchema,
+  MultiplayerActionSchema,
+  MultiplayerPreparationCommandSchema,
   HeartbeatReplySchema,
   type Catalog,
   type PlayerId,
 } from '@amp/core';
-import { KarutaDuelFactory, ManualPreferenceSource } from '@amp/adapters';
+import {
+  KarutaDuelFactory,
+  MultiplayerFactory,
+  ManualPreferenceSource,
+} from '@amp/adapters';
 import { MANUAL_SCORING_CONFIG } from '@amp/music-profile';
 import {
   createDuelPreparation,
+  createMultiplayerPreparation,
+  type MultiplayerPreparationController,
   createLobby,
   type DuelPreparationController,
   type LobbyController,
@@ -40,7 +48,12 @@ export function createApp(options: ServerOptions) {
   const now = options.now ?? Date.now;
   const rooms = new Map<
     string,
-    { lobby: LobbyController; duel: DuelPreparationController; touched: number }
+    {
+      lobby: LobbyController;
+      duel: DuelPreparationController;
+      multi: MultiplayerPreparationController;
+      touched: number;
+    }
   >();
   type Session = {
     roomId: string;
@@ -83,6 +96,8 @@ export function createApp(options: ServerOptions) {
               JSON.stringify(room.lobby.snapshot()) +
               '\n\nevent: duel\ndata: ' +
               JSON.stringify(room.duel.snapshot(s.playerId)) +
+              '\n\nevent: multiplayer\ndata: ' +
+              JSON.stringify(room.multi.snapshot(s.playerId)) +
               '\n\n',
           );
   }
@@ -132,7 +147,7 @@ export function createApp(options: ServerOptions) {
     )
       return send(res, 403, { error: '不接受跨站请求' });
     if (req.method === 'GET' && path === '/api/health')
-      return send(res, 200, { status: 'ok', mode: 'D2-duel' });
+      return send(res, 200, { status: 'ok', mode: 'D3-multiplayer' });
     if (req.method === 'GET' && path === '/api/catalog')
       return send(res, 200, {
         songs: options.catalog.songs,
@@ -187,7 +202,16 @@ export function createApp(options: ServerOptions) {
           onChange: () => broadcast(roomId),
           onCompleted: lobby.settleDuel,
         });
-        rooms.set(roomId, { lobby, duel, touched: now() });
+        const multi = createMultiplayerPreparation({
+          context: lobby.preparationContext,
+          factory: new MultiplayerFactory(),
+          now,
+          nextId: id,
+          seed: () => randomBytes(4).readUInt32LE(),
+          onChange: () => broadcast(roomId),
+          onCompleted: lobby.settleGame,
+        });
+        rooms.set(roomId, { lobby, duel, multi, touched: now() });
         establish(res, roomId, playerId);
         return;
       }
@@ -200,7 +224,11 @@ export function createApp(options: ServerOptions) {
           .members.find((m) => m.id === room.lobby.snapshot().hostId)?.online
       )
         return send(res, 404, { error: '房间不存在或房主已离开' });
-      room.lobby.join(playerId, nickname);
+      const ongoing = [
+        room.duel.snapshot(room.lobby.snapshot().hostId).game,
+        room.multi.snapshot(room.lobby.snapshot().hostId).game,
+      ].some((g) => g && !['completed', 'aborted'].includes(g.phase));
+      room.lobby.join(playerId, nickname, ongoing);
       room.touched = now();
       establish(res, roomId, playerId);
       broadcast(roomId);
@@ -265,6 +293,19 @@ export function createApp(options: ServerOptions) {
       }
       if (req.method === 'POST' && path === '/api/commands') {
         const cmd = LobbyCommandSchema.parse(await body(req));
+        const member = room.lobby
+          .snapshot()
+          .members.find((m) => m.id === session.playerId);
+        const ongoing = [
+          room.duel.snapshot(session.playerId).game,
+          room.multi.snapshot(session.playerId).game,
+        ].some((g) => g && !['completed', 'aborted'].includes(g.phase));
+        if (
+          ongoing &&
+          cmd.type !== 'leave' &&
+          !(member?.waitingForNextMatch && cmd.type === 'profile')
+        )
+          throw new Error('请先结束当前对局');
         const state = room.lobby.dispatch(session.playerId, cmd);
         if (cmd.type === 'leave') {
           const leaving = [...sessions].filter(
@@ -308,10 +349,13 @@ export function createApp(options: ServerOptions) {
         session.lastPong = now();
         room.lobby.setOnline(session.playerId, reply.visible);
         room.duel.tick();
+        room.multi.tick();
         broadcast(session.roomId);
         return send(res, 200, { ok: true });
       }
       if (req.method === 'POST' && path === '/api/duel/prepare') {
+        if (room.lobby.snapshot().mode !== 'duel')
+          throw new Error('请切换到双人模式');
         const cmd = DuelPreparationCommandSchema.parse(await body(req));
         if (
           cmd.type === 'start' &&
@@ -320,7 +364,12 @@ export function createApp(options: ServerOptions) {
             .some((s) => now() - s.lastPong > 15000 || s.rttSamples.length < 1)
         )
           throw new Error('等待双方连接确认后再开局');
-        return send(res, 200, room.duel.dispatch(session.playerId, cmd));
+        const result = room.duel.dispatch(session.playerId, cmd);
+        if (cmd.type === 'reset') {
+          room.lobby.releaseWaiting();
+          broadcast(session.roomId);
+        }
+        return send(res, 200, result);
       }
       if (req.method === 'POST' && path === '/api/duel/action') {
         const cmd = DuelActionSchema.parse(await body(req));
@@ -334,6 +383,55 @@ export function createApp(options: ServerOptions) {
             samples[Math.floor(samples.length / 2)] ?? 0,
           ),
         );
+      }
+      if (req.method === 'GET' && path === '/api/multiplayer')
+        return send(res, 200, room.multi.snapshot(session.playerId));
+      if (req.method === 'POST' && path === '/api/multiplayer/prepare') {
+        if (room.lobby.snapshot().mode !== 'multiplayer')
+          throw new Error('请切换到多人模式');
+        const cmd = MultiplayerPreparationCommandSchema.parse(await body(req));
+        if (
+          cmd.type === 'start' &&
+          [...sessions.values()]
+            .filter(
+              (s) =>
+                s.roomId === session.roomId &&
+                room.multi
+                  .snapshot(session.playerId)
+                  .playerIds.includes(s.playerId),
+            )
+            .some((s) => now() - s.lastPong > 15000 || s.rttSamples.length < 1)
+        )
+          throw new Error('等待全员连接确认');
+        const result = room.multi.dispatch(session.playerId, cmd);
+        if (cmd.type === 'reset') {
+          room.lobby.releaseWaiting();
+          broadcast(session.roomId);
+        }
+        return send(res, 200, result);
+      }
+      if (req.method === 'POST' && path === '/api/multiplayer/action')
+        return send(
+          res,
+          200,
+          room.multi.action(
+            session.playerId,
+            MultiplayerActionSchema.parse(await body(req)),
+          ),
+        );
+      const multiAudio = /^\/api\/multiplayer\/audio\/([A-Za-z0-9:-]+)$/.exec(
+        path,
+      );
+      if (req.method === 'GET' && multiAudio) {
+        if (session.playerId !== room.lobby.snapshot().hostId)
+          return send(res, 403, { error: '音频仅由共享音箱播放' });
+        room.multi.tick();
+        const q = room.multi.currentQuestion(multiAudio[1]!);
+        const file = q
+          ? options.questionAudioFiles?.get(q.questionId)
+          : undefined;
+        if (!file) return send(res, 404, { error: '当前片段不可用' });
+        return audio(req, res, file);
       }
       const roundAudio = new RegExp('^/api/duel/audio/([A-Za-z0-9:-]+)$').exec(
         path,
@@ -468,13 +566,19 @@ export function createApp(options: ServerOptions) {
         }
       }
     }
-    for (const r of rooms.values()) r.duel.tick();
+    for (const r of rooms.values()) {
+      r.duel.tick();
+      r.multi.tick();
+    }
     for (const [id, r] of rooms)
       if (now() - r.touched > 6 * 60 * 60 * 1000) rooms.delete(id);
   }, 5000);
   timer.unref();
   const gameTimer = setInterval(() => {
-    for (const r of rooms.values()) r.duel.tick();
+    for (const r of rooms.values()) {
+      r.duel.tick();
+      r.multi.tick();
+    }
   }, 50);
   gameTimer.unref();
   server.on('close', () => {
