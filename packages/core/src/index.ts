@@ -20,3 +20,5 @@ export * from './lobby.js';
 export * from './duel.js';
 
 export * from './duel-preparation.js';
+
+export * from './multiplayer.js';

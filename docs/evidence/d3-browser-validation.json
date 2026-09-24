@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-09-24T17:32:52.498Z",
+  "browser": "three isolated Chrome contexts via Playwright CLI",
+  "matches": [
+    {
+      "players": 3,
+      "rounds": 12,
+      "phase": "completed",
+      "scores": [8, 0, 0],
+      "ranks": [1, 2, 2],
+      "allClientsAgree": true,
+      "feedbackSongCounts": [8, 1, 1],
+      "guestActions": "Each guest made one wrong claim; only that player was locked for that question."
+    }
+  ],
+  "failure": {
+    "players": 2,
+    "phase": "aborted",
+    "round": 2,
+    "cause": "current audio request aborted by browser QA",
+    "guestProfileVersion": 1,
+    "guestSongEvidenceCount": 0
+  },
+  "layout": [
+    {
+      "viewport": 360,
+      "document": 360
+    },
+    {
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "viewport": 430,
+      "document": 430
+    }
+  ],
+  "checks": {
+    "fullSuite": {
+      "passed": 508,
+      "failed": 1,
+      "failure": "local loopback ETIMEDOUT in standard duel HTTP test"
+    },
+    "affectedFileRerun": {
+      "passed": 4,
+      "failed": 0
+    },
+    "build": true,
+    "typecheck": true,
+    "eslint": true,
+    "prettier": true
+  },
+  "environmentNotes": [
+    "Tool kernel resets stopped its child preview server; final preview was relaunched as an independent hidden host process.",
+    "Automatic approval timeout recovered on one permitted retry."
+  ],
+  "boundary": "QA claims match only the currently returned audio hash to visible song titles. No future plan, seed, score injection or clock acceleration. Human recognition and QQ WebView device acceptance are not claimed.",
+  "artifacts": [
+    {
+      "name": "three-player-result.png",
+      "sha256": "fbf885461505d5c9190b6d726b83bc9c0c7f6a66091ac01003200cf66bc05165",
+      "location": "local output/playwright/d3-browser; not committed"
+    },
+    {
+      "name": "final-mobile-board.png",
+      "sha256": "d6c07e8ab845905c80d14ccf24546bb00f5aa2ba501e702376f5a845a13e5c3e",
+      "location": "local output/playwright/d3-browser; not committed"
+    },
+    {
+      "name": "playback-failure.png",
+      "sha256": "d94c4995a4f8c76114ee906544cb8a5bcb29d892add053c010dacc71110702ce",
+      "location": "local output/playwright/d3-browser; not committed"
+    }
+  ]
+}

@@ -14,3 +14,8 @@ export {
   createDuelPreparation,
   type DuelPreparationController,
 } from './duel-preparation.js';
+
+export {
+  createMultiplayerPreparation,
+  type MultiplayerPreparationController,
+} from './multiplayer-preparation.js';

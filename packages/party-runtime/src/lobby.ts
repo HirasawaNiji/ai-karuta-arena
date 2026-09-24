@@ -3,6 +3,8 @@ import {
   RawUserMusicDataSchema,
   type GameEvent,
   type DuelResult,
+  type GameResult,
+  MULTIPLAYER_RULES,
   GameTypeSchema,
   PlayerIdSchema,
   LobbyEntrySchema,
@@ -62,12 +64,14 @@ export function createLobby(
     nickname: string;
     online: boolean;
     lobbyReady: boolean;
+    waitingForNextMatch: boolean;
     profile: PlayerMusicProfile;
     raw: RawUserMusicData;
     feedback: RawUserMusicData[];
   };
   const members = new Map<PlayerId, Member>();
   let preset: LobbySnapshot['preset'] = 'quick';
+  let mode: LobbySnapshot['mode'] = 'duel';
   let revision = 0;
   let assessment: LobbySnapshot['assessment'] = null;
   let selectedSongIds: LobbySnapshot['selectedSongIds'] = [];
@@ -101,7 +105,11 @@ export function createLobby(
     selectedSongIds = [];
     for (const m of members.values()) m.lobbyReady = false;
   }
-  function join(id: PlayerId, displayName: string) {
+  function join(
+    id: PlayerId,
+    displayName: string,
+    waitingForNextMatch = false,
+  ) {
     PlayerIdSchema.parse(id);
     const { nickname } = LobbyEntrySchema.parse({ nickname: displayName });
     if (members.has(id) || members.size >= 8)
@@ -132,18 +140,19 @@ export function createLobby(
       nickname,
       online: true,
       lobbyReady: false,
+      waitingForNextMatch,
       profile,
       raw,
       feedback: [],
     });
-    invalidate();
+    if (!waitingForNextMatch) invalidate();
   }
   function setOnline(id: PlayerId, online: boolean) {
     const m = members.get(id);
     if (!m) throw new Error('成员会话已失效');
     if (m.online !== online) {
       m.online = online;
-      invalidate();
+      if (!m.waitingForNextMatch) invalidate();
     }
   }
   function matrix(at: string) {
@@ -163,11 +172,13 @@ export function createLobby(
       revision,
       hostId,
       preset,
+      mode,
       members: [...members.values()].map((m) => ({
         id: m.id,
         nickname: m.nickname,
         online: m.online,
         lobbyReady: m.lobbyReady,
+        waitingForNextMatch: m.waitingForNextMatch,
         matchReady: null,
         profileVersion: m.profile.profileVersion,
       })),
@@ -178,7 +189,10 @@ export function createLobby(
       stage: assessment ? 'assessed' : 'lobby',
       canStart: false,
       startBlocker:
-        playableCount < DUEL_PRESETS[preset].minimumCandidates
+        playableCount <
+        (mode === 'multiplayer'
+          ? MULTIPLAYER_RULES.questionCount
+          : DUEL_PRESETS[preset].minimumCandidates)
           ? '已核验可玩素材不足，请先完成素材核验。'
           : '请进入听歌抢牌，完成双方选歌、禁歌和最终准备。',
     });
@@ -196,8 +210,10 @@ export function createLobby(
     const cmd = LobbyCommandSchema.parse(input);
     const m = members.get(id);
     if (!m || !m.online) throw new Error('成员不在线');
-    if ((cmd.type === 'preset' || cmd.type === 'assess') && id !== hostId)
+    if (['preset', 'assess', 'mode'].includes(cmd.type) && id !== hostId)
       throw new Error('仅房主可执行此操作');
+    if (m.waitingForNextMatch && cmd.type !== 'profile' && cmd.type !== 'leave')
+      throw new Error('请等待下一局');
     if (cmd.type === 'profile') {
       const at = deps.now();
       const raw = deps.submitProfile(id, cmd.preferences, catalog(), at);
@@ -213,7 +229,12 @@ export function createLobby(
       );
       m.raw = raw;
       m.profile = profile;
-      invalidate();
+      if (!m.waitingForNextMatch) invalidate();
+    } else if (cmd.type === 'mode') {
+      if (mode !== cmd.mode) {
+        mode = cmd.mode;
+        invalidate();
+      }
     } else if (cmd.type === 'preset') {
       if (preset !== cmd.preset) {
         preset = cmd.preset;
@@ -228,7 +249,7 @@ export function createLobby(
       if (id === hostId) {
         for (const member of members.values()) member.online = false;
       } else members.delete(id);
-      invalidate();
+      if (!m.waitingForNextMatch) invalidate();
     } else {
       if (
         members.size !== 2 ||
@@ -290,16 +311,25 @@ export function createLobby(
   }
   const settled = new Set<string>();
   function settleDuel(result: DuelResult, events: readonly GameEvent[]) {
+    settleGame(result.game, events);
+  }
+  function releaseWaiting() {
+    if ([...members.values()].some((m) => m.waitingForNextMatch)) {
+      for (const m of members.values()) m.waitingForNextMatch = false;
+      invalidate();
+    }
+  }
+  function settleGame(result: GameResult, events: readonly GameEvent[]) {
     if (
-      result.game.status !== 'completed' ||
-      settled.has(result.game.session.gameSessionId)
+      result.status !== 'completed' ||
+      settled.has(result.session.gameSessionId)
     )
       return;
-    const at = result.game.endedAt;
+    const at = result.endedAt;
     const evidence = events.flatMap((event) => {
       const e = gameplayEvidence({
         catalog: catalog(),
-        session: result.game.session,
+        session: result.session,
         event,
         sourceId: 'runtime:gameplay',
         observedAt: at,
@@ -312,8 +342,7 @@ export function createLobby(
         schemaVersion: 1,
         sourceId: 'runtime:gameplay',
         userId: m.id,
-        snapshotId:
-          'feedback:' + result.game.session.gameSessionId + ':' + m.id,
+        snapshotId: 'feedback:' + result.session.gameSessionId + ':' + m.id,
         observedAt: at,
         evidence: evidence.filter((e) => e.playerId === m.id),
         declaredPreferences: emptyPreferences(),
@@ -335,7 +364,8 @@ export function createLobby(
       m.feedback = feedback;
       m.profile = profile;
     }
-    settled.add(result.game.session.gameSessionId);
+    settled.add(result.session.gameSessionId);
+    releaseWaiting();
     invalidate();
   }
   return {
@@ -346,6 +376,8 @@ export function createLobby(
     self,
     preparationContext,
     settleDuel,
+    settleGame,
+    releaseWaiting,
   };
 }
 export type LobbyController = ReturnType<typeof createLobby>;

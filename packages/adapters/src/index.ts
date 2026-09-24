@@ -13,3 +13,8 @@ export {
   createKarutaDuel,
   shuffledQuestions,
 } from './karuta/duel-engine.js';
+
+export {
+  MultiplayerFactory,
+  createMultiplayer,
+} from './karuta/multiplayer-engine.js';
