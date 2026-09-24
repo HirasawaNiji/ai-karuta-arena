@@ -41,7 +41,7 @@
 - ZIP：322,756,985 字节；SHA-256：`f9037d3d3835938e820d582bd59d85c65d100f4f017f2c6a0f052c2221ad73b4`。
 - CSV：106 条、106 个 sourceTrackId；音频均存在且经 ffprobe / ffmpeg 完整解码，时长 29,989–30,000 ms。
 - 105 条具有可解码卡面，对应 105 个唯一 engineCardKey；与实际 HTTP catalog 逐项一致。
-- `PJSK-184-A`（化けの花）声明 MISSING_COVER，缺封面，被明确列为 excluded。与 `PJSK-090-A` 同名不证明同录音，不按标题合并。
+- `PJSK-184-A`（化けの花）声明 MISSING_COVER，缺封面，被明确列为 excluded。与 `PJSK-090-A` 同名不证明同录音，不按标题合并。这是原引擎图卡入口的排除条件；D1 的文字歌牌不强制封面，核实录音/题目身份后可另建文字卡，不能把缺封面永久等同于不可播放。
 - CSV 指向 `mp3_files/PJSK/...`，实际是 `mp3_files/seg_30/PJSK/...`。报告记录实际成员、字节数、内容哈希，不能把 CSV 的原音源大小当片段大小。
 - 106 条 artist 都缺失；manifest 仅声明 lite 模式，没有原录音版本、切片起点或前奏语义证明。文件名含 seg_30 不能证明是前奏。
 - 报告统一标记 `semanticReview: pending`、`segmentKind: unverified`、`productionEligible: false`。sourceTrackId 与 engineCardKey 是来源标识，不直接冒充 core 的 SongId/RecordingId/QuestionId。
