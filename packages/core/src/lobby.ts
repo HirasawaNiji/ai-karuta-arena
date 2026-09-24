@@ -20,7 +20,7 @@ export const LobbyCommandSchema = z.discriminatedUnion('type', [
   z.strictObject({ type: z.literal('preset'), preset: DuelPresetIdSchema }),
   z.strictObject({
     type: z.literal('mode'),
-    mode: z.enum(['duel', 'multiplayer']),
+    mode: z.enum(['duel', 'multiplayer', 'tournament']),
   }),
   z.strictObject({ type: z.literal('ready'), ready: z.boolean() }),
   z.strictObject({ type: z.literal('assess') }),
@@ -32,7 +32,7 @@ export interface LobbySnapshot {
   readonly revision: number;
   readonly hostId: PlayerId;
   readonly preset: DuelPresetId;
-  readonly mode: 'duel' | 'multiplayer';
+  readonly mode: 'duel' | 'multiplayer' | 'tournament';
   readonly members: readonly {
     readonly id: PlayerId;
     readonly nickname: string;

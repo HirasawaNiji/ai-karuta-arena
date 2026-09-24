@@ -19,3 +19,9 @@ export {
   createMultiplayerPreparation,
   type MultiplayerPreparationController,
 } from './multiplayer-preparation.js';
+
+export { createTournament, type TournamentController } from './tournament.js';
+export {
+  createTournamentPreparation,
+  type TournamentPreparationController,
+} from './tournament-preparation.js';

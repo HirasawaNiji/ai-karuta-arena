@@ -319,7 +319,11 @@ export function createLobby(
       invalidate();
     }
   }
-  function settleGame(result: GameResult, events: readonly GameEvent[]) {
+  function settleGame(
+    result: GameResult,
+    events: readonly GameEvent[],
+    preserveWaiting = false,
+  ) {
     if (
       result.status !== 'completed' ||
       settled.has(result.session.gameSessionId)
@@ -365,7 +369,7 @@ export function createLobby(
       m.profile = profile;
     }
     settled.add(result.session.gameSessionId);
-    releaseWaiting();
+    if (!preserveWaiting) releaseWaiting();
     invalidate();
   }
   return {

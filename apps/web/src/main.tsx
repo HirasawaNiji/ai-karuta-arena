@@ -6,6 +6,7 @@ import {
   type Catalog,
   type DuelPreparationView,
   type MultiplayerPreparationView,
+  type TournamentView,
   MULTIPLAYER_RULES,
   type LobbySnapshot,
   type LobbySelf,
@@ -14,6 +15,7 @@ import {
 } from '@amp/core';
 import { DuelPanel } from './duel.js';
 import { MultiplayerPanel } from './multiplayer.js';
+import { TournamentPanel } from './tournament.js';
 import { platform } from './platform.js';
 import './style.css';
 
@@ -57,6 +59,7 @@ const levels = {
   intro: '前奏就能认出',
 } as const;
 function App() {
+  const [tournament, setTournament] = useState<TournamentView | null>(null);
   const [multi, setMulti] = useState<MultiplayerPreparationView | null>(null);
   const [duel, setDuel] = useState<DuelPreparationView | null>(null);
   const [entry, setEntry] = useState<Entry | null>(null);
@@ -124,6 +127,14 @@ function App() {
   useEffect(() => {
     if (!roomId) return;
     const events = new EventSource('/api/events');
+    void api<TournamentView>('/api/tournament')
+      .then(setTournament)
+      .catch(() => {});
+    events.addEventListener('tournament', (event) =>
+      setTournament(
+        JSON.parse((event as MessageEvent<string>).data) as TournamentView,
+      ),
+    );
     void api<MultiplayerPreparationView>('/api/multiplayer')
       .then(setMulti)
       .catch(() => {});
@@ -174,6 +185,7 @@ function App() {
       setEntry(null);
       setDuel(null);
       setMulti(null);
+      setTournament(null);
       setNotice('房间已结束或已退出。');
     });
     return () => {
@@ -426,9 +438,11 @@ function App() {
             </div>
             <nav className="steps" aria-label="派对进度">
               <button
-                disabled={[duel?.game, multi?.game].some(
-                  (g) => g && !['completed', 'aborted'].includes(g.phase),
-                )}
+                disabled={[
+                  duel?.game,
+                  multi?.game,
+                  tournament?.preparation?.game,
+                ].some((g) => g && !['completed', 'aborted'].includes(g.phase))}
                 aria-current={screen === 'profile' ? 'step' : undefined}
                 onClick={() => {
                   platform.pauseAudio();
@@ -438,9 +452,11 @@ function App() {
                 01 音乐偏好
               </button>
               <button
-                disabled={[duel?.game, multi?.game].some(
-                  (g) => g && !['completed', 'aborted'].includes(g.phase),
-                )}
+                disabled={[
+                  duel?.game,
+                  multi?.game,
+                  tournament?.preparation?.game,
+                ].some((g) => g && !['completed', 'aborted'].includes(g.phase))}
                 aria-current={screen === 'lobby' ? 'step' : undefined}
                 onClick={() => {
                   platform.pauseAudio();
@@ -457,7 +473,19 @@ function App() {
               </button>
             </nav>
             {screen === 'duel' ? (
-              room.mode === 'multiplayer' ? (
+              room.mode === 'tournament' ? (
+                tournament && entry && library ? (
+                  <TournamentPanel
+                    room={room}
+                    playerId={entry.playerId as LobbySnapshot['hostId']}
+                    songs={library.songs}
+                    view={tournament}
+                    onView={setTournament}
+                  />
+                ) : (
+                  <p>正在加载赛程…</p>
+                )
+              ) : room.mode === 'multiplayer' ? (
                 multi && entry && library ? (
                   <MultiplayerPanel
                     room={room}
@@ -609,7 +637,7 @@ function App() {
                       <span className="pill">
                         {room.mode === 'multiplayer'
                           ? '多人同场'
-                          : '1v1 预评估'}
+                          : room.mode === 'tournament' ? '好友淘汰赛' : '1v1 预评估'}
                       </span>
                     </div>
                     <div className="members">
@@ -709,7 +737,7 @@ function App() {
                         busy ||
                         !connected ||
                         !host ||
-                        room.mode === 'multiplayer' ||
+                        room.mode !== 'duel' ||
                         room.members.length !== 2 ||
                         room.members.some((m) => !m.online || !m.lobbyReady)
                       }
@@ -725,30 +753,38 @@ function App() {
                   <section className="panel">
                     <h2>这一局怎么听</h2>
                     <div className="preset-list">
-                      {(['duel', 'multiplayer'] as const).map((mode) => (
-                        <button
-                          key={mode}
-                          disabled={!host || busy || !connected}
-                          aria-pressed={room.mode === mode}
-                          onClick={() =>
-                            void action(async () =>
-                              command({ type: 'mode', mode }),
-                            )
-                          }
-                        >
-                          <strong>
-                            {mode === 'duel' ? '双人经典抢牌' : '多人同场抢牌'}
-                          </strong>
-                          <small>
-                            {mode === 'duel'
-                              ? '先清空手牌获胜'
-                              : '2–8 人 · 12 题 · 同分并列'}
-                          </small>
-                        </button>
-                      ))}
+                      {(['duel', 'multiplayer', 'tournament'] as const).map(
+                        (mode) => (
+                          <button
+                            key={mode}
+                            disabled={!host || busy || !connected}
+                            aria-pressed={room.mode === mode}
+                            onClick={() =>
+                              void action(async () =>
+                                command({ type: 'mode', mode }),
+                              )
+                            }
+                          >
+                            <strong>
+                              {mode === 'duel'
+                                ? '双人经典抢牌'
+                                : mode === 'multiplayer'
+                                  ? '多人同场抢牌'
+                                  : '好友单淘汰赛'}
+                            </strong>
+                            <small>
+                              {mode === 'duel'
+                                ? '先清空手牌获胜'
+                                : mode === 'multiplayer'
+                                  ? '2–8 人 · 12 题 · 同分并列'
+                                  : '4 / 8 人 · 半决赛到冠军'}
+                            </small>
+                          </button>
+                        ),
+                      )}
                     </div>
                     <div className="preset-list">
-                      {room.mode === 'duel' &&
+                      {room.mode !== 'multiplayer' &&
                         Object.entries(DUEL_PRESETS).map(([id, p]) => (
                           <button
                             key={id}

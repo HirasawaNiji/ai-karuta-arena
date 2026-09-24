@@ -38,6 +38,7 @@ import { canStart } from './can-start.js';
 
 type Context = ReturnType<LobbyController['preparationContext']>;
 export interface DuelPreparationDependencies {
+  readonly onResult?: (result: DuelResult) => void;
   readonly context: () => Context;
   readonly factory: DuelEngineFactory;
   readonly now: () => number;
@@ -252,6 +253,7 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
     const result = game?.result();
     if (result && !completed) {
       if (result.game.status === 'completed') deps.onCompleted(result, events);
+      deps.onResult?.(result);
       completed = true;
     }
   }
