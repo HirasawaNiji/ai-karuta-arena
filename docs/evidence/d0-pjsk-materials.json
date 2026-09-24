@@ -1,0 +1,5084 @@
+{
+  "schemaVersion": "d0-material-audit-v1",
+  "package": "jla-muca-pjsk-lite.zip",
+  "packageSha256": "f9037d3d3835938e820d582bd59d85c65d100f4f017f2c6a0f052c2221ad73b4",
+  "metadataRows": 106,
+  "availableRecords": 105,
+  "scope": "Existing user-administered Karuta material; not an open-source license or QQ distribution grant.",
+  "records": [
+    {
+      "sourceTrackId": "PJSK-079-A",
+      "title": "「1」",
+      "artist": null,
+      "workName": "「1」",
+      "engineCardKey": "79|music_cover/PJSK/079_PJSK_「1」.webp|「1」",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/079_PJSK_「1」.mp3",
+        "sha256": "a1725b7718504a8a0880935d773cafdfc0f64bdbbdfcd2bd19ab9aafa2f6dfaa",
+        "bytes": 2120208,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/079_PJSK_「1」.webp",
+        "sha256": "e855e01d854dd61f2be575eeb0f5af82003ce49f5d60eb3794ccfa19bacde973",
+        "bytes": 469532,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-080-A",
+      "title": "抜錨",
+      "artist": null,
+      "workName": "抜錨",
+      "engineCardKey": "80|music_cover/PJSK/080_PJSK_抜錨.webp|抜錨",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/080_PJSK_抜錨.mp3",
+        "sha256": "49607f3ec91c6a5ea506d1f3cd60578d28083b28e2e489e94bd5cef77def490d",
+        "bytes": 1281009,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/080_PJSK_抜錨.webp",
+        "sha256": "dad0d08a15477fec5d1063f109e686a3ebe87daea4224aa0538bb5658c1368b8",
+        "bytes": 139932,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-081-A",
+      "title": "春嵐",
+      "artist": null,
+      "workName": "春嵐",
+      "engineCardKey": "81|music_cover/PJSK/081_PJSK_春嵐.webp|春嵐",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/081_PJSK_春嵐.mp3",
+        "sha256": "3fd73851a0f4d037e77917f30ac35775b685a6a5c5a614ce41fd51fa5aa6f0e9",
+        "bytes": 1425271,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/081_PJSK_春嵐.webp",
+        "sha256": "a5f2b272a226db1bd5dfb664b1d8bdf2f53f7226accdf8f2596992fcdc8a9bd7",
+        "bytes": 655800,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-082-A",
+      "title": "地球最後の告白を",
+      "artist": null,
+      "workName": "地球最後の告白を",
+      "engineCardKey": "82|music_cover/PJSK/082_PJSK_地球最後の告白を.webp|地球最後の告白を",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/082_PJSK_地球最後の告白を.mp3",
+        "sha256": "a8aed47e0bd560d64b7c2abdf25e775ad6c9bd9edce477ca4a7980eb1797e588",
+        "bytes": 3187985,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/082_PJSK_地球最後の告白を.webp",
+        "sha256": "443a06e659aeb0a002b88b66a7953d12660e20f0ae48c37311ab1b98adcf2dfe",
+        "bytes": 397220,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-083-A",
+      "title": "帝国少女",
+      "artist": null,
+      "workName": "帝国少女",
+      "engineCardKey": "83|music_cover/PJSK/083_PJSK_帝国少女.webp|帝国少女",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/083_PJSK_帝国少女.mp3",
+        "sha256": "081bf74c1736c30e04661d5bc29a75d82e6418683b9e41ef411a1b8bd660e7fe",
+        "bytes": 1864266,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/083_PJSK_帝国少女.webp",
+        "sha256": "9b63ed5d6e561bb82456806407f570511f5c7eabf1517f0ecfb4cb53c2413c7d",
+        "bytes": 606322,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-084-A",
+      "title": "独りんぼエンヴィー",
+      "artist": null,
+      "workName": "独りんぼエンヴィー",
+      "engineCardKey": "84|music_cover/PJSK/084_PJSK_独りんぼエンヴィー.webp|独りんぼエンヴィー",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/084_PJSK_独りんぼエンヴィー.mp3",
+        "sha256": "3f258da6aac9c48f9ce867f412b83c2590beca1785bc2716dc0ecc9fc8ab5f75",
+        "bytes": 2260588,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/084_PJSK_独りんぼエンヴィー.webp",
+        "sha256": "9ecac35cc713f62b7e2f8b4b1edf0bfbd91abb3d08e22326f019158061dbea73",
+        "bytes": 442280,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-085-A",
+      "title": "悪役にキスシーンを",
+      "artist": null,
+      "workName": "悪役にキスシーンを",
+      "engineCardKey": "85|music_cover/PJSK/085_PJSK_悪役にキスシーンを.webp|悪役にキスシーンを",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/085_PJSK_悪役にキスシーンを.mp3",
+        "sha256": "f408b7633386498592b76f695c9b166ea88a19e681f21a1559d0ac2869055bb1",
+        "bytes": 1205035,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/085_PJSK_悪役にキスシーンを.webp",
+        "sha256": "8e43484a6e84549d3cfa1dac65de8acaca7b6316c8f230f54f4612c7785b38a4",
+        "bytes": 384254,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-086-A",
+      "title": "悪ノ娘",
+      "artist": null,
+      "workName": "悪ノ娘",
+      "engineCardKey": "86|music_cover/PJSK/086_PJSK_悪ノ娘.webp|悪ノ娘",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/086_PJSK_悪ノ娘.mp3",
+        "sha256": "38b40e0736c9eca2626634f96568967ec98d0b841b29e94e0807fc8f6dffda30",
+        "bytes": 760908,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/086_PJSK_悪ノ娘.webp",
+        "sha256": "f89c338ec54304dab33d551a9eb1c99a9025c54072813547a67be6019ba37c43",
+        "bytes": 465302,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-087-A",
+      "title": "仮死化",
+      "artist": null,
+      "workName": "仮死化",
+      "engineCardKey": "87|music_cover/PJSK/087_PJSK_仮死化.webp|仮死化",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/087_PJSK_仮死化.mp3",
+        "sha256": "4e00320bf84c738d9c73f69ff950ddf3a3289be7b7e124f824089ca78c7b7104",
+        "bytes": 2165816,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/087_PJSK_仮死化.webp",
+        "sha256": "b01aa889b2896e8dc0b91833f93a839e7104ab7678fda34990bf5174104c414f",
+        "bytes": 554884,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-088-A",
+      "title": "古書屋敷殺人事件",
+      "artist": null,
+      "workName": "古書屋敷殺人事件",
+      "engineCardKey": "88|music_cover/PJSK/088_PJSK_古書屋敷殺人事件.webp|古書屋敷殺人事件",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/088_PJSK_古書屋敷殺人事件.mp3",
+        "sha256": "c2cb431b28f3d295a32984b4ffcde86e5e8c2f6d78e122ae153b5bc3c7cb98f7",
+        "bytes": 1226642,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/088_PJSK_古書屋敷殺人事件.webp",
+        "sha256": "83536be4eb39d5bbadf86baa57d8be11e01d7b969d25bd3210f341212865a358",
+        "bytes": 496932,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-089-A",
+      "title": "光線歌",
+      "artist": null,
+      "workName": "光線歌",
+      "engineCardKey": "89|music_cover/PJSK/089_PJSK_光線歌.webp|光線歌",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/089_PJSK_光線歌.mp3",
+        "sha256": "d5a9a33c6ad4c5492b3565793294fe68670eb63e011b98977e98506033f4fc51",
+        "bytes": 1349554,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/089_PJSK_光線歌.webp",
+        "sha256": "efcaa4c48d528f5ad49b004e9328cfdae80ef2fe2ba8b663b7518a338b68b4b4",
+        "bytes": 564262,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-090-A",
+      "title": "化けの花",
+      "artist": null,
+      "workName": "化けの花",
+      "engineCardKey": "90|music_cover/PJSK/090_PJSK_化けの花.webp|化けの花",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/090_PJSK_化けの花.mp3",
+        "sha256": "5819b61ad14e2d3eec8985b6a7fde4fa426594b41ad899d0519fdb20f20cae7a",
+        "bytes": 1146692,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/090_PJSK_化けの花.webp",
+        "sha256": "6ba602406a1db51082c046a7510323a765e4f66190d1fa32d3d01e46b7da6613",
+        "bytes": 710656,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-091-A",
+      "title": "悔やむと書いてミライ",
+      "artist": null,
+      "workName": "悔やむと書いてミライ",
+      "engineCardKey": "91|music_cover/PJSK/091_PJSK_悔やむと書いてミライ.webp|悔やむと書いてミライ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/091_PJSK_悔やむと書いてミライ.mp3",
+        "sha256": "caeeb9f97cd70cc338d0e74f39816ad957a73f854755f5de826140618375edfb",
+        "bytes": 1432530,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/091_PJSK_悔やむと書いてミライ.webp",
+        "sha256": "7f4fe94f038dff8dda497cc9619a34c6d9219548635daee67482343b23a0aead",
+        "bytes": 663184,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-092-A",
+      "title": "街",
+      "artist": null,
+      "workName": "街",
+      "engineCardKey": "92|music_cover/PJSK/092_PJSK_街.webp|街",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/092_PJSK_街.mp3",
+        "sha256": "45cc01766f840a186f6f76f5fc7c98ecc3466c21a3a3083f7cd8c6aea25fdd3c",
+        "bytes": 2691029,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/092_PJSK_街.webp",
+        "sha256": "5838e30f57e094cd7f55a0fb86601463edb518de097bf5afc7250ace437627c9",
+        "bytes": 802190,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-093-A",
+      "title": "君の夜をくれ",
+      "artist": null,
+      "workName": "君の夜をくれ",
+      "engineCardKey": "93|music_cover/PJSK/093_PJSK_君の夜をくれ.webp|君の夜をくれ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/093_PJSK_君の夜をくれ.mp3",
+        "sha256": "5ea118fbc58c5cd793d2c6a1284617dbe54e8a69312d62f0f7bef27ad83bceaa",
+        "bytes": 2102812,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/093_PJSK_君の夜をくれ.webp",
+        "sha256": "761ad8331dd51f965948f09393ebe5b5ff1a854e244e1712276a0b02a4657b45",
+        "bytes": 347440,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-094-A",
+      "title": "恋愛裁判",
+      "artist": null,
+      "workName": "恋愛裁判",
+      "engineCardKey": "94|music_cover/PJSK/094_PJSK_恋愛裁判.webp|恋愛裁判",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/094_PJSK_恋愛裁判.mp3",
+        "sha256": "f5e5a70c33813ab1074ae41cbdaf4adbd0409dd97df80214974b538bbf640d83",
+        "bytes": 3187935,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/094_PJSK_恋愛裁判.webp",
+        "sha256": "472455468d674b041d5bc9fbc1b5043c8035df4002c58557c4cfac63a4372395",
+        "bytes": 153864,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-095-A",
+      "title": "劣等上等",
+      "artist": null,
+      "workName": "劣等上等",
+      "engineCardKey": "95|music_cover/PJSK/095_PJSK_劣等上等.webp|劣等上等",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/095_PJSK_劣等上等.mp3",
+        "sha256": "0c65b6ee5f07f7ffb828b5747c1800e7eb89ef6b9a393e93eed0bacff73c8d46",
+        "bytes": 1242982,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/095_PJSK_劣等上等.webp",
+        "sha256": "5e70e9cc674cb135b143272b2589dc09d6881c1e25ff6d26f1e31fae1e1af109",
+        "bytes": 584568,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-096-A",
+      "title": "烈火",
+      "artist": null,
+      "workName": "烈火",
+      "engineCardKey": "96|music_cover/PJSK/096_PJSK_烈火.webp|烈火",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/096_PJSK_烈火.mp3",
+        "sha256": "06ffae2b2e05a4145a234abb9f791a70ceeebe4698bd16df1b0cd0fa9c9196e0",
+        "bytes": 1081367,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/096_PJSK_烈火.webp",
+        "sha256": "6adf827d8ac982fd7d1c22e481cd933c8d1b7f1f229281ec3e25839bc317ce10",
+        "bytes": 759446,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-097-A",
+      "title": "泥中に咲く",
+      "artist": null,
+      "workName": "泥中に咲く",
+      "engineCardKey": "97|music_cover/PJSK/097_PJSK_泥中に咲く.webp|泥中に咲く",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/097_PJSK_泥中に咲く.mp3",
+        "sha256": "3250f60dddbd731c3ed525e3b2744a63330e479ae139c2e4a0b994e001a05524",
+        "bytes": 2508245,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/097_PJSK_泥中に咲く.webp",
+        "sha256": "715c1d07a1d541fe82601c9428a232615a44d55aa3d2d90d094d7d139b930a68",
+        "bytes": 461586,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-098-A",
+      "title": "青く駆けろ！",
+      "artist": null,
+      "workName": "青く駆けろ！",
+      "engineCardKey": "98|music_cover/PJSK/098_PJSK_青く駆けろ！.webp|青く駆けろ！",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/098_PJSK_青く駆けろ！.mp3",
+        "sha256": "baf51efc5089714c6072b21b557f46d55d77f5fd0a99ca19e38cca4569e3fa7e",
+        "bytes": 3588048,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/098_PJSK_青く駆けろ！.webp",
+        "sha256": "85641d1c4bac233d017b444798c34a34017e9c9e94c8157307bad046088a6dab",
+        "bytes": 587386,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-099-A",
+      "title": "熱異常",
+      "artist": null,
+      "workName": "熱異常",
+      "engineCardKey": "99|music_cover/PJSK/099_PJSK_熱異常.webp|熱異常",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/099_PJSK_熱異常.mp3",
+        "sha256": "0bca3cd58d528f2def43f64f26b0cc86f79aedda40c1d41ac3df6d7bfc866270",
+        "bytes": 1010888,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/099_PJSK_熱異常.webp",
+        "sha256": "e5ae9d11323431237474436344b4839a831ab702353a082215ac07b20583d38b",
+        "bytes": 667578,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-100-A",
+      "title": "如月アテンション",
+      "artist": null,
+      "workName": "如月アテンション",
+      "engineCardKey": "100|music_cover/PJSK/100_PJSK_如月アテンション.webp|如月アテンション",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/100_PJSK_如月アテンション.mp3",
+        "sha256": "3f11e12ab691eb9c1465f8e3df63099910d0396713a1d10e7a37fd340a58a645",
+        "bytes": 1205011,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/100_PJSK_如月アテンション.webp",
+        "sha256": "7e137477c22c0665e1f1a49d47c0f8d5f053eb11c9c20d71f90050c00be68001",
+        "bytes": 662846,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-101-A",
+      "title": "少女A",
+      "artist": null,
+      "workName": "少女A",
+      "engineCardKey": "101|music_cover/PJSK/101_PJSK_少女A.webp|少女A",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/101_PJSK_少女A.mp3",
+        "sha256": "bea3550d1cc2b9c5a775a9a9af633858d91c9e17e4076894c2e03e23bc8f3043",
+        "bytes": 993059,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/101_PJSK_少女A.webp",
+        "sha256": "ce288b4fc1c342ffcbbc33b4d64d25e578bfc9b15232de9c55c1ce78128f2eef",
+        "bytes": 116234,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-102-A",
+      "title": "少女レイ",
+      "artist": null,
+      "workName": "少女レイ",
+      "engineCardKey": "102|music_cover/PJSK/102_PJSK_少女レイ.webp|少女レイ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/102_PJSK_少女レイ.mp3",
+        "sha256": "1fb31c6644deff9be84f4f9653f19de901682481f78cd837ea9312d1518ab1bb",
+        "bytes": 2337987,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/102_PJSK_少女レイ.webp",
+        "sha256": "448e12d6a1bf0ab5fc40ee4874e335ec8df95000f172fbda92ef42525679d076",
+        "bytes": 440604,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-103-A",
+      "title": "神のまにまに",
+      "artist": null,
+      "workName": "神のまにまに",
+      "engineCardKey": "103|music_cover/PJSK/103_PJSK_神のまにまに.webp|神のまにまに",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/103_PJSK_神のまにまに.mp3",
+        "sha256": "860293f0b60f27ce394e17347758ad0660f279626625b1a44910ce07c3a2433e",
+        "bytes": 2277168,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/103_PJSK_神のまにまに.webp",
+        "sha256": "e35dfc24f0eb7e1250472c9e072bf884eb6c40b2c09aee23868250948b4230d6",
+        "bytes": 554408,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-104-A",
+      "title": "失敗作少女",
+      "artist": null,
+      "workName": "失敗作少女",
+      "engineCardKey": "104|music_cover/PJSK/104_PJSK_失敗作少女.webp|失敗作少女",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/104_PJSK_失敗作少女.mp3",
+        "sha256": "1cfbb58f4f33b605481f1227013e675a411ee8c65733c051b27b9f2b105729ce",
+        "bytes": 2676644,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/104_PJSK_失敗作少女.webp",
+        "sha256": "3c5aa4ed3ebe63d22a6d5ac1a9e2b9987fe52eb53cf459bc953575309dadb779",
+        "bytes": 569694,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-105-A",
+      "title": "私は雨",
+      "artist": null,
+      "workName": "私は雨",
+      "engineCardKey": "105|music_cover/PJSK/105_PJSK_私は雨.webp|私は雨",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/105_PJSK_私は雨.mp3",
+        "sha256": "cbf32b0f5aa885c552ef7d7cd2b56382d01093fe8bd6b78eb850e6ffd7d68079",
+        "bytes": 2692916,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/105_PJSK_私は雨.webp",
+        "sha256": "26f30b500eeed66a0317d9b56bf3c994e50c6f3d877dc887709e1d589493c509",
+        "bytes": 389468,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-106-A",
+      "title": "透明なパレット",
+      "artist": null,
+      "workName": "透明なパレット",
+      "engineCardKey": "106|music_cover/PJSK/106_PJSK_透明なパレット.webp|透明なパレット",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/106_PJSK_透明なパレット.mp3",
+        "sha256": "94b03c5ae2a3bbf6f140a2effdf18eb34c6e0097e4babedc7d7bd98f9c7a8867",
+        "bytes": 3308068,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/106_PJSK_透明なパレット.webp",
+        "sha256": "cac98b51c7f766e3a0556dc57ac5a5a49084f3b5b129e37bbe0cd1edd11a198b",
+        "bytes": 500302,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-107-A",
+      "title": "妄想感傷代償連盟",
+      "artist": null,
+      "workName": "妄想感傷代償連盟",
+      "engineCardKey": "107|music_cover/PJSK/107_PJSK_妄想感傷代償連盟.webp|妄想感傷代償連盟",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/107_PJSK_妄想感傷代償連盟.mp3",
+        "sha256": "3e188037d2111d186f5ec85e6caf48069055318a92841ffaed8eeb53268d9b93",
+        "bytes": 2508251,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/107_PJSK_妄想感傷代償連盟.webp",
+        "sha256": "af9c5438ea17d94930c2e66c6df07ac5338b5b32fdf20ca1f064397f760599b4",
+        "bytes": 218382,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-108-A",
+      "title": "威風堂",
+      "artist": null,
+      "workName": "威風堂",
+      "engineCardKey": "108|music_cover/PJSK/108_PJSK_威風堂.webp|威風堂",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/108_PJSK_威風堂.mp3",
+        "sha256": "8343c20b9b79d3253b0b86f449ae9d1afa60b5823171971e1b36490e8e4634ea",
+        "bytes": 1267682,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/108_PJSK_威風堂.webp",
+        "sha256": "e3f6b00d3c4feed8c2cb079218cc36de415648af766f4447734910a5fa4fa90f",
+        "bytes": 574948,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-109-A",
+      "title": "下剋上",
+      "artist": null,
+      "workName": "下剋上",
+      "engineCardKey": "109|music_cover/PJSK/109_PJSK_下剋上.webp|下剋上",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/109_PJSK_下剋上.mp3",
+        "sha256": "9b97a59dd98abcf7a16cad84d553eadccb556f401eac693250845b6a2cbd7705",
+        "bytes": 2203179,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/109_PJSK_下剋上.webp",
+        "sha256": "43048c4ac910b8b9b78f2b8921d0c553bd036ee4100a9f5a66f3fb469541a9ce",
+        "bytes": 425066,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-110-A",
+      "title": "限りなく灰色へ",
+      "artist": null,
+      "workName": "限りなく灰色へ",
+      "engineCardKey": "110|music_cover/PJSK/110_PJSK_限りなく灰色へ.webp|限りなく灰色へ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/110_PJSK_限りなく灰色へ.mp3",
+        "sha256": "c1e68779f75e89c7386a50aa5c0c6ac162546d8688b919e93fcf3b292283362e",
+        "bytes": 2172348,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/110_PJSK_限りなく灰色へ.webp",
+        "sha256": "921e531d690a3283be9325aca477952c82cfdf8363789f9aaf03c25bf5dd0bb9",
+        "bytes": 306748,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-111-A",
+      "title": "携帯恋話",
+      "artist": null,
+      "workName": "携帯恋話",
+      "engineCardKey": "111|music_cover/PJSK/111_PJSK_携帯恋話.webp|携帯恋話",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/111_PJSK_携帯恋話.mp3",
+        "sha256": "01df3fc02cf9d46f5596f8cedbacf954ca95c4690fda71ee8914bbd72a0dc29a",
+        "bytes": 1432496,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/111_PJSK_携帯恋話.webp",
+        "sha256": "e969771d98ef921f09c2a875c5e153373be73f74ada0e19d3bff134827a7b03b",
+        "bytes": 502614,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-112-A",
+      "title": "心予報",
+      "artist": null,
+      "workName": "心予報",
+      "engineCardKey": "112|music_cover/PJSK/112_PJSK_心予報.webp|心予報",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/112_PJSK_心予報.mp3",
+        "sha256": "515fe142cae57355070d021df121c6fde1ff6fd18ea95e494d91f37dab2c48b4",
+        "bytes": 2338007,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/112_PJSK_心予報.webp",
+        "sha256": "c45693f178b53d5715b12668c753a4de52c2064d8f33868ffc1bcf2f379160e5",
+        "bytes": 389812,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-113-A",
+      "title": "星空のメロディー",
+      "artist": null,
+      "workName": "星空のメロディー",
+      "engineCardKey": "113|music_cover/PJSK/113_PJSK_星空のメロディー.webp|星空のメロディー",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/113_PJSK_星空のメロディー.mp3",
+        "sha256": "7e70e30486d55705f533dcc9becf417f0bc63966ed9c8665cc8f2aae0acea58c",
+        "bytes": 1968851,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/113_PJSK_星空のメロディー.webp",
+        "sha256": "e9da2134c6c6946b8d5b235bbdc8b30eb77d650699cbef963ae53ecfa1701da5",
+        "bytes": 246528,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-114-A",
+      "title": "幸福刑",
+      "artist": null,
+      "workName": "幸福刑",
+      "engineCardKey": "114|music_cover/PJSK/114_PJSK_幸福刑.webp|幸福刑",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/114_PJSK_幸福刑.mp3",
+        "sha256": "d5abddfa12f74746922d34f7d5b004d7cb1012eb8fcf633dd12363e4af6396dd",
+        "bytes": 659726,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/114_PJSK_幸福刑.webp",
+        "sha256": "bd983599802506d12859e35290d066d6da66b57581059b9050509712ff4fa7f7",
+        "bytes": 530974,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-115-A",
+      "title": "虚ろを扇ぐ",
+      "artist": null,
+      "workName": "虚ろを扇ぐ",
+      "engineCardKey": "115|music_cover/PJSK/115_PJSK_虚ろを扇ぐ.webp|虚ろを扇ぐ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/115_PJSK_虚ろを扇ぐ.mp3",
+        "sha256": "9ad67621f7841b724111722234425782d86d279f01b63e9621d566cfda7f19cd",
+        "bytes": 2165820,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/115_PJSK_虚ろを扇ぐ.webp",
+        "sha256": "6caf4cd66209330ab97e0a350edc95bd5d2ff4f685088622094e38df29755f08",
+        "bytes": 321264,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-116-A",
+      "title": "演劇",
+      "artist": null,
+      "workName": "演劇",
+      "engineCardKey": "116|music_cover/PJSK/116_PJSK_演劇.webp|演劇",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/116_PJSK_演劇.mp3",
+        "sha256": "e283a6e79578699a00296e451c98025713a08b6ce661e1648609ec51321dd20e",
+        "bytes": 1207652,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/116_PJSK_演劇.webp",
+        "sha256": "851a929acd18969467dc38897d354d2b80e0f2b3d7d98bfa86a67be34a788cd4",
+        "bytes": 545554,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 733
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-117-A",
+      "title": "踊れオーケストラ",
+      "artist": null,
+      "workName": "踊れオーケストラ",
+      "engineCardKey": "117|music_cover/PJSK/117_PJSK_踊れオーケストラ.webp|踊れオーケストラ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/117_PJSK_踊れオーケストラ.mp3",
+        "sha256": "834e4c84bb6c29fb1c4a2e4ed654fc5aeb668ea07b08a553df78316e7d3816fa",
+        "bytes": 2277172,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/117_PJSK_踊れオーケストラ.webp",
+        "sha256": "5ba865c8d316d10d699d21e4beefcd6f109b60e2f67a45ad65c93f2770c5e2af",
+        "bytes": 125192,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-118-A",
+      "title": "幽霊東京",
+      "artist": null,
+      "workName": "幽霊東京",
+      "engineCardKey": "118|music_cover/PJSK/118_PJSK_幽霊東京.webp|幽霊東京",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/118_PJSK_幽霊東京.mp3",
+        "sha256": "7561b86f76702bf2a4c855f7994dab6e72969ce2f0a87a26283f0bfbc8af7b14",
+        "bytes": 3065981,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/118_PJSK_幽霊東京.webp",
+        "sha256": "b6c234edccdb8e3eb07179ca3f5c2df41de2119402a6bd41c3e4639a69bfdf35",
+        "bytes": 553600,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-119-A",
+      "title": "余花にみとれて",
+      "artist": null,
+      "workName": "余花にみとれて",
+      "engineCardKey": "119|music_cover/PJSK/119_PJSK_余花にみとれて.webp|余花にみとれて",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/119_PJSK_余花にみとれて.mp3",
+        "sha256": "e4e2c6b824dcfe633abea0eda86a8badcc934cb087f0d062ac4adca7354a0bdd",
+        "bytes": 2193963,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/119_PJSK_余花にみとれて.webp",
+        "sha256": "9a15282bc7538b4f88aa41b4a2a466114f9bbdd1e60cd39d616d7b1c67938dc8",
+        "bytes": 353784,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-120-A",
+      "title": "月光",
+      "artist": null,
+      "workName": "月光",
+      "engineCardKey": "120|music_cover/PJSK/120_PJSK_月光.webp|月光",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/120_PJSK_月光.mp3",
+        "sha256": "b2bb62d4b2ba2eedf4b9ca8f33f5abbf0eb726b21c34ed76c44dad1bde357fc9",
+        "bytes": 2691033,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/120_PJSK_月光.webp",
+        "sha256": "dc7aef0ad332aa58720377f0144875992bea08d7b3fa0d850ed4001d23a04486",
+        "bytes": 319338,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-121-A",
+      "title": "自傷無色",
+      "artist": null,
+      "workName": "自傷無色",
+      "engineCardKey": "121|music_cover/PJSK/121_PJSK_自傷無色.webp|自傷無色",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/121_PJSK_自傷無色.mp3",
+        "sha256": "b12b4ede7f2260c81a316f267e2824d927e905fc12df8eecc9939e835d9a672f",
+        "bytes": 2260500,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/121_PJSK_自傷無色.webp",
+        "sha256": "019be0da9e3ba3f3b0bbc3b12eda8e36ee3412f41c27fabdadd00e01131cc03e",
+        "bytes": 684948,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-122-A",
+      "title": "酔いどれ知らず",
+      "artist": null,
+      "workName": "酔いどれ知らず",
+      "engineCardKey": "122|music_cover/PJSK/122_PJSK_酔いどれ知らず.webp|酔いどれ知らず",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/122_PJSK_酔いどれ知らず.mp3",
+        "sha256": "5fd50292715e8889814ee80569b79bb84ad2bc4d673e09eeca02f89266733d7e",
+        "bytes": 2852978,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/122_PJSK_酔いどれ知らず.webp",
+        "sha256": "812e190ae8376ddde1321954e9e7d4387c641b818b6dc688c9493271e69f87e0",
+        "bytes": 623778,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-123-A",
+      "title": "Awake Now",
+      "artist": null,
+      "workName": "Awake Now",
+      "engineCardKey": "123|music_cover/PJSK/123_PJSK_Awake Now.webp|Awake Now",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/123_PJSK_Awake Now.mp3",
+        "sha256": "bdba6b22402e75f7224a37c7279c00e2591ecaf2213e0ed66d98672e3e6d1528",
+        "bytes": 1248523,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/123_PJSK_Awake Now.webp",
+        "sha256": "3e7c8165c028cbbf0ff2d0c8c02add9cfae6917b63f891c871e5dd6c9fd8bdd9",
+        "bytes": 446056,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-124-A",
+      "title": "blender",
+      "artist": null,
+      "workName": "blender",
+      "engineCardKey": "124|music_cover/PJSK/124_PJSK_blender.webp|blender",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/124_PJSK_blender.mp3",
+        "sha256": "7bdddf7631116c525d04e1d04ab38530b89406deb260faf3a664229274a8b1e2",
+        "bytes": 1528010,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/124_PJSK_blender.webp",
+        "sha256": "9a2d10dbd98c69b65ab2ff3d887af24a25103a22fa2b1f9db2d33cb438ecd686",
+        "bytes": 332188,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-125-A",
+      "title": "DAYBREAK FRONTLINE",
+      "artist": null,
+      "workName": "DAYBREAK FRONTLINE",
+      "engineCardKey": "125|music_cover/PJSK/125_PJSK_DAYBREAK FRONTLINE.webp|DAYBREAK FRONTLINE",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/125_PJSK_DAYBREAK FRONTLINE.mp3",
+        "sha256": "4261bad27c3c5fb0515f1161e353af7d2f31713ac07db3e90725be556bb200cd",
+        "bytes": 1864314,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/125_PJSK_DAYBREAK FRONTLINE.webp",
+        "sha256": "5c22174452d0d5c3e3221be40c811cfa1639a8ad2489b5a83dd67b33f900f8e0",
+        "bytes": 469390,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-126-A",
+      "title": "DNA",
+      "artist": null,
+      "workName": "DNA",
+      "engineCardKey": "126|music_cover/PJSK/126_PJSK_DNA.webp|DNA",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/126_PJSK_DNA.mp3",
+        "sha256": "ceab484161f75344395527b89029cfc53bcef6108308466d6e3d8fd5a3210d86",
+        "bytes": 1692413,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/126_PJSK_DNA.webp",
+        "sha256": "391c6b8206ce06ccec6c8861d11e47d1f01b498dcbfbcc4b8c837c1c025ea229",
+        "bytes": 484528,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-127-A",
+      "title": "Flyer!",
+      "artist": null,
+      "workName": "Flyer!",
+      "engineCardKey": "127|music_cover/PJSK/127_PJSK_Flyer!.webp|Flyer!",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/127_PJSK_Flyer!.mp3",
+        "sha256": "0627d19b451b89bf3d4e68b08007e4a93b6bb2d76d538ddbf9040789fc8e6a68",
+        "bytes": 1240005,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/127_PJSK_Flyer!.webp",
+        "sha256": "db88c370993109bec9ee745a257c6ccc675ecb4064ee05a89fa9a24db3b54865",
+        "bytes": 464144,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 739
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-128-A",
+      "title": "from Y to Y",
+      "artist": null,
+      "workName": "from Y to Y",
+      "engineCardKey": "128|music_cover/PJSK/128_PJSK_from Y to Y.webp|from Y to Y",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/128_PJSK_from Y to Y.mp3",
+        "sha256": "0d2b6bf45d30b884b5daa3ae8ea9640c82ae93d78ce2bb772b792c69ad8f9b06",
+        "bytes": 3587978,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/128_PJSK_from Y to Y.webp",
+        "sha256": "6cd8e5d1e01849a562fbb8d9bab2e6c997c7966a3f86736e5bb1106b2239c7cb",
+        "bytes": 54234,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-129-A",
+      "title": "Hello,world!",
+      "artist": null,
+      "workName": "Hello,world!",
+      "engineCardKey": "129|music_cover/PJSK/129_PJSK_Hello,world!.webp|Hello,world!",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/129_PJSK_Hello,world!.mp3",
+        "sha256": "60071e24cf3809144da8c3998dcc1d88fd377ada934d6033a58ec1eff6573aa9",
+        "bytes": 756500,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/129_PJSK_Hello,world!.webp",
+        "sha256": "ab4bb1f8771efbcf8c84fea48c21da8379fa71382193eb049313791ed4a21493",
+        "bytes": 535974,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-130-A",
+      "title": "Iなんです",
+      "artist": null,
+      "workName": "Iなんです",
+      "engineCardKey": "130|music_cover/PJSK/130_PJSK_Iなんです.webp|Iなんです",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/130_PJSK_Iなんです.mp3",
+        "sha256": "e40b4923889ed95683bdfb1d76a9e0ee7f41ca64706c15f490b5a73baa83d6c5",
+        "bytes": 2102790,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/130_PJSK_Iなんです.webp",
+        "sha256": "620a5ce64d5d9995d786c1717b797790e41ea422c60569d444b6c855a2fa6119",
+        "bytes": 285228,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-131-A",
+      "title": "KING",
+      "artist": null,
+      "workName": "KING",
+      "engineCardKey": "131|music_cover/PJSK/131_PJSK_KING.webp|KING",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/131_PJSK_KING.mp3",
+        "sha256": "292be2f63e482e0022a027f6bd087407a5eb91f150fa2691e382b5d520a806a2",
+        "bytes": 2949218,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/131_PJSK_KING.webp",
+        "sha256": "8f209b949c7d8364a9eb3e810b6863872244b45d30719a1c9a3ccbe60858ecf0",
+        "bytes": 504622,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-132-A",
+      "title": "needLe",
+      "artist": null,
+      "workName": "needLe",
+      "engineCardKey": "132|music_cover/PJSK/132_PJSK_needLe.webp|needLe",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/132_PJSK_needLe.mp3",
+        "sha256": "03dafffbbbe64fad66ea22a56eeda710c0cae70d9887c25cd03ebf4ff11c6b87",
+        "bytes": 1799427,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/132_PJSK_needLe.webp",
+        "sha256": "33e64f963d1ccd8810860b3268d9e58fafaa081e0278029bb407f5341e57515b",
+        "bytes": 504348,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-133-A",
+      "title": "purpose",
+      "artist": null,
+      "workName": "purpose",
+      "engineCardKey": "133|music_cover/PJSK/133_PJSK_purpose.webp|purpose",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/133_PJSK_purpose.mp3",
+        "sha256": "01425e08a9adfac3c175c2b8d00395db1e161e7da720ac3c414f65001a027070",
+        "bytes": 1261690,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/133_PJSK_purpose.webp",
+        "sha256": "29bccb542f54d039d66a0acb6739d33b61c72062f47fc6d262cbf514825789e1",
+        "bytes": 381470,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-134-A",
+      "title": "QUEEN Full ver",
+      "artist": null,
+      "workName": "QUEEN Full ver",
+      "engineCardKey": "134|music_cover/PJSK/134_PJSK_QUEEN Full ver.webp|QUEEN Full ver",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/134_PJSK_QUEEN Full ver.mp3",
+        "sha256": "3fff4725eaeaf37a16912d326602c6f7afc740069bd4c49d2c1aeb7282302c81",
+        "bytes": 2383362,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/134_PJSK_QUEEN Full ver.webp",
+        "sha256": "aee5f88dfc1a747b304a20a6c96eec8cebc527c6bff65235b3868f80f2932456",
+        "bytes": 482484,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-135-A",
+      "title": "ray",
+      "artist": null,
+      "workName": "ray",
+      "engineCardKey": "135|music_cover/PJSK/135_PJSK_ray.webp|ray",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/135_PJSK_ray.mp3",
+        "sha256": "1eb6495489beaa2c822a609306899172e0495b861432d60bb4e24b93de9a213d",
+        "bytes": 2836172,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/135_PJSK_ray.webp",
+        "sha256": "1004ceb1a5ba5c1f75e66e1f803f106c4abaab6774c7e461a3834d902ca08033",
+        "bytes": 614796,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-136-A",
+      "title": "Ready Steady",
+      "artist": null,
+      "workName": "Ready Steady",
+      "engineCardKey": "136|music_cover/PJSK/136_PJSK_Ready Steady.webp|Ready Steady",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/136_PJSK_Ready Steady.mp3",
+        "sha256": "dd2f08f76443523275558c501e47792537866fa8d8c18318aa37c71e9e328cdf",
+        "bytes": 1144697,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/136_PJSK_Ready Steady.webp",
+        "sha256": "037407f8313b0630f8a084c37304be5383364761808d36a0dec5be1de9b745a5",
+        "bytes": 597458,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-137-A",
+      "title": "STAGE OF SEKAI",
+      "artist": null,
+      "workName": "STAGE OF SEKAI",
+      "engineCardKey": "137|music_cover/PJSK/137_PJSK_STAGE OF SEKAI.webp|STAGE OF SEKAI",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/137_PJSK_STAGE OF SEKAI.mp3",
+        "sha256": "d8ca39cfa33af69582dcaeaad33b320d91b81f05618e0058d5b8366a22f76c9e",
+        "bytes": 2149094,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/137_PJSK_STAGE OF SEKAI.webp",
+        "sha256": "b626a8a6df2ac0640af2a04cfdd355cd7c01f0c59411087b18d9b2ca6a639d6a",
+        "bytes": 374156,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-138-A",
+      "title": "Supernova",
+      "artist": null,
+      "workName": "Supernova",
+      "engineCardKey": "138|music_cover/PJSK/138_PJSK_Supernova.webp|Supernova",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/138_PJSK_Supernova.mp3",
+        "sha256": "e2fa32579fc59db7906c0719b3257bc3c8f936034a0fe6620da592fee4499aec",
+        "bytes": 1143889,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/138_PJSK_Supernova.webp",
+        "sha256": "41ee9251fc46558b46d066c12ab8493c5e56ba380b443123415810820d975aed",
+        "bytes": 342466,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-139-A",
+      "title": "Voices",
+      "artist": null,
+      "workName": "Voices",
+      "engineCardKey": "139|music_cover/PJSK/139_PJSK_Voices.webp|Voices",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/139_PJSK_Voices.mp3",
+        "sha256": "11cb3fc19d23ddd0dba913a5e892cbb81cf6517236aeb8f934dc96fd7445ddfe",
+        "bytes": 2571785,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/139_PJSK_Voices.webp",
+        "sha256": "577f53a201c780f961814b4cd03ffef909d65221c5766ffbff0ecd2e796b0c68",
+        "bytes": 536268,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-140-A",
+      "title": "YY",
+      "artist": null,
+      "workName": "YY",
+      "engineCardKey": "140|music_cover/PJSK/140_PJSK_YY.webp|YY",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/140_PJSK_YY.mp3",
+        "sha256": "dc062f218fdfe5e98a36dfef77a5a89190464888ecabe62a502114f378dfab75",
+        "bytes": 1864282,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/140_PJSK_YY.webp",
+        "sha256": "93cea17efbe7d94f165236c22a1f4e8e6f34fd6797d7896b4cf606f8e3db60d7",
+        "bytes": 71630,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-141-A",
+      "title": "アイドル新鋭隊",
+      "artist": null,
+      "workName": "アイドル新鋭隊",
+      "engineCardKey": "141|music_cover/PJSK/141_PJSK_アイドル新鋭隊.webp|アイドル新鋭隊",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/141_PJSK_アイドル新鋭隊.mp3",
+        "sha256": "b73042ff446251a0b79634e6abdfc96fcbff0de2c23fe280551c160c9e76b945",
+        "bytes": 1407169,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/141_PJSK_アイドル新鋭隊.webp",
+        "sha256": "8dd851a64d59df9c3eb4f7244dadf5efaa57c06408bed64088135df26a23bd8a",
+        "bytes": 615236,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-142-A",
+      "title": "アスノヨゾラ哨戒班",
+      "artist": null,
+      "workName": "アスノヨゾラ哨戒班",
+      "engineCardKey": "142|music_cover/PJSK/142_PJSK_アスノヨゾラ哨戒班.webp|アスノヨゾラ哨戒班",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/142_PJSK_アスノヨゾラ哨戒班.mp3",
+        "sha256": "3059a40010e6b304d26968d1529b89b93b9433f8745f6bdda96f32dcac3ec130",
+        "bytes": 3587992,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/142_PJSK_アスノヨゾラ哨戒班.webp",
+        "sha256": "8025919b3393639b0c210bc324789d0920682c5902c1b9e895d4c2483efe1e3c",
+        "bytes": 385788,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-143-A",
+      "title": "アトラクトライト",
+      "artist": null,
+      "workName": "アトラクトライト",
+      "engineCardKey": "143|music_cover/PJSK/143_PJSK_アトラクトライト.webp|アトラクトライト",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/143_PJSK_アトラクトライト.mp3",
+        "sha256": "aca347e6416e4c42f5b34fa94942adb1e923612b7b7ebb6fa89a008652fa4700",
+        "bytes": 1912635,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/143_PJSK_アトラクトライト.webp",
+        "sha256": "b2ba885085952e8a3f10ef3a46f52dd44835cececa2d6de803902d2a2836465f",
+        "bytes": 304190,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-144-A",
+      "title": "イフ",
+      "artist": null,
+      "workName": "イフ",
+      "engineCardKey": "144|music_cover/PJSK/144_PJSK_イフ.webp|イフ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/144_PJSK_イフ.mp3",
+        "sha256": "31dbec9956704246d69543ae1840a4ac69d2df9b9cb92bd13e21f3089740698e",
+        "bytes": 2454005,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/144_PJSK_イフ.webp",
+        "sha256": "9829fd3425fa6ace1fb0a0f056eca7a993da41451e71baefaf8dd02b5293de97",
+        "bytes": 517414,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-145-A",
+      "title": "エイリアンエイリアン",
+      "artist": null,
+      "workName": "エイリアンエイリアン",
+      "engineCardKey": "145|music_cover/PJSK/145_PJSK_エイリアンエイリアン.webp|エイリアンエイリアン",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/145_PJSK_エイリアンエイリアン.mp3",
+        "sha256": "98f4d147f71b9f9dbb4ea1670dca516d4e3fdd0cd0b6882a61cc66cd8eec1b77",
+        "bytes": 2277160,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/145_PJSK_エイリアンエイリアン.webp",
+        "sha256": "a25f30e187259b5b653f24e5b5a8054498fe09d1862954545e1eab35260a0c81",
+        "bytes": 115032,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-146-A",
+      "title": "エンパープル",
+      "artist": null,
+      "workName": "エンパープル",
+      "engineCardKey": "146|music_cover/PJSK/146_PJSK_エンパープル.webp|エンパープル",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/146_PJSK_エンパープル.mp3",
+        "sha256": "d1ac1c5b1f3a5bcd5a4b234ce799fd3adee7a27d151a58acd3b0c924e07a03a5",
+        "bytes": 3714268,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/146_PJSK_エンパープル.webp",
+        "sha256": "3d0fa91f1f357fd8aed7356defd463573db60251b90261e6aee07786d6c4ecc9",
+        "bytes": 524202,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-147-A",
+      "title": "オーバーライド",
+      "artist": null,
+      "workName": "オーバーライド",
+      "engineCardKey": "147|music_cover/PJSK/147_PJSK_オーバーライド.webp|オーバーライド",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/147_PJSK_オーバーライド.mp3",
+        "sha256": "0d86172510bb7e5c855466747c3a92cebac4267faf4ece150954a914e6e1a09b",
+        "bytes": 1619596,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/147_PJSK_オーバーライド.webp",
+        "sha256": "faf8785e1754a6f51adb538388f5ef4135d1a4581f12b55fd39a33ec4c3c8c77",
+        "bytes": 318982,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-148-A",
+      "title": "からくりピエロ",
+      "artist": null,
+      "workName": "からくりピエロ",
+      "engineCardKey": "148|music_cover/PJSK/148_PJSK_からくりピエロ.webp|からくりピエロ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/148_PJSK_からくりピエロ.mp3",
+        "sha256": "cf2ec1ce3d62cd2eaaa4fb8c3bbc8d4bf5fc494c426a489428fee44f7c6b5dd1",
+        "bytes": 2338015,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/148_PJSK_からくりピエロ.webp",
+        "sha256": "6b35e53863aa9bf7fcf8bfcc983099a7ecaa0c58d4d3efabd4cff8e84e5aba1e",
+        "bytes": 535982,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-149-A",
+      "title": "きゅうくらりん",
+      "artist": null,
+      "workName": "きゅうくらりん",
+      "engineCardKey": "149|music_cover/PJSK/149_PJSK_きゅうくらりん.webp|きゅうくらりん",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/149_PJSK_きゅうくらりん.mp3",
+        "sha256": "e20d554e6bf0175eec34d91b59b7867a463684b8a62eb2616c47acaa17a4592d",
+        "bytes": 1205029,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/149_PJSK_きゅうくらりん.webp",
+        "sha256": "33521764f6c8d8ca061d44bb24b967a7205449cd9f13e80c65ddb26c3911989e",
+        "bytes": 257516,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-150-A",
+      "title": "キティ",
+      "artist": null,
+      "workName": "キティ",
+      "engineCardKey": "150|music_cover/PJSK/150_PJSK_キティ.webp|キティ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/150_PJSK_キティ.mp3",
+        "sha256": "d5b2ed1714c6a793419e2ba279f02f4a3cbe4d5b7e0fb37c1ac56e96c9240cea",
+        "bytes": 1321983,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/150_PJSK_キティ.webp",
+        "sha256": "78f21d91641dd64dd0a0e6f6e1a0041cfba72dd3dd4319f4db45aadfb923c9f6",
+        "bytes": 527128,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-151-A",
+      "title": "キャットラビング",
+      "artist": null,
+      "workName": "キャットラビング",
+      "engineCardKey": "151|music_cover/PJSK/151_PJSK_キャットラビング.webp|キャットラビング",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/151_PJSK_キャットラビング.mp3",
+        "sha256": "d4d54746b05e532063e3100731517b250f8fc00ca1aa1bb3cf9a73b85e92ccb6",
+        "bytes": 880471,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/151_PJSK_キャットラビング.webp",
+        "sha256": "3e74b7e66acb5781647de2a8b47c2b7fdb839deca9887885e7d19aa19e5d691d",
+        "bytes": 534704,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-152-A",
+      "title": "さよならプリンセス",
+      "artist": null,
+      "workName": "さよならプリンセス",
+      "engineCardKey": "152|music_cover/PJSK/152_PJSK_さよならプリンセス.webp|さよならプリンセス",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/152_PJSK_さよならプリンセス.mp3",
+        "sha256": "995328365f6f07cda937c0a696ff9aaad510f8c30f96496e988d200812b5644b",
+        "bytes": 1205011,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/152_PJSK_さよならプリンセス.webp",
+        "sha256": "09bb9469ab6583589eb12a121fcf1b687060be85e7747361b5ccef945a8e281a",
+        "bytes": 306272,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-153-A",
+      "title": "サイバーパンクデッドボーイ",
+      "artist": null,
+      "workName": "サイバーパンクデッドボーイ",
+      "engineCardKey": "153|music_cover/PJSK/153_PJSK_サイバーパンクデッドボーイ.webp|サイバーパンクデッドボーイ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/153_PJSK_サイバーパンクデッドボーイ.mp3",
+        "sha256": "af90513ba799010d618020baba377f8686be3b79b669d7836ac94edd648f2522",
+        "bytes": 1609232,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/153_PJSK_サイバーパンクデッドボーイ.webp",
+        "sha256": "3218defe2de4f62a174d82395217ff66c97d2fc4309233fb80acae4db3cd42f2",
+        "bytes": 421812,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-154-A",
+      "title": "サマータイムレコード",
+      "artist": null,
+      "workName": "サマータイムレコード",
+      "engineCardKey": "154|music_cover/PJSK/154_PJSK_サマータイムレコード.webp|サマータイムレコード",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/154_PJSK_サマータイムレコード.mp3",
+        "sha256": "f025f6a0ed902722c9e0d79685c5f7d20d8a8028b4c9823e4d1a946682f63381",
+        "bytes": 1433980,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/154_PJSK_サマータイムレコード.webp",
+        "sha256": "838e4ea9f51220805356c491d20a75a661fc3e2eef5c0fce124806af606bb32a",
+        "bytes": 343618,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-155-A",
+      "title": "ザムザ",
+      "artist": null,
+      "workName": "ザムザ",
+      "engineCardKey": "155|music_cover/PJSK/155_PJSK_ザムザ.webp|ザムザ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/155_PJSK_ザムザ.mp3",
+        "sha256": "77cea3d7c70797786fffc873814a967b9fcba4e0d6c139b7a11616fa137f7826",
+        "bytes": 1321987,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/155_PJSK_ザムザ.webp",
+        "sha256": "c9e844c5a894721da71bb07bfe51ed20f762329cd8d1459124b3e748b70596ce",
+        "bytes": 238698,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-156-A",
+      "title": "ジェヘナ",
+      "artist": null,
+      "workName": "ジェヘナ",
+      "engineCardKey": "156|music_cover/PJSK/156_PJSK_ジェヘナ.webp|ジェヘナ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/156_PJSK_ジェヘナ.mp3",
+        "sha256": "48ebf61080fa84fc50f1eb572c64d2fd9c37d3fda7e37627a092753a00392517",
+        "bytes": 2508245,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/156_PJSK_ジェヘナ.webp",
+        "sha256": "a6ba65c144862409c4f1ab6454e431537013e504f020c5d7a29da69577047f7c",
+        "bytes": 621932,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-157-A",
+      "title": "シネマ",
+      "artist": null,
+      "workName": "シネマ",
+      "engineCardKey": "157|music_cover/PJSK/157_PJSK_シネマ.webp|シネマ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/157_PJSK_シネマ.mp3",
+        "sha256": "2dadaadd4a70a5d5cc6ceb6ca771cdfb314f63ea632f7bb3fdc59645840dfd01",
+        "bytes": 1294283,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/157_PJSK_シネマ.webp",
+        "sha256": "d549bf94b33bef042ca7dd7969a93d9f3f42e2d43c491279e23eead0159205db",
+        "bytes": 310900,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-158-A",
+      "title": "シャルル",
+      "artist": null,
+      "workName": "シャルル",
+      "engineCardKey": "158|music_cover/PJSK/158_PJSK_シャルル.webp|シャルル",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/158_PJSK_シャルル.mp3",
+        "sha256": "a1b6fcd44fea7a5cef305a14bed2cdf65c232b54515b499b917afc49919ca1f1",
+        "bytes": 2260432,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/158_PJSK_シャルル.webp",
+        "sha256": "207bdf330bd2e2a70cb1cd5bbcc33388af3b6eb2a6dba0d22f93894cc692ed01",
+        "bytes": 358572,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-159-A",
+      "title": "すれすれ",
+      "artist": null,
+      "workName": "すれすれ",
+      "engineCardKey": "159|music_cover/PJSK/159_PJSK_すれすれ.webp|すれすれ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/159_PJSK_すれすれ.mp3",
+        "sha256": "e3df4e9f5eedf3aa700846fa317a596fce531db4b3253b1355016bbe00397e0d",
+        "bytes": 725773,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/159_PJSK_すれすれ.webp",
+        "sha256": "13e833f44b0dca1e9f48b05a3f0a17d13b48f243cf5242a23615e18a2d1f27be",
+        "bytes": 285392,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-160-A",
+      "title": "ステラ",
+      "artist": null,
+      "workName": "ステラ",
+      "engineCardKey": "160|music_cover/PJSK/160_PJSK_ステラ.webp|ステラ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/160_PJSK_ステラ.mp3",
+        "sha256": "f5e5278f1ab80bc121cbebcc5243596354b15a685218e73bf4e5173c9aa0ad92",
+        "bytes": 1799411,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/160_PJSK_ステラ.webp",
+        "sha256": "43edffcfd9698028770f20d58e82c0a0bb24302057339dca1a47f34b359ff8d6",
+        "bytes": 728604,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-161-A",
+      "title": "スマイルシンフォニー",
+      "artist": null,
+      "workName": "スマイルシンフォニー",
+      "engineCardKey": "161|music_cover/PJSK/161_PJSK_スマイルシンフォニー.webp|スマイルシンフォニー",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/161_PJSK_スマイルシンフォニー.mp3",
+        "sha256": "4029f4fbc21b68b11cad9160c2bcfdc09962e0599c484b01830ecf90172b1bd4",
+        "bytes": 2162761,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/161_PJSK_スマイルシンフォニー.webp",
+        "sha256": "b0c6e04c004d169b602d10029e02311ee91d09d4024cd511a4cb6b9b2ad8ed50",
+        "bytes": 490678,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-162-A",
+      "title": "タイムマシン",
+      "artist": null,
+      "workName": "タイムマシン",
+      "engineCardKey": "162|music_cover/PJSK/162_PJSK_タイムマシン.webp|タイムマシン",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/162_PJSK_タイムマシン.mp3",
+        "sha256": "c0b29d7b802bb82b6c4f04cb85fab9cb4615ce7de2d87ddae72d90503173f2c4",
+        "bytes": 3588036,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/162_PJSK_タイムマシン.webp",
+        "sha256": "bb0712bb4bce22889282484dd9a9a69e2532e2a8794b3b17e6f550251f9a06e3",
+        "bytes": 453804,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-163-A",
+      "title": "チームメイト",
+      "artist": null,
+      "workName": "チームメイト",
+      "engineCardKey": "163|music_cover/PJSK/163_PJSK_チームメイト.webp|チームメイト",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/163_PJSK_チームメイト.mp3",
+        "sha256": "9829d78ac30083b0768f8ffaa953489fb48111f6757ca6e269b087bb0c1b36b8",
+        "bytes": 1941375,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/163_PJSK_チームメイト.webp",
+        "sha256": "c7214489170d3812ebb48fdadbdd3fb262fe82dd443d8a3f187df2d3361b794b",
+        "bytes": 343838,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-164-A",
+      "title": "てらてら",
+      "artist": null,
+      "workName": "てらてら",
+      "engineCardKey": "164|music_cover/PJSK/164_PJSK_てらてら.webp|てらてら",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/164_PJSK_てらてら.mp3",
+        "sha256": "44d241f0fcb6cbbed0d45eab838a1c528d8561309fe856e5a1a3fd189b3627be",
+        "bytes": 2226544,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/164_PJSK_てらてら.webp",
+        "sha256": "24bf5c630a2c4857b9c546ca8ca752da61aa71b5cfe6b79f2cc5462cb520c9f1",
+        "bytes": 365450,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-165-A",
+      "title": "とても素敵な六月でした",
+      "artist": null,
+      "workName": "とても素敵な六月でした",
+      "engineCardKey": "165|music_cover/PJSK/165_PJSK_とても素敵な六月でした.webp|とても素敵な六月でした",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/165_PJSK_とても素敵な六月でした.mp3",
+        "sha256": "60245f9ee63dbb21dd7de475861f271d083c49bfca8109419eef0aee2653540a",
+        "bytes": 1010888,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/165_PJSK_とても素敵な六月でした.webp",
+        "sha256": "0a4d8aae177546acacfc113df1c1a9ed485c89de7de934470a024c1c1c40c8b9",
+        "bytes": 622234,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-166-A",
+      "title": "にっこり^^調査隊のテーマ",
+      "artist": null,
+      "workName": "にっこり^^調査隊のテーマ",
+      "engineCardKey": "166|music_cover/PJSK/166_PJSK_にっこり^^調査隊のテーマ.webp|にっこり^^調査隊のテーマ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/166_PJSK_にっこり^^調査隊のテーマ.mp3",
+        "sha256": "feb4ec927df456119f4a24b2dd894d265b2580d2153cbb5c4af442873b3c0a88",
+        "bytes": 1208239,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/166_PJSK_にっこり^^調査隊のテーマ.webp",
+        "sha256": "e14c0136bd38338482e8e156ad71fa0e9f0a8aeb5e6f5ce28d74fd458f90b2d0",
+        "bytes": 544980,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-167-A",
+      "title": "バグ",
+      "artist": null,
+      "workName": "バグ",
+      "engineCardKey": "167|music_cover/PJSK/167_PJSK_バグ.webp|バグ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/167_PJSK_バグ.mp3",
+        "sha256": "0b427c8fe1166de2aec5e21113b70ed68be0867bcf5e3697c49d74e81cd0e5bb",
+        "bytes": 2151270,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/167_PJSK_バグ.webp",
+        "sha256": "b0a520e2397787337b7146c0e8ff3954e43a48514a209bc6c2dee67c7744f7e4",
+        "bytes": 773932,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-168-A",
+      "title": "ひつじがいっぴき",
+      "artist": null,
+      "workName": "ひつじがいっぴき",
+      "engineCardKey": "168|music_cover/PJSK/168_PJSK_ひつじがいっぴき.webp|ひつじがいっぴき",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/168_PJSK_ひつじがいっぴき.mp3",
+        "sha256": "896a205bff6c9063183473598e8a097b676980f77f536926a5b9c9a74a7cebfa",
+        "bytes": 2203191,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/168_PJSK_ひつじがいっぴき.webp",
+        "sha256": "b19dec3aaed9ff1a8a6deca42180485ebbf78b619a146cb0463a8ea411aea9b9",
+        "bytes": 587336,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-169-A",
+      "title": "ヒバナ -Reloaded-",
+      "artist": null,
+      "workName": "ヒバナ -Reloaded-",
+      "engineCardKey": "169|music_cover/PJSK/169_PJSK_ヒバナ -Reloaded-.webp|ヒバナ -Reloaded-",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/169_PJSK_ヒバナ -Reloaded-.mp3",
+        "sha256": "3035c2f1accec6201b19155b290f08b2fe2afd16cec1120de91d258c68ea4dc4",
+        "bytes": 3588070,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/169_PJSK_ヒバナ -Reloaded-.webp",
+        "sha256": "6f80555654e86f52ae27219f97f8a7ae2eb762c5d0c8331e86e55cb165fb871b",
+        "bytes": 584250,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-170-A",
+      "title": "ベノム",
+      "artist": null,
+      "workName": "ベノム",
+      "engineCardKey": "170|music_cover/PJSK/170_PJSK_ベノム.webp|ベノム",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/170_PJSK_ベノム.mp3",
+        "sha256": "610a45cd334b1b52bff80cf4fec6a451b9af101c9731b19f1db9269be23d67d0",
+        "bytes": 2260392,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/170_PJSK_ベノム.webp",
+        "sha256": "01e05ad28d6b52ae1f0363b56eca63cdd10e4e86e8e02fedacf3bd4e25dd9590",
+        "bytes": 710084,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-171-A",
+      "title": "ぼくのかみさま",
+      "artist": null,
+      "workName": "ぼくのかみさま",
+      "engineCardKey": "171|music_cover/PJSK/171_PJSK_ぼくのかみさま.webp|ぼくのかみさま",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/171_PJSK_ぼくのかみさま.mp3",
+        "sha256": "f95b62170ccf76465a97e42564caf3b7924ac30b33cd0a3fb24e643aa773911e",
+        "bytes": 1960711,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/171_PJSK_ぼくのかみさま.webp",
+        "sha256": "295df2735ffe22407ea956cf89622455cdfc05bfae000c8972540fd7104f1091",
+        "bytes": 481348,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-172-A",
+      "title": "ボッカデラベリタ",
+      "artist": null,
+      "workName": "ボッカデラベリタ",
+      "engineCardKey": "172|music_cover/PJSK/172_PJSK_ボッカデラベリタ.webp|ボッカデラベリタ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/172_PJSK_ボッカデラベリタ.mp3",
+        "sha256": "62ddfd2926b0f5fe35c271ae75c98d55ae5a82c22737777fd7d095a5012c593c",
+        "bytes": 2260444,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "png",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/172_PJSK_ボッカデラベリタ.webp",
+        "sha256": "598c33a61403a7f1bb212fd8f6d5cd69d26a74bc0f84d9ecaef5014287f53a4d",
+        "bytes": 566620,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-173-A",
+      "title": "ミライ",
+      "artist": null,
+      "workName": "ミライ",
+      "engineCardKey": "173|music_cover/PJSK/173_PJSK_ミライ.webp|ミライ",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/173_PJSK_ミライ.mp3",
+        "sha256": "9f7c7c10de251daddf49058710e5cf2fccad765334d392e1ac722eb454b705cf",
+        "bytes": 1239989,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/173_PJSK_ミライ.webp",
+        "sha256": "1dff85ab07d7a0146d443ea7a24f77fde57d769613f0f13f1382251a56c1b73b",
+        "bytes": 590802,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-174-A",
+      "title": "メランコリック",
+      "artist": null,
+      "workName": "メランコリック",
+      "engineCardKey": "174|music_cover/PJSK/174_PJSK_メランコリック.webp|メランコリック",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/174_PJSK_メランコリック.mp3",
+        "sha256": "13458925f3cddd949f19b838f2d94989b8335cb3b6b7a042120db4af3955d271",
+        "bytes": 1205007,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/174_PJSK_メランコリック.webp",
+        "sha256": "ecd2cb058cccf5c73f80b95ac99e80100fba387f644b1bdaeeb6c0264e936828",
+        "bytes": 368222,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-175-A",
+      "title": "メリュー",
+      "artist": null,
+      "workName": "メリュー",
+      "engineCardKey": "175|music_cover/PJSK/175_PJSK_メリュー.webp|メリュー",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/175_PJSK_メリュー.mp3",
+        "sha256": "d51ce2608101d85bc9168eae3089a03a4f720adeca44aa9fb6bb060cd12d9588",
+        "bytes": 2508247,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/175_PJSK_メリュー.webp",
+        "sha256": "34524e9d5445a5bc1b3b3a400348076a0113c9f7691daa50e0fcda947a64e34f",
+        "bytes": 513296,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-176-A",
+      "title": "モア！ジャンプ！モア！",
+      "artist": null,
+      "workName": "モア！ジャンプ！モア！",
+      "engineCardKey": "176|music_cover/PJSK/176_PJSK_モア！ジャンプ！モア！.webp|モア！ジャンプ！モア！",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/176_PJSK_モア！ジャンプ！モア！.mp3",
+        "sha256": "c8f9fb73e5a814818da1ef9726c0d364ef12d24cf8a2df0045e33889d47d8055",
+        "bytes": 1407171,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/176_PJSK_モア！ジャンプ！モア！.webp",
+        "sha256": "b349094835368904c5384312cbd84ce9e6eeb857c3a1084061a8432bb0b1345a",
+        "bytes": 298566,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-177-A",
+      "title": "モザイクロール (Reloaded)",
+      "artist": null,
+      "workName": "モザイクロール (Reloaded)",
+      "engineCardKey": "177|music_cover/PJSK/177_PJSK_モザイクロール (Reloaded).webp|モザイクロール (Reloaded)",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/177_PJSK_モザイクロール (Reloaded).mp3",
+        "sha256": "7d283ae613d475e64a760bc24b06e1af5edc964632beb5917e3e8aae77e70010",
+        "bytes": 1281045,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/177_PJSK_モザイクロール (Reloaded).webp",
+        "sha256": "1d6212ba114e7f8995eeda1aa8893ac5b9ce0e9d2cd84c044254f868b28ebd11",
+        "bytes": 590012,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-178-A",
+      "title": "モニタリング",
+      "artist": null,
+      "workName": "モニタリング",
+      "engineCardKey": "178|music_cover/PJSK/178_PJSK_モニタリング.webp|モニタリング",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/178_PJSK_モニタリング.mp3",
+        "sha256": "f1779f160f4c05a61d3802bed27f89def714753084c25b45bb3f36711cccd8ba",
+        "bytes": 1322028,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/178_PJSK_モニタリング.webp",
+        "sha256": "537df7fd9c995121316d71217075e07d50b2d4dc4c0235169df0cd15d022ac80",
+        "bytes": 798752,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-179-A",
+      "title": "リモコン",
+      "artist": null,
+      "workName": "リモコン",
+      "engineCardKey": "179|music_cover/PJSK/179_PJSK_リモコン.webp|リモコン",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/179_PJSK_リモコン.mp3",
+        "sha256": "7a423896e9a8f58a6b14ef1f19160667f3b016b975702cc41038585883021fc5",
+        "bytes": 2277158,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/179_PJSK_リモコン.webp",
+        "sha256": "bb727232fd493723d46b0c3c9040c6aab277203762efc7d0b574409dafdf6c15",
+        "bytes": 389964,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-180-A",
+      "title": "レグルス",
+      "artist": null,
+      "workName": "レグルス",
+      "engineCardKey": "180|music_cover/PJSK/180_PJSK_レグルス.webp|レグルス",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/180_PJSK_レグルス.mp3",
+        "sha256": "3e65b904c7ce5fbf75346f14287154f80d4d8b9c78e8fe11fbf46a3c553dec8d",
+        "bytes": 572798,
+        "durationMs": 30000,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/180_PJSK_レグルス.webp",
+        "sha256": "da9eb8e9c36af5aebb60a76d9f4cae83aed95a808e5f68a32e76c848027a92be",
+        "bytes": 646568,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-181-A",
+      "title": "ロウワー",
+      "artist": null,
+      "workName": "ロウワー",
+      "engineCardKey": "181|music_cover/PJSK/181_PJSK_ロウワー.webp|ロウワー",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/181_PJSK_ロウワー.mp3",
+        "sha256": "b01c49f4c86b251e561fa9df76cc489aad2518f7af41a2b345a7d99ef23fe87e",
+        "bytes": 1257734,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/181_PJSK_ロウワー.webp",
+        "sha256": "3d86423d1ab68f07c84c8c94eeba254530b586508ce120f646c6101de5f0f5d1",
+        "bytes": 174454,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-182-A",
+      "title": "ロストエンファウンド",
+      "artist": null,
+      "workName": "ロストエンファウンド",
+      "engineCardKey": "182|music_cover/PJSK/182_PJSK_ロストエンファウンド.webp|ロストエンファウンド",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/182_PJSK_ロストエンファウンド.mp3",
+        "sha256": "9c795eee5f9d69810402a00e196611c48bc1624d97b059931cccd5473682a96b",
+        "bytes": 1912625,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/182_PJSK_ロストエンファウンド.webp",
+        "sha256": "d908a4917477192c55ef686319b52dffedfbe039d703c7e1a982947abd65c49a",
+        "bytes": 312346,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-183-A",
+      "title": "ロストワンの号哭",
+      "artist": null,
+      "workName": "ロストワンの号哭",
+      "engineCardKey": "183|music_cover/PJSK/183_PJSK_ロストワンの号哭.webp|ロストワンの号哭",
+      "sourceMappingStatus": "OK",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/183_PJSK_ロストワンの号哭.mp3",
+        "sha256": "df11da3fa394a9d06a01f061fe45cee494f6fc06565d05a4a4fa33208e91770b",
+        "bytes": 1912611,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": {
+        "member": "music_cover/PJSK/183_PJSK_ロストワンの号哭.webp",
+        "sha256": "8effb927fa97bd51a33fc9206c22e01578575954e5dd89ae62381a5a0a7c24fc",
+        "bytes": 379004,
+        "durationMs": 0,
+        "streams": [
+          {
+            "codec_name": "webp",
+            "codec_type": "video",
+            "width": 740,
+            "height": 740
+          }
+        ],
+        "decodeOk": true
+      },
+      "problems": [],
+      "technicalStatus": "available",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    },
+    {
+      "sourceTrackId": "PJSK-184-A",
+      "title": "化けの花",
+      "artist": null,
+      "workName": "化けの花",
+      "engineCardKey": null,
+      "sourceMappingStatus": "MISSING_COVER",
+      "audio": {
+        "member": "mp3_files/seg_30/PJSK/184_PJSK_化けの花.mp3",
+        "sha256": "c0ad5f16177824cb100ecd265d81b7790841ff155a92a4b16f9393c3875d6725",
+        "bytes": 651516,
+        "durationMs": 29989,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "codec_type": "audio"
+          },
+          {
+            "codec_name": "mjpeg",
+            "codec_type": "video",
+            "width": 1280,
+            "height": 1280
+          }
+        ],
+        "decodeOk": true
+      },
+      "image": null,
+      "problems": ["source_mapping_not_ok", "missing_cover"],
+      "technicalStatus": "excluded",
+      "semanticReview": "pending",
+      "segmentKind": "unverified",
+      "sourceRecordingVersion": "unverified",
+      "productionEligible": false
+    }
+  ]
+}
