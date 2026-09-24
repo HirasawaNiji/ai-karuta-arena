@@ -11,6 +11,8 @@ export const view = (page, path) =>
     if (!response.ok) throw new Error('Read failed: ' + path);
     return response.json();
   }, path);
+export const responseStatus = (page, path) =>
+  page.evaluate(async (path) => (await fetch(path)).status, path);
 export async function room(
   browser,
   baseURL,

@@ -5,6 +5,7 @@ import {
   prepareDuel,
   play,
   view,
+  responseStatus,
   confirm,
   assertNoOverflow,
 } from './helpers.mjs';
@@ -81,11 +82,10 @@ test('three clients complete multiplayer with wrong-answer lock and tied ranks',
     const state = await view(host.page, '/api/multiplayer');
     // The guest's real browser session cannot read the shared speaker's audio.
     expect(
-      (
-        await wrong.context.request.get(
-          baseURL + '/api/multiplayer/audio/' + state.game.round.token,
-        )
-      ).status(),
+      await responseStatus(
+        wrong.page,
+        '/api/multiplayer/audio/' + state.game.round.token,
+      ),
     ).toBe(403);
     expect(JSON.stringify(state)).not.toMatch(/questionId|recordingId|seed/);
     await expect
