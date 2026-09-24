@@ -19,6 +19,7 @@ export default tseslint.config(
           './packages/music-profile/tsconfig.json',
           './packages/adapters/tsconfig.json',
           './packages/playlist-engine/tsconfig.json',
+          './packages/party-runtime/tsconfig.json',
         ],
         tsconfigRootDir: import.meta.dirname,
       },
@@ -88,6 +89,38 @@ export default tseslint.config(
               group: ['node:*', '**/apps/**', '**/packages/**', '**/src/**'],
               message:
                 'Pure domain calculations have no I/O or cross-package source imports.',
+            },
+          ],
+        },
+      ],
+      'no-restricted-globals': ['error', 'fetch', 'process', 'require'],
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: 'ImportExpression',
+          message: 'Use static public dependencies.',
+        },
+      ],
+    },
+  },
+  {
+    files: ['packages/party-runtime/src/**/*.ts'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: builtinModules.map((name) => ({
+            name,
+            message: 'Runtime injects I/O ports.',
+          })),
+          patterns: [
+            {
+              regex: '^@amp/(?!core$|music-profile$|playlist-engine$)',
+              message: 'Runtime injects adapters through core ports.',
+            },
+            {
+              group: ['node:*', '**/apps/**', '**/packages/**', '**/src/**'],
+              message: 'Use public domain exports.',
             },
           ],
         },

@@ -112,3 +112,38 @@ it('keeps playlist-engine independent of profile calculations, adapters and I/O'
   });
   expect(valid[0]?.errorCount).toBe(0);
 }, 30000);
+
+it('keeps runtime adapters injected through core ports', async () => {
+  const eslint = new ESLint({
+    overrideConfig: {
+      languageOptions: {
+        parserOptions: { disallowAutomaticSingleRunInference: true },
+      },
+    },
+  });
+  for (const dependency of [
+    '@amp/adapters',
+    '@amp/adapters/fixtures',
+    'node:fs',
+    '../../adapters/src/index.js',
+  ]) {
+    const results = await eslint.lintText("import '" + dependency + "';", {
+      filePath: 'packages/party-runtime/src/index.ts',
+    });
+    expect(
+      results
+        .flatMap((r) => r.messages)
+        .some((m) => m.ruleId === 'no-restricted-imports'),
+    ).toBe(true);
+  }
+  for (const dependency of [
+    '@amp/core',
+    '@amp/music-profile',
+    '@amp/playlist-engine',
+  ]) {
+    const results = await eslint.lintText("import '" + dependency + "';", {
+      filePath: 'packages/party-runtime/src/index.ts',
+    });
+    expect(results[0]?.errorCount).toBe(0);
+  }
+}, 30000);

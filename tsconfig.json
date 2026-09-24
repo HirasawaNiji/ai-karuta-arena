@@ -12,6 +12,9 @@
     },
     {
       "path": "packages/playlist-engine"
+    },
+    {
+      "path": "packages/party-runtime"
     }
   ]
 }
