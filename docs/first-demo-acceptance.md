@@ -9,7 +9,7 @@
 | PRE-03 / PAD-02：范围证据、手动 v2 与旧 v1 回归 | manual-profile、profile-contracts、music-profile 测试；D2/D3/D4 反馈版本证据 | 自动验证通过；自报、实测与未答保持区分 |
 | PRE-04 / PAD-04–06：在线/准备/公平门槛、冻结题组、多人抢牌 | multiplayer-engine/preparation/server 测试；[三客户端 12 题](evidence/d3-browser-validation.json) | 自动验证完成；服务端拥有身份、计分和题序，共享音箱为现场模式 |
 | PRE-05 / PAD-07：真实 10/15 张 1v1、BAN 后重评、独立手机 UI | duel-engine/preparation/server；[双浏览器两种局长](evidence/d2-browser-validation.json) | 真实素材与自动操作完成；真人听辨和手机触屏仍未执行 |
-| PRE-06 / PAD-08：4 人淘汰与 8 人推进、冲突/平局/弃权 | tournament/preparation/server；[四浏览器三场](evidence/d4-browser-validation.json) | 4 浏览器自动闭环、8 人七场引擎回归通过；规格要求的 4 人真人半决赛/决赛仍待现场验收 |
+| PRE-06 / PAD-08：4 人淘汰与 8 人推进、冲突/平局/弃权 | tournament/preparation/server；[四浏览器三场](evidence/d4-browser-validation.json) | 4 浏览器自动闭环、8 人七场引擎回归通过；#42 增加八浏览器七场合成音工程回归，本机定向通过，后续结果以 PR CI 为准。规格要求的 4 人真人半决赛/决赛仍待现场验收 |
 | PRE-07 / PAD-09：赛前画像、曝光排除、短库/补库版本 | 赛事与素材补库回归、四端冻结/反馈版本、最新补库 UI 证据 | 自动验证通过，补库不替换旧录音，允许重复需明确决定 |
 | PRE-08：包边界、可信服务与独立 Web | dependencies 测试、仓库 CI、无 Key CLI 进程检查 | 已实现；进程内房间无重启恢复，QQ/LLM/生产账号不属于已交付能力 |
 | PAD-10：真人完整游玩、可解释中断、诚实宿主标识 | D2/D3 播放失败中断、界面显示浏览器演示、[演示手册](demo-walkthrough.md) | **部分通过**：自动浏览器证据充分，真人听辨、真实前后台行为及 QQ WebView 真机未验收 |
