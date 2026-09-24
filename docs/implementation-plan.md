@@ -131,4 +131,4 @@ Issue #4 始终追踪整个 Mock 里程碑。阶段 PR 待审时可在 Checkpoin
 
 ## M1 子范围交付
 
-M1.1–M1.3 与该子范围 CI 的实现和检查见[基础验收](m1-foundation.md)。M1 拆为基础契约与完整业务契约两次可审查交付；M1.4–M1.5 尚未实现，M1.6 的完整检查需随后覆盖全部契约。Issue #4 第一项在完整 M1 接受前保持未勾选。D0 发现与用户素材授权见[引擎核对](karuta-engine-audit.md)，真实适配不可用 Mock 接口代替。
+M1.1–M1.3 与该子范围 CI 的实现和检查见[基础验收](m1-foundation.md)，M1.4 见[证据契约](m1-evidence-contracts.md)，M1.5/M1.6 见[完整契约验收](m1-runtime-contracts.md)。M1 分阶段提交；完整检查、审核和合并后，Issue #4 只勾选第一项，接着进入 M2。D0 发现与用户素材授权见[引擎核对](karuta-engine-audit.md)，真实适配不可用 Mock 接口代替。
