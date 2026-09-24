@@ -7,3 +7,4 @@ export {
   type MockAnswer,
   type MockGameOptions,
 } from './mock-game.js';
+export { ManualPreferenceSource } from './sources/manual-preference-source.js';

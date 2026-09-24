@@ -12,8 +12,15 @@ import {
   type ScoringConfig,
   type SongProfile,
   type Taxonomy,
+  QuestionSchema,
+  type Question,
 } from '@amp/core';
 import { clamp, compare, decay, latest, playScore } from './util.js';
+import {
+  matchesScope,
+  scopeSpecificity,
+  applicableRecognition,
+} from './manual-scope.js';
 type Feature = keyof ScoringConfig['weights'];
 export function scoreFamiliarity(
   profile: PlayerMusicProfile,
@@ -21,7 +28,13 @@ export function scoreFamiliarity(
   config: ScoringConfig,
   referenceTime: string,
   taxonomy: Taxonomy,
+  question?: Question,
 ): FamiliarityEstimate {
+  if (question) {
+    QuestionSchema.parse(question);
+    if (question.songId !== song.id)
+      throw new Error('Question belongs to another song');
+  }
   PlayerMusicProfileSchema.parse(profile);
   SongProfileSchema.parse(song);
   ScoringConfigSchema.parse(config);
@@ -29,7 +42,14 @@ export function scoreFamiliarity(
   UtcTimestampSchema.parse(referenceTime);
   if (Date.parse(profile.updatedAt) > Date.parse(referenceTime))
     throw new Error('Profile is newer than score time');
-  return scoreValidated(profile, song, config, referenceTime, taxonomy);
+  return scoreValidated(
+    profile,
+    song,
+    config,
+    referenceTime,
+    taxonomy,
+    question,
+  );
 }
 /** Internal hot path: matrix builder has already validated the entire input context. */
 export function scoreValidated(
@@ -38,8 +58,11 @@ export function scoreValidated(
   config: ScoringConfig,
   referenceTime: string,
   taxonomy: Taxonomy,
+  question?: Question,
 ): FamiliarityEstimate {
-  const evidence = profile.songEvidence[song.id] ?? [];
+  const evidence = (profile.songEvidence[song.id] ?? []).filter(
+    (e) => !config.manual || applicableRecognition(e, question),
+  );
   const features = new Map<Feature, { value: number; ids: EvidenceId[] }>();
   const bases: FamiliarityEstimate['confidenceBasis'][] = [
     { feature: 'none', evidenceIds: [], value: 0 },
@@ -186,6 +209,34 @@ export function scoreValidated(
     value = after;
   }
   adjust('clamp', clamp(value));
+  if (config.manual) {
+    const report = evidence
+      .filter((e) => e.type === 'recognition_report')
+      .filter((e) => matchesScope(e.recognitionScope, question))
+      .filter(
+        (e) =>
+          e.recognitionLevel !== 'intro' ||
+          !e.recognitionScope ||
+          question?.segmentKind === 'intro',
+      )
+      .sort(
+        (a, b) =>
+          scopeSpecificity(a) - scopeSpecificity(b) ||
+          Date.parse(a.observedAt) - Date.parse(b.observedAt) ||
+          compare(a.evidenceId, b.evidenceId),
+      )
+      .at(-1);
+    if (report) {
+      const level =
+        report.recognitionLevel === 'intro' && !report.recognitionScope
+          ? 'familiar'
+          : report.recognitionLevel;
+      adjust('selfReportFloor', Math.max(value, config.manual[level]), [
+        report,
+      ]);
+      basis('recognitionReport', config.manual.confidence, [report]);
+    }
+  }
   const answers = evidence
     .filter((e) => 'eventId' in e)
     .sort(

@@ -4,3 +4,8 @@ export {
   type RuntimeDependencies,
 } from './runtime.js';
 export { canStart } from './can-start.js';
+export {
+  createLobby,
+  type LobbyController,
+  type LobbyDependencies,
+} from './lobby.js';

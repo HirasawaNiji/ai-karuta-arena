@@ -65,6 +65,12 @@ const songEvidence = z.discriminatedUnion('type', [
     type: z.literal('self_report'),
     familiarity: UnitIntervalSchema,
   }),
+  z.strictObject({
+    ...song,
+    type: z.literal('recognition_report'),
+    recognitionLevel: z.enum(['heard', 'familiar', 'intro']),
+    recognitionScope: RecognitionScopeSchema.optional(),
+  }),
   recognition('warmup_correct'),
   recognition('warmup_wrong'),
   recognition('game_correct'),

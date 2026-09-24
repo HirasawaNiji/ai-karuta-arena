@@ -27,7 +27,7 @@ export const FamiliarityReasonSchema = z
   .readonly();
 export const FamiliarityAdjustmentSchema = z
   .strictObject({
-    kind: z.enum(['clamp', 'correctFloor', 'wrongPenalty']),
+    kind: z.enum(['clamp', 'selfReportFloor', 'correctFloor', 'wrongPenalty']),
     before: z.number().finite(),
     after: z.number().finite(),
     evidenceIds: uniqueValues(EvidenceIdSchema),
@@ -36,7 +36,7 @@ export const FamiliarityAdjustmentSchema = z
     if (value.kind === 'clamp')
       return value.after === Math.max(0, Math.min(1, value.before));
     if (value.before < 0 || value.before > 1) return false;
-    return value.kind === 'correctFloor'
+    return value.kind === 'correctFloor' || value.kind === 'selfReportFloor'
       ? value.after >= value.before && value.after <= 1
       : value.after <= value.before && value.before - value.after <= 1;
   }, 'Adjustment contradicts its declared operation')

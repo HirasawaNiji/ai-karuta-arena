@@ -91,6 +91,9 @@ export function normalizeEvidence(
       item.playerId,
       item.type,
       target,
+      item.type === 'recognition_report'
+        ? canonical(item.recognitionScope ?? {})
+        : '',
       item.type === 'self_report' || item.type === 'recent_play'
         ? ''
         : item.sourceId,
