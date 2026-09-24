@@ -16,7 +16,8 @@
     "demo": "node scripts/run-demo.mjs",
     "demo:check": "node scripts/check-demo.mjs",
     "start": "node apps/server/dist/main.js",
-    "test:browser": "pnpm build && playwright test"
+    "test:browser": "pnpm build && playwright test",
+    "network:check": "node scripts/check-loopback.mjs"
   },
   "devDependencies": {
     "@amp/adapters": "workspace:*",
