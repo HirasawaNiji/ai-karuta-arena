@@ -24,6 +24,10 @@ for (const preset of ['quick', 'standard'])
       try {
         await ready(r.clients, 'duel', preset);
         await prepareDuel(r.clients, preset);
+        const opening = (await view(r.clients[0].page, '/api/duel')).game;
+        expect(Object.values(opening.hands).map((hand) => hand.length)).toEqual(
+          preset === 'quick' ? [10, 10] : [15, 15],
+        );
         const result = await play(r.clients[0], r.clients[0], '/api/duel');
         expect(result.game.winnerId).toBe(r.clients[0].id);
         expect(result.game.hands[r.clients[0].id]).toHaveLength(0);
@@ -75,6 +79,15 @@ test('three clients complete multiplayer with wrong-answer lock and tied ranks',
       .poll(async () => (await view(host.page, '/api/multiplayer')).game?.phase)
       .toBe('playing');
     const state = await view(host.page, '/api/multiplayer');
+    // The guest's real browser session cannot read the shared speaker's audio.
+    expect(
+      (
+        await wrong.context.request.get(
+          baseURL + '/api/multiplayer/audio/' + state.game.round.token,
+        )
+      ).status(),
+    ).toBe(403);
+    expect(JSON.stringify(state)).not.toMatch(/questionId|recordingId|seed/);
     await expect
       .poll(() => host.audio.get(state.game.round.token))
       .toBeTruthy();
