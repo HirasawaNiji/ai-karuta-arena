@@ -15,22 +15,24 @@
     "format": "prettier --write .",
     "demo": "node scripts/run-demo.mjs",
     "demo:check": "node scripts/check-demo.mjs",
-    "start": "node apps/server/dist/main.js"
+    "start": "node apps/server/dist/main.js",
+    "test:browser": "pnpm build && playwright test"
   },
   "devDependencies": {
+    "@amp/adapters": "workspace:*",
     "@amp/core": "workspace:*",
+    "@amp/demo": "workspace:*",
+    "@amp/music-profile": "workspace:*",
+    "@amp/party-runtime": "workspace:*",
+    "@amp/playlist-engine": "workspace:*",
+    "@amp/server": "workspace:*",
     "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
     "@types/node": "24.13.3",
     "eslint": "10.11.0",
     "prettier": "3.9.8",
     "typescript": "6.0.2",
     "typescript-eslint": "8.70.1",
-    "vitest": "5.0.1",
-    "@amp/music-profile": "workspace:*",
-    "@amp/adapters": "workspace:*",
-    "@amp/playlist-engine": "workspace:*",
-    "@amp/party-runtime": "workspace:*",
-    "@amp/demo": "workspace:*",
-    "@amp/server": "workspace:*"
+    "vitest": "5.0.1"
   }
 }

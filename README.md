@@ -76,3 +76,7 @@ M1–M5 的核心 Mock 已实现，`install / build / typecheck / test / lint / 
 ## 浏览器派对（D1–D4）
 
 依次运行 `pnpm build`、`pnpm start`，打开 http://127.0.0.1:3210 。已实现创建/加入、手动偏好、大厅准备、选曲预评估与房主素材试听；默认 10 对 10，可选 15 对 15。已接入选歌、BAN、最终重评、10/15 张真实裁决和共享音箱；素材目录配置与完整操作见 [D2 说明](docs/d2-duel.md)。105 首管理员核验的前奏可按清单加载，待核验素材不会被当成可玩题目。D2 两种局长已通过双浏览器真实素材结算；多人模式支持 2–8 人、12 题、BAN 后补齐重评与并列排名，见 [多人说明](docs/d3-multiplayer.md)；4/8 人淘汰赛见 [赛事说明](docs/d4-tournament.md)。QQ WebView 与现场真人听辨尚未验收。
+
+## 静音浏览器回归
+
+执行 `pnpm exec playwright install chromium` 后运行 `pnpm test:browser`，自动验证双人两种局长、多人及四人淘汰完整流程。测试强制静音，使用明确标注的合成测试音，说明见 [浏览器回归](docs/browser-regression.md)。

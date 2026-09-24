@@ -28,3 +28,6 @@ coverage/
 
 **/dist-types/
 .local/
+
+# Browser regression artifacts (may contain test sessions)
+output/playwright/
