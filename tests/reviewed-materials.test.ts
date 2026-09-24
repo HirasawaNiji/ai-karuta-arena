@@ -1,9 +1,36 @@
-import { afterEach, expect, it } from 'vitest';
-import { mkdtemp, writeFile, rm } from 'node:fs/promises';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
+import {
+  mkdtemp,
+  writeFile,
+  readFile,
+  readdir,
+  rm,
+  open,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, basename } from 'node:path';
 import { createHash } from 'node:crypto';
 import { loadPendingMaterials, loadReviewedMaterials } from '@amp/server';
+const transcodes = vi.hoisted(
+  () =>
+    [] as {
+      output: string;
+      complete: (error: Error | null) => void;
+    }[],
+);
+vi.mock('node:child_process', () => ({
+  execFile: (
+    _file: string,
+    args: string[],
+    _options: unknown,
+    callback: (error: Error | null) => void,
+  ) => {
+    transcodes.push({ output: args.at(-1)!, complete: callback });
+  },
+}));
+beforeEach(() => {
+  transcodes.length = 0;
+});
 const files: string[] = [];
 afterEach(async () => {
   for (const file of files.splice(0))
@@ -94,4 +121,178 @@ it('binds review to exact bytes and refuses an unrelated language or song', asyn
     /语言/,
   );
   await expect(load([{ ...record, id: 'missing' }])).rejects.toThrow(/匹配/);
+});
+
+async function cacheFixture() {
+  const { pending, record, dir } = await fixture();
+  const manifestPath = join(dir, 'review.json');
+  const cacheDirectory = join(dir, 'cache');
+  await writeFile(
+    manifestPath,
+    JSON.stringify({ schemaVersion: 'intro-review-v1', records: [record] }),
+  );
+  const targetFor = (content: string) =>
+    join(
+      cacheDirectory,
+      record.audioSha256 +
+        '-intro-v1-' +
+        createHash('sha256').update(content).digest('hex') +
+        '.mp3',
+    );
+  const load = () =>
+    loadReviewedMaterials({
+      catalog: pending.catalog,
+      files: pending.files,
+      manifestPath,
+      cacheDirectory,
+      ffmpeg: 'controlled-test-converter',
+    });
+  return { cacheDirectory, targetFor, load };
+}
+async function publish(
+  cache: Awaited<ReturnType<typeof cacheFixture>>,
+  content: string,
+) {
+  const index = transcodes.length,
+    pending = cache.load();
+  await expect.poll(() => transcodes.length).toBe(index + 1);
+  await writeFile(transcodes[index]!.output, content);
+  transcodes[index]!.complete(null);
+  return pending;
+}
+
+it('publishes complete new audio while preserving already opened readers and old room paths', async () => {
+  const cache = await cacheFixture();
+  const initial = await publish(cache, 'old complete audio');
+  const oldPath = [...initial.questionAudioFiles.values()][0]!;
+  expect(oldPath).toBe(cache.targetFor('old complete audio'));
+  const reader = await open(oldPath, 'r');
+  try {
+    const refreshed = cache.load();
+    await expect.poll(() => transcodes.length).toBe(2);
+    const newPath = cache.targetFor('new complete audio');
+    await writeFile(transcodes[1]!.output, 'partial new');
+    expect(await readFile(oldPath, 'utf8')).toBe('old complete audio');
+    await expect(readFile(newPath)).rejects.toMatchObject({ code: 'ENOENT' });
+    await writeFile(transcodes[1]!.output, 'new complete audio');
+    transcodes[1]!.complete(null);
+    const result = await refreshed;
+    expect([...result.questionAudioFiles.values()]).toEqual([newPath]);
+    expect(await readFile(newPath, 'utf8')).toBe('new complete audio');
+    expect(await reader.readFile('utf8')).toBe('old complete audio');
+    expect(await readFile(oldPath, 'utf8')).toBe('old complete audio');
+    expect((await readdir(cache.cacheDirectory)).sort()).toEqual(
+      [basename(oldPath), basename(newPath)].sort(),
+    );
+  } finally {
+    await reader.close();
+  }
+});
+
+it.each([false, true])(
+  'failed conversion preserves published content (existing=%s) and cleans partial output',
+  async (existing) => {
+    const cache = await cacheFixture();
+    if (existing) await publish(cache, 'old complete audio');
+    const index = transcodes.length;
+    const failed = expect(cache.load()).rejects.toThrow('生成对局音频失败');
+    await expect.poll(() => transcodes.length).toBe(index + 1);
+    await writeFile(transcodes[index]!.output, 'broken partial');
+    transcodes[index]!.complete(new Error('converter failed'));
+    await failed;
+    if (existing)
+      expect(
+        await readFile(cache.targetFor('old complete audio'), 'utf8'),
+      ).toBe('old complete audio');
+    expect(await readdir(cache.cacheDirectory)).toEqual(
+      existing ? [basename(cache.targetFor('old complete audio'))] : [],
+    );
+  },
+);
+
+it('isolates concurrent outputs and never exposes either incomplete file', async () => {
+  const cache = await cacheFixture();
+  const first = cache.load(),
+    second = cache.load();
+  await expect.poll(() => transcodes.length).toBe(2);
+  expect(transcodes[0]!.output).not.toBe(transcodes[1]!.output);
+  await writeFile(transcodes[0]!.output, 'first complete');
+  await writeFile(transcodes[1]!.output, 'second partial');
+  transcodes[0]!.complete(null);
+  await expect
+    .poll(async () => readFile(cache.targetFor('first complete'), 'utf8'))
+    .toBe('first complete');
+  await expect(
+    readFile(cache.targetFor('second complete')),
+  ).rejects.toMatchObject({ code: 'ENOENT' });
+  await writeFile(transcodes[1]!.output, 'second complete');
+  transcodes[1]!.complete(null);
+  const results = await Promise.all([first, second]);
+  expect(
+    new Set(results.flatMap((r) => [...r.questionAudioFiles.values()])),
+  ).toEqual(
+    new Set([
+      cache.targetFor('first complete'),
+      cache.targetFor('second complete'),
+    ]),
+  );
+  expect(await readFile(cache.targetFor('first complete'), 'utf8')).toBe(
+    'first complete',
+  );
+  expect(await readFile(cache.targetFor('second complete'), 'utf8')).toBe(
+    'second complete',
+  );
+  expect(
+    (await readdir(cache.cacheDirectory)).some((name) =>
+      name.includes('.tmp.'),
+    ),
+  ).toBe(false);
+});
+
+it('reuses identical bytes under concurrent refresh while an existing reader holds the file', async () => {
+  const cache = await cacheFixture();
+  const initial = await publish(cache, 'same complete audio');
+  const target = [...initial.questionAudioFiles.values()][0]!;
+  const reader = await open(target, 'r');
+  try {
+    const first = cache.load(),
+      second = cache.load();
+    await expect.poll(() => transcodes.length).toBe(3);
+    for (const converter of transcodes.slice(1)) {
+      await writeFile(converter.output, 'same complete audio');
+      converter.complete(null);
+    }
+    const results = await Promise.all([first, second]);
+    for (const result of results)
+      expect([...result.questionAudioFiles.values()]).toEqual([target]);
+    expect(await reader.readFile('utf8')).toBe('same complete audio');
+    expect(await readdir(cache.cacheDirectory)).toEqual([basename(target)]);
+  } finally {
+    await reader.close();
+  }
+});
+
+it('does not publish empty output even if the converter reports success', async () => {
+  const cache = await cacheFixture();
+  const failed = expect(cache.load()).rejects.toThrow('生成的对局音频为空');
+  await expect.poll(() => transcodes.length).toBe(1);
+  await writeFile(transcodes[0]!.output, '');
+  transcodes[0]!.complete(null);
+  await failed;
+  expect(await readdir(cache.cacheDirectory)).toEqual([]);
+});
+
+it('rejects corrupt existing content without replacing or trusting it', async () => {
+  const cache = await cacheFixture();
+  const failed = expect(cache.load()).rejects.toThrow(
+    '已有对局音频缓存内容不匹配',
+  );
+  await expect.poll(() => transcodes.length).toBe(1);
+  const target = cache.targetFor('expected complete');
+  await writeFile(target, 'corrupt cache');
+  await writeFile(transcodes[0]!.output, 'expected complete');
+  transcodes[0]!.complete(null);
+  await failed;
+  expect(await readFile(target, 'utf8')).toBe('corrupt cache');
+  expect(await readdir(cache.cacheDirectory)).toEqual([basename(target)]);
 });
