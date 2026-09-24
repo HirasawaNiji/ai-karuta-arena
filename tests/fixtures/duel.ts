@@ -1,12 +1,12 @@
 import { CatalogSchema, type Catalog } from '@amp/core';
 import { catalogInput } from './catalog.js';
-export function duelCatalog(verified = true): Catalog {
+export function duelCatalog(verified = true, count = 40): Catalog {
   const raw = catalogInput();
   const first = raw.songs[0]!;
   const catalog = CatalogSchema.parse({
     ...raw,
     players: [],
-    songs: Array.from({ length: 40 }, (_, i) => ({
+    songs: Array.from({ length: count }, (_, i) => ({
       ...first,
       id: 'song:' + i,
     })),
@@ -23,16 +23,16 @@ export function duelCatalog(verified = true): Catalog {
         },
       },
     ],
-    recordings: Array.from({ length: 40 }, (_, i) => ({
+    recordings: Array.from({ length: count }, (_, i) => ({
       ...raw.recordings[0],
       songId: 'song:' + i,
       recordingId: 'recording:' + i,
     })),
-    cards: Array.from({ length: 40 }, (_, i) => ({
+    cards: Array.from({ length: count }, (_, i) => ({
       ...raw.cards[0],
       cardId: 'card:' + i,
     })),
-    questions: Array.from({ length: 40 }, (_, i) => ({
+    questions: Array.from({ length: count }, (_, i) => ({
       ...raw.questions[0],
       questionId: 'q:' + i,
       songId: 'song:' + i,

@@ -37,7 +37,13 @@ export function DuelPanel({
   songs,
   view,
   onView,
+  endpoint = '/api/duel',
+  tournament = false,
+  match,
 }: {
+  endpoint?: string;
+  tournament?: boolean;
+  match?: { matchId: string; attempt: number };
   room: LobbySnapshot;
   playerId: string;
   songs: Catalog['songs'];
@@ -65,12 +71,17 @@ export function DuelPanel({
   const title = (id: string) => songs.find((s) => s.id === id)?.title ?? id;
   const cardTitle = (id: string) =>
     view.cards.find((c) => c.cardId === id)?.title ?? id;
+  const prepareRequest = (command: unknown) =>
+    api<DuelPreparationView>(
+      endpoint + '/prepare',
+      match ? { ...match, command } : command,
+    );
   async function command(intent: Intent) {
     setBusy(true);
     setError('');
     try {
       onView(
-        await api<DuelPreparationView>('/api/duel/prepare', {
+        await prepareRequest({
           ...intent,
           actionId: newActionId(),
           expectedVersion: current.current.version,
@@ -91,7 +102,7 @@ export function DuelPanel({
   ) {
     if (!snapshot?.round) return;
     try {
-      await api('/api/duel/action', {
+      await api(endpoint + '/action', {
         ...intent,
         actionId: newActionId(),
         gameSessionId: snapshot.gameSessionId,
@@ -141,7 +152,7 @@ export function DuelPanel({
         if (!context || context.state !== 'running' || document.hidden)
           throw new Error('音箱未解锁，请重新准备');
         const response = await fetch(
-          '/api/duel/audio/' + encodeURIComponent(token!),
+          endpoint + '/audio/' + encodeURIComponent(token!),
         );
         if (!response.ok) throw new Error('片段加载失败');
         const buffer = await context.decodeAudioData(
@@ -229,7 +240,12 @@ export function DuelPanel({
           {preset.handSize} 对 {preset.handSize}
         </span>
       </div>
-      <p role="status">{game?.message ?? view.message}</p>
+      <p role="status">
+        {game?.message ??
+          (tournament
+            ? view.message.replaceAll('房主', '本场播放选手')
+            : view.message)}
+      </p>
       {error && (
         <p role="alert" className="message error">
           {error}
@@ -239,7 +255,7 @@ export function DuelPanel({
         <>
           <p className="muted">
             各选 {preset.selectPerPlayer} 首，交换禁掉 {preset.banPerPlayer}{' '}
-            首。先清空自己手牌的人获胜，由房主设备共享播放。
+            首。先清空自己手牌的人获胜，由本场第一位选手设备共享播放。
           </p>
           <button
             className="primary"
@@ -252,7 +268,7 @@ export function DuelPanel({
             }
             onClick={() => void command({ type: 'begin' })}
           >
-            {host ? '开始选歌' : '等待房主开始'}
+            {host ? '开始选歌' : '等待播放选手开始'}
           </button>
           {room.playableCount < preset.minimumCandidates && (
             <p className="message">
@@ -312,7 +328,7 @@ export function DuelPanel({
         <>
           <p>
             最终 {view.cards.length}{' '}
-            首已重新评估。双方确认看到全部歌牌，房主点击确认时会播放提示音。
+            首已重新评估。双方确认看到全部歌牌，本场播放选手点击确认时会播放提示音。
           </p>
           {view.assessment?.reasons.map((r, i) => (
             <p className="message" key={i}>
@@ -457,7 +473,7 @@ export function DuelPanel({
           )}
         </>
       )}
-      {host && view.phase !== 'idle' && (!game || done) && (
+      {!tournament && host && view.phase !== 'idle' && (!game || done) && (
         <button
           className="text-button"
           disabled={busy}

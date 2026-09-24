@@ -16,6 +16,8 @@ import {
   MultiplayerActionSchema,
   MultiplayerPreparationCommandSchema,
   HeartbeatReplySchema,
+  TournamentCommandSchema,
+  TournamentPrepareSchema,
   type Catalog,
   type PlayerId,
 } from '@amp/core';
@@ -28,6 +30,8 @@ import { MANUAL_SCORING_CONFIG } from '@amp/music-profile';
 import {
   createDuelPreparation,
   createMultiplayerPreparation,
+  createTournamentPreparation,
+  type TournamentPreparationController,
   type MultiplayerPreparationController,
   createLobby,
   type DuelPreparationController,
@@ -41,6 +45,12 @@ export interface ServerOptions {
   materials?: readonly MaterialPreview[];
   mediaFiles?: ReadonlyMap<string, string>;
   questionAudioFiles?: ReadonlyMap<string, string>;
+  /** Trusted local loader only; no browser-supplied paths or manifests. */
+  reloadTournamentMaterials?: () => Promise<{
+    catalog: Catalog;
+    verifiedQuestionIds: readonly string[];
+    questionAudioFiles: ReadonlyMap<string, string>;
+  }>;
   webDirectory?: string;
   now?: () => number;
 }
@@ -52,7 +62,9 @@ export function createApp(options: ServerOptions) {
       lobby: LobbyController;
       duel: DuelPreparationController;
       multi: MultiplayerPreparationController;
+      tournament: TournamentPreparationController;
       touched: number;
+      questionAudioFiles: Map<string, string>;
     }
   >();
   type Session = {
@@ -88,9 +100,15 @@ export function createApp(options: ServerOptions) {
   function broadcast(roomId: string) {
     const room = rooms.get(roomId);
     if (!room) return;
+    if (
+      room.lobby.snapshot().mode === 'tournament' &&
+      !room.tournament.active()
+    )
+      room.lobby.releaseWaiting();
     for (const s of sessions.values())
       if (s.roomId === roomId)
-        for (const stream of s.streams)
+        for (const stream of s.streams) {
+          if (stream.destroyed || stream.writableEnded) continue;
           stream.write(
             'data: ' +
               JSON.stringify(room.lobby.snapshot()) +
@@ -98,8 +116,11 @@ export function createApp(options: ServerOptions) {
               JSON.stringify(room.duel.snapshot(s.playerId)) +
               '\n\nevent: multiplayer\ndata: ' +
               JSON.stringify(room.multi.snapshot(s.playerId)) +
+              '\n\nevent: tournament\ndata: ' +
+              JSON.stringify(room.tournament.snapshot(s.playerId)) +
               '\n\n',
           );
+        }
   }
   async function body(req: IncomingMessage): Promise<unknown> {
     if (!req.headers['content-type']?.startsWith('application/json'))
@@ -147,16 +168,28 @@ export function createApp(options: ServerOptions) {
     )
       return send(res, 403, { error: '不接受跨站请求' });
     if (req.method === 'GET' && path === '/api/health')
-      return send(res, 200, { status: 'ok', mode: 'D3-multiplayer' });
-    if (req.method === 'GET' && path === '/api/catalog')
+      return send(res, 200, { status: 'ok', mode: 'D4-tournament' });
+    if (req.method === 'GET' && path === '/api/catalog') {
+      let catalog = options.catalog;
+      let playableSongIds = catalog.questions
+        .filter((q) => options.verifiedQuestionIds?.includes(q.questionId))
+        .map((q) => q.songId);
+      try {
+        const context = rooms
+          .get(authenticate(req).roomId)!
+          .lobby.preparationContext();
+        catalog = context.catalog;
+        playableSongIds = Object.values(context.questions).map((q) => q.songId);
+      } catch {
+        /* Public entry catalog. */
+      }
       return send(res, 200, {
-        songs: options.catalog.songs,
-        playableSongIds: options.catalog.questions
-          .filter((q) => options.verifiedQuestionIds?.includes(q.questionId))
-          .map((q) => q.songId),
-        tags: options.catalog.taxonomy.filter((t) => t.id !== 'lang:unknown'),
-        artists: options.catalog.artists,
+        songs: catalog.songs,
+        playableSongIds,
+        tags: catalog.taxonomy.filter((t) => t.id !== 'lang:unknown'),
+        artists: catalog.artists,
       });
+    }
     if (
       req.method === 'POST' &&
       (path === '/api/rooms' || /^\/api\/rooms\/[A-F0-9]{6}\/join$/.test(path))
@@ -211,7 +244,24 @@ export function createApp(options: ServerOptions) {
           onChange: () => broadcast(roomId),
           onCompleted: lobby.settleGame,
         });
-        rooms.set(roomId, { lobby, duel, multi, touched: now() });
+        const tournament = createTournamentPreparation({
+          context: lobby.preparationContext,
+          room: lobby.snapshot,
+          factory: new KarutaDuelFactory(),
+          now,
+          nextId: id,
+          seed: () => randomBytes(4).readUInt32LE(),
+          onChange: () => broadcast(roomId),
+          onCompleted: (r, events) => lobby.settleGame(r.game, events, true),
+        });
+        rooms.set(roomId, {
+          lobby,
+          duel,
+          multi,
+          tournament,
+          touched: now(),
+          questionAudioFiles: new Map(options.questionAudioFiles),
+        });
         establish(res, roomId, playerId);
         return;
       }
@@ -228,7 +278,7 @@ export function createApp(options: ServerOptions) {
         room.duel.snapshot(room.lobby.snapshot().hostId).game,
         room.multi.snapshot(room.lobby.snapshot().hostId).game,
       ].some((g) => g && !['completed', 'aborted'].includes(g.phase));
-      room.lobby.join(playerId, nickname, ongoing);
+      room.lobby.join(playerId, nickname, ongoing || room.tournament.active());
       room.touched = now();
       establish(res, roomId, playerId);
       broadcast(roomId);
@@ -301,7 +351,7 @@ export function createApp(options: ServerOptions) {
           room.multi.snapshot(session.playerId).game,
         ].some((g) => g && !['completed', 'aborted'].includes(g.phase));
         if (
-          ongoing &&
+          (ongoing || room.tournament.active()) &&
           cmd.type !== 'leave' &&
           !(member?.waitingForNextMatch && cmd.type === 'profile')
         )
@@ -330,6 +380,95 @@ export function createApp(options: ServerOptions) {
         broadcast(session.roomId);
         return send(res, 200, state);
       }
+      if (req.method === 'GET' && path === '/api/tournament')
+        return send(res, 200, room.tournament.snapshot(session.playerId));
+      if (req.method === 'POST' && path === '/api/tournament/command') {
+        if (room.lobby.snapshot().mode !== 'tournament')
+          throw new Error('请切换到淘汰赛模式');
+        const cmd = TournamentCommandSchema.parse(await body(req));
+        if (
+          cmd.type === 'refresh_pool' &&
+          room.tournament.checkRefresh(session.playerId, cmd)
+        ) {
+          if (!options.reloadTournamentMaterials)
+            throw new Error('管理员尚未配置题库刷新来源');
+          const refreshed = await options.reloadTournamentMaterials();
+          // Loading is asynchronous: reject stale requests before changing room data.
+          if (!room.tournament.checkRefresh(session.playerId, cmd))
+            return send(
+              res,
+              200,
+              room.tournament.dispatch(session.playerId, cmd),
+            );
+          for (const qid of refreshed.verifiedQuestionIds) {
+            if (!refreshed.questionAudioFiles.has(qid))
+              throw new Error('新增核验片段不可用');
+          }
+          room.lobby.supplementMaterials(
+            refreshed.catalog,
+            refreshed.verifiedQuestionIds,
+          );
+          for (const [qid, file] of refreshed.questionAudioFiles) {
+            if (!room.questionAudioFiles.has(qid))
+              room.questionAudioFiles.set(qid, file);
+          }
+        }
+        const result = room.tournament.dispatch(session.playerId, cmd);
+        if (!room.tournament.active()) room.lobby.releaseWaiting();
+        broadcast(session.roomId);
+        return send(res, 200, result);
+      }
+      if (req.method === 'POST' && path === '/api/tournament/prepare') {
+        const envelope = TournamentPrepareSchema.parse(await body(req));
+        const cmd = envelope.command;
+        const pair =
+          room.tournament
+            .snapshot(session.playerId)
+            .matchRoom?.members.map((m) => m.id) ?? [];
+        if (
+          cmd.type === 'start' &&
+          pair.some(
+            (id) =>
+              ![...sessions.values()].some(
+                (s) =>
+                  s.roomId === session.roomId &&
+                  s.playerId === id &&
+                  now() - s.lastPong <= 15000 &&
+                  s.rttSamples.length > 0,
+              ),
+          )
+        )
+          throw new Error('等待本场双方连接确认');
+        return send(
+          res,
+          200,
+          room.tournament.prepare(session.playerId, cmd, envelope),
+        );
+      }
+      if (req.method === 'POST' && path === '/api/tournament/action') {
+        const samples = [...session.rttSamples].sort((a, b) => a - b);
+        return send(
+          res,
+          200,
+          room.tournament.action(
+            session.playerId,
+            DuelActionSchema.parse(await body(req)),
+            samples[Math.floor(samples.length / 2)] ?? 0,
+          ),
+        );
+      }
+      const tournamentAudio =
+        /^\/api\/tournament\/audio\/([A-Za-z0-9:-]+)$/.exec(path);
+      if (req.method === 'GET' && tournamentAudio) {
+        room.tournament.tick();
+        const q = room.tournament.currentQuestion(
+          session.playerId,
+          tournamentAudio[1]!,
+        );
+        const file = q ? room.questionAudioFiles.get(q.questionId) : undefined;
+        if (!file) return send(res, 404, { error: '当前片段不可用' });
+        return audio(req, res, file);
+      }
       if (req.method === 'GET' && path === '/api/duel')
         return send(res, 200, room.duel.snapshot(session.playerId));
       if (req.method === 'POST' && path === '/api/heartbeat') {
@@ -350,6 +489,7 @@ export function createApp(options: ServerOptions) {
         room.lobby.setOnline(session.playerId, reply.visible);
         room.duel.tick();
         room.multi.tick();
+        room.tournament.tick();
         broadcast(session.roomId);
         return send(res, 200, { ok: true });
       }
@@ -426,6 +566,7 @@ export function createApp(options: ServerOptions) {
         if (session.playerId !== room.lobby.snapshot().hostId)
           return send(res, 403, { error: '音频仅由共享音箱播放' });
         room.multi.tick();
+        room.tournament.tick();
         const q = room.multi.currentQuestion(multiAudio[1]!);
         const file = q
           ? options.questionAudioFiles?.get(q.questionId)
@@ -569,6 +710,7 @@ export function createApp(options: ServerOptions) {
     for (const r of rooms.values()) {
       r.duel.tick();
       r.multi.tick();
+      r.tournament.tick();
     }
     for (const [id, r] of rooms)
       if (now() - r.touched > 6 * 60 * 60 * 1000) rooms.delete(id);
@@ -578,6 +720,7 @@ export function createApp(options: ServerOptions) {
     for (const r of rooms.values()) {
       r.duel.tick();
       r.multi.tick();
+      r.tournament.tick();
     }
   }, 50);
   gameTimer.unref();

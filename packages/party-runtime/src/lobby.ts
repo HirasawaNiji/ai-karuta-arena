@@ -21,6 +21,7 @@ import {
   type LobbySelf,
   type Question,
 } from '@amp/core';
+import { supplementCatalog, reviewedQuestions } from './material-pool.js';
 import {
   gameplayEvidence,
   buildPlayerProfile,
@@ -58,7 +59,7 @@ export function createLobby(
   nickname: string,
   deps: LobbyDependencies,
 ) {
-  const base = CatalogSchema.parse({ ...deps.catalog, players: [] });
+  let base = CatalogSchema.parse({ ...deps.catalog, players: [] });
   type Member = {
     id: PlayerId;
     nickname: string;
@@ -75,22 +76,16 @@ export function createLobby(
   let revision = 0;
   let assessment: LobbySnapshot['assessment'] = null;
   let selectedSongIds: LobbySnapshot['selectedSongIds'] = [];
-  const questions: Record<string, Question> = {};
-  for (const q of base.questions) {
-    const recording = base.recordings.find(
-      (r) => r.recordingId === q.recordingId,
-    );
-    const asset = base.audioAssets.find(
-      (a) => a.assetId === recording?.audioAssetId,
-    );
-    if (
-      deps.verifiedQuestionIds.includes(q.questionId) &&
-      asset?.available &&
-      asset.usage.status === 'verified' &&
-      q.segmentKind === 'intro' &&
-      !questions[q.songId]
-    )
-      questions[q.songId] = q;
+  let questions = reviewedQuestions(base, deps.verifiedQuestionIds);
+  function supplementMaterials(fresh: Catalog, verifiedIds: readonly string[]) {
+    const next = supplementCatalog(base, fresh);
+    const nextQuestions = reviewedQuestions(next, [
+      ...Object.values(questions).map((q) => q.questionId),
+      ...verifiedIds,
+    ]);
+    base = next;
+    questions = nextQuestions;
+    invalidate();
   }
   const catalog = (): Catalog => ({
     ...base,
@@ -319,7 +314,11 @@ export function createLobby(
       invalidate();
     }
   }
-  function settleGame(result: GameResult, events: readonly GameEvent[]) {
+  function settleGame(
+    result: GameResult,
+    events: readonly GameEvent[],
+    preserveWaiting = false,
+  ) {
     if (
       result.status !== 'completed' ||
       settled.has(result.session.gameSessionId)
@@ -365,7 +364,7 @@ export function createLobby(
       m.profile = profile;
     }
     settled.add(result.session.gameSessionId);
-    releaseWaiting();
+    if (!preserveWaiting) releaseWaiting();
     invalidate();
   }
   return {
@@ -375,6 +374,7 @@ export function createLobby(
     snapshot,
     self,
     preparationContext,
+    supplementMaterials,
     settleDuel,
     settleGame,
     releaseWaiting,
