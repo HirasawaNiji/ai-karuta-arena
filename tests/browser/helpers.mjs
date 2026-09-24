@@ -15,7 +15,7 @@ export async function room(
   browser,
   baseURL,
   count,
-  { code, onProfile, nicknameOffset = 0 } = {},
+  { code, onProfile, beforeEnter, nicknameOffset = 0 } = {},
 ) {
   const clients = [],
     errors = [];
@@ -61,6 +61,7 @@ export async function room(
       await expect(
         page.getByRole('button', { name: '创建音乐派对 →', exact: true }),
       ).toBeEnabled();
+      if (beforeEnter) await beforeEnter(page, i);
       if (i || code)
         await page
           .getByRole('button', { name: '加入好友', exact: true })

@@ -10,6 +10,7 @@ export default tseslint.config(
       '**/dist-types/**',
       '**/node_modules/**',
       '**/coverage/**',
+      'output/playwright/**',
     ],
   },
   js.configs.recommended,

@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { setTimeout as delay } from 'node:timers/promises';
 import { room, ready, prepareDuel, confirm, play, view } from './helpers.mjs';
 
 test.beforeAll(async ({ browser }) => {
@@ -34,6 +35,17 @@ test('independent tag and song profiles survive reload and lower self-report rep
   baseURL,
 }) => {
   const r = await room(browser, baseURL, 2, {
+    beforeEnter: async (page) => {
+      // A slow initial profile response must never erase a user's fast input.
+      await page.route(
+        '**/api/profile',
+        async (route) => {
+          await delay(2000);
+          await route.continue();
+        },
+        { times: 1 },
+      );
+    },
     onProfile: async (page, index) => {
       if (index === 0) await button(page, '测试音').click();
       else {

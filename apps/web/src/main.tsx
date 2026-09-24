@@ -222,8 +222,8 @@ function App() {
           : '/api/rooms/' + code.trim().toUpperCase() + '/join',
         { nickname },
       );
-      setEntry(data);
       await loadProfile();
+      setEntry(data);
       setScreen('profile');
     });
   }
