@@ -1,0 +1,870 @@
+{
+  "schemaVersion": "d0-browser-audit-v1",
+  "engineCommit": "780c1c0230589caf43c4835dc046ad7555c85f0a",
+  "packageSha256": "f9037d3d3835938e820d582bd59d85c65d100f4f017f2c6a0f052c2221ad73b4",
+  "date": "2026-09-24",
+  "method": "Two isolated Chrome sessions; genuine built UI and local engine/audio; CLI controlled clicks use current-round server log as answer oracle; unmodified game timing. This is not human recognition or QQ host acceptance.",
+  "range": {
+    "status": 206,
+    "contentRange": "bytes 0-1023/1248523",
+    "bytes": 1024
+  },
+  "clients": [
+    {
+      "phase": "over",
+      "round": 38,
+      "hands": {
+        "A": 0,
+        "B": 23
+      },
+      "over": {
+        "t": "matchOver",
+        "winner": "A",
+        "scores": {
+          "A": 22,
+          "B": 0
+        },
+        "rounds": 38
+      },
+      "eventCounts": {
+        "welcome": 2,
+        "roomList": 2,
+        "pong": 545,
+        "room": 365,
+        "network": 394,
+        "matchAudio": 1,
+        "roundPrepare": 38,
+        "roundStart": 38,
+        "roundResult": 38,
+        "claimFeedback": 22,
+        "cardTransfer": 17,
+        "matchOver": 1
+      },
+      "media": {
+        "calls": 77,
+        "started": 77,
+        "progressObserved": 40,
+        "errors": []
+      },
+      "lastCardTransfer": {
+        "t": "cardTransfer",
+        "from": "A",
+        "to": "B",
+        "cardKey": "107|music_cover/PJSK/107_PJSK_妄想感傷代償連盟.webp|妄想感傷代償連盟",
+        "automatic": false
+      },
+      "eventExamples": {
+        "firstRound": {
+          "at": 1790248261354,
+          "t": "roundStart",
+          "roundNo": 1
+        },
+        "correctClaim": {
+          "at": 1790248423565,
+          "t": "claimFeedback",
+          "correct": true,
+          "playerId": "A",
+          "cardKey": "146|music_cover/PJSK/146_PJSK_エンパープル.webp|エンパープル"
+        },
+        "timeout": {
+          "at": 1790248273423,
+          "t": "roundResult",
+          "roundNo": 1,
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          },
+          "reason": "timeout",
+          "cardKey": "176|music_cover/PJSK/176_PJSK_モア！ジャンプ！モア！.webp|モア！ジャンプ！モア！"
+        },
+        "final": {
+          "at": 1790249046112,
+          "t": "matchOver",
+          "winner": "A",
+          "scores": {
+            "A": 22,
+            "B": 0
+          },
+          "rounds": 38
+        }
+      },
+      "roundResults": [
+        {
+          "roundNo": 1,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 2,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 3,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 4,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 1,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 5,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 2,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 6,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 3,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 7,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 4,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 8,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 5,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 9,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 5,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 10,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 5,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 11,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 6,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 12,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 7,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 13,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 8,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 14,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 15,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 16,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 17,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 18,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 19,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 20,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 21,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 22,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 23,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 24,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 11,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 25,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 12,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 26,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 13,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 27,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 13,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 28,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 14,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 29,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 15,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 30,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 16,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 31,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 17,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 32,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 18,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 33,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 18,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 34,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 19,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 35,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 19,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 36,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 20,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 37,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 21,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 38,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 22,
+            "B": 0
+          }
+        }
+      ]
+    },
+    {
+      "phase": "over",
+      "round": 38,
+      "hands": {
+        "A": 0,
+        "B": 23
+      },
+      "over": {
+        "t": "matchOver",
+        "winner": "A",
+        "scores": {
+          "A": 22,
+          "B": 0
+        },
+        "rounds": 38
+      },
+      "eventCounts": {
+        "welcome": 2,
+        "roomList": 3,
+        "pong": 546,
+        "room": 364,
+        "network": 388,
+        "matchAudio": 1,
+        "roundPrepare": 38,
+        "roundStart": 38,
+        "roundResult": 38,
+        "claimFeedback": 22,
+        "cardTransfer": 17,
+        "matchOver": 1
+      },
+      "media": {
+        "calls": 77,
+        "started": 77,
+        "progressObserved": 38,
+        "errors": []
+      },
+      "lastCardTransfer": {
+        "t": "cardTransfer",
+        "from": "A",
+        "to": "B",
+        "cardKey": "107|music_cover/PJSK/107_PJSK_妄想感傷代償連盟.webp|妄想感傷代償連盟",
+        "automatic": false
+      },
+      "eventExamples": {
+        "firstRound": {
+          "at": 1790248261354,
+          "t": "roundStart",
+          "roundNo": 1
+        },
+        "correctClaim": {
+          "at": 1790248423545,
+          "t": "claimFeedback",
+          "correct": true,
+          "playerId": "A",
+          "cardKey": "146|music_cover/PJSK/146_PJSK_エンパープル.webp|エンパープル"
+        },
+        "timeout": {
+          "at": 1790248273423,
+          "t": "roundResult",
+          "roundNo": 1,
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          },
+          "reason": "timeout",
+          "cardKey": "176|music_cover/PJSK/176_PJSK_モア！ジャンプ！モア！.webp|モア！ジャンプ！モア！"
+        },
+        "final": {
+          "at": 1790249046099,
+          "t": "matchOver",
+          "winner": "A",
+          "scores": {
+            "A": 22,
+            "B": 0
+          },
+          "rounds": 38
+        }
+      },
+      "roundResults": [
+        {
+          "roundNo": 1,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 2,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 3,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 0,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 4,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 1,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 5,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 2,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 6,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 3,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 7,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 4,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 8,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 5,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 9,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 5,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 10,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 5,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 11,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 6,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 12,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 7,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 13,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 8,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 14,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 15,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 16,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 17,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 18,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 9,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 19,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 20,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 21,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 22,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 23,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 10,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 24,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 11,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 25,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 12,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 26,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 13,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 27,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 13,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 28,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 14,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 29,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 15,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 30,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 16,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 31,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 17,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 32,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 18,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 33,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 18,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 34,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 19,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 35,
+          "reason": "timeout",
+          "winner": null,
+          "scores": {
+            "A": 19,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 36,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 20,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 37,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 21,
+            "B": 0
+          }
+        },
+        {
+          "roundNo": 38,
+          "reason": "claimed",
+          "winner": "A",
+          "scores": {
+            "A": 22,
+            "B": 0
+          }
+        }
+      ]
+    }
+  ],
+  "reconnect": {
+    "client": "B",
+    "phase": "over",
+    "round": 38,
+    "winner": "A",
+    "matchOverReplayed": false,
+    "roomSnapshotRestored": true
+  }
+}
