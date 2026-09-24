@@ -11,7 +11,12 @@ export const view = (page, path) =>
     if (!response.ok) throw new Error('Read failed: ' + path);
     return response.json();
   }, path);
-export async function room(browser, baseURL, count) {
+export async function room(
+  browser,
+  baseURL,
+  count,
+  { code, onProfile, nicknameOffset = 0 } = {},
+) {
   const clients = [],
     errors = [];
   try {
@@ -20,10 +25,11 @@ export async function room(browser, baseURL, count) {
         viewport: { width: 390, height: 844 },
       });
       const page = await context.newPage();
+      page.setDefaultTimeout(15_000);
       const client = {
         context,
         page,
-        nickname: '测试好友' + i,
+        nickname: '测试好友' + (i + nicknameOffset),
         audio: new Map(),
         id: null,
       };
@@ -55,21 +61,24 @@ export async function room(browser, baseURL, count) {
       await expect(
         page.getByRole('button', { name: '创建音乐派对 →', exact: true }),
       ).toBeEnabled();
-      if (i)
+      if (i || code)
         await page
           .getByRole('button', { name: '加入好友', exact: true })
           .click();
       await page.getByLabel('派对昵称').fill(client.nickname);
-      if (i) await page.getByLabel('好友房间码').fill(clients[0].code);
+      if (i || code)
+        await page.getByLabel('好友房间码').fill(code ?? clients[0].code);
       await page
         .getByRole('button', {
-          name: i ? '加入好友房间 →' : '创建音乐派对 →',
+          name: i || code ? '加入好友房间 →' : '创建音乐派对 →',
           exact: true,
         })
         .click();
-      await page
-        .getByRole('button', { name: '暂时跳过，保留未知', exact: true })
-        .click();
+      if (onProfile) await onProfile(page, i);
+      else
+        await page
+          .getByRole('button', { name: '暂时跳过，保留未知', exact: true })
+          .click();
       const session = await view(page, '/api/session');
       client.id = session.playerId;
       client.code = session.room.roomId;
@@ -119,7 +128,7 @@ export async function ready(clients, mode = 'duel', preset = 'quick') {
       .click();
   }
 }
-export async function confirm(clients, audio) {
+export async function confirm(clients, audio, { start = true } = {}) {
   const warning = audio.page.getByRole('button', {
     name: '了解以上差异，继续这一局',
     exact: true,
@@ -133,11 +142,12 @@ export async function confirm(clients, audio) {
         exact: true,
       })
       .click();
-  await audio.page
-    .getByRole('button', { name: '开始听歌', exact: true })
-    .click();
+  if (start)
+    await audio.page
+      .getByRole('button', { name: '开始听歌', exact: true })
+      .click();
 }
-export async function prepareDuel(pair, preset = 'quick') {
+export async function prepareDuel(pair, preset = 'quick', options = {}) {
   await pair[0].page
     .getByRole('button', { name: '开始选歌', exact: true })
     .click();
@@ -156,7 +166,7 @@ export async function prepareDuel(pair, preset = 'quick') {
       await page.locator('button.song-card').nth(i).click();
     await page.getByRole('button', { name: '确认禁歌', exact: true }).click();
   }
-  await confirm(pair, pair[0]);
+  await confirm(pair, pair[0], options);
 }
 export async function play(audio, winner, path) {
   const clicked = new Set();
