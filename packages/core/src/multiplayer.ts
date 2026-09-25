@@ -15,7 +15,7 @@ import {
 import { GameSessionInputSchema, type GameResult } from './game.js';
 import { QuestionSchema, type Question } from './question.js';
 import { type DuelEngineDependencies } from './duel.js';
-import { type FairnessAssessment } from './selection.js';
+import { type FairnessAssessment, type SelectionResult } from './selection.js';
 
 export const MULTIPLAYER_RULES = Object.freeze({
   version: 'party-grab-v1',
@@ -132,6 +132,26 @@ export const MultiplayerPreparationCommandSchema = z.discriminatedUnion(
 export type MultiplayerPreparationCommand = z.infer<
   typeof MultiplayerPreparationCommandSchema
 >;
+/** Aggregate selection history, never the randomized playback order or player evidence. */
+export interface MultiplayerSelectionExplanation {
+  readonly stage: 'proposal' | 'final';
+  readonly selectionVersion: number;
+  readonly selectionConfigVersion: string;
+  readonly scoringConfigVersion: string;
+  readonly fairnessConfigVersion: string;
+  readonly requestedCount: number;
+  readonly actualCount: number;
+  readonly steps: readonly (Pick<
+    SelectionResult['steps'][number],
+    | 'songId'
+    | 'deficitGain'
+    | 'objectiveGains'
+    | 'softRatioContribution'
+    | 'totalGain'
+  > & {
+    readonly tieBreakRule: SelectionResult['steps'][number]['tieBreak']['rule'];
+  })[];
+}
 export interface MultiplayerPreparationView {
   readonly version: number;
   readonly phase: 'idle' | 'banning' | 'confirming' | 'match';
@@ -145,6 +165,7 @@ export interface MultiplayerPreparationView {
   }[];
   readonly readyPlayerIds: readonly PlayerId[];
   readonly assessment: FairnessAssessment | null;
+  readonly selectionExplanation: MultiplayerSelectionExplanation | null;
   readonly acknowledged: boolean;
   readonly blockers: readonly string[];
   readonly canStart: boolean;

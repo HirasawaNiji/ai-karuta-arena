@@ -15,6 +15,7 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
   const origin =
     'http://127.0.0.1:' + (app.server.address() as AddressInfo).port;
   const streams: AbortController[] = [];
+  const pushed = new Map<string, MultiplayerPreparationView[]>();
   const request = (path: string, cookie = '', data?: unknown) =>
     fetch(origin + path, {
       method: data === undefined ? 'GET' : 'POST',
@@ -43,7 +44,28 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
         signal: abort.signal,
       });
       const reader = response.body!.getReader();
-      const first = new TextDecoder().decode((await reader.read()).value);
+      const decoder = new TextDecoder();
+      let buffer = '';
+      const updates: MultiplayerPreparationView[] = [];
+      pushed.set(cookie, updates);
+      const consume = (text: string) => {
+        buffer += text;
+        let boundary: number;
+        while ((boundary = buffer.indexOf('\n\n')) >= 0) {
+          const frame = buffer.slice(0, boundary);
+          buffer = buffer.slice(boundary + 2);
+          if (frame.startsWith('event: multiplayer\ndata: '))
+            updates.push(
+              JSON.parse(
+                frame.slice('event: multiplayer\ndata: '.length),
+              ) as MultiplayerPreparationView,
+            );
+        }
+      };
+      const first = decoder.decode((await reader.read()).value, {
+        stream: true,
+      });
+      consume(first);
       const challenge = JSON.parse(
         first.split('event: heartbeat\ndata: ')[1]!.split('\n')[0]!,
       ) as { token: string };
@@ -57,8 +79,10 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
       ).toBe(200);
       void (async () => {
         try {
-          while (!(await reader.read()).done) {
-            /* Drain test stream. */
+          while (true) {
+            const chunk = await reader.read();
+            if (chunk.done) break;
+            consume(decoder.decode(chunk.value, { stream: true }));
           }
         } catch {
           /* Closed in cleanup. */
@@ -98,10 +122,36 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
           .status,
       ).toBe(200);
     expect((await cmd(host, { type: 'begin' })).status).toBe(200);
+    const proposal = (await view()).selectionExplanation!;
+    expect(proposal.stage).toBe('proposal');
+    expect(proposal.steps.map((step) => step.songId)).toEqual(
+      (await view()).proposedSongIds,
+    );
+    await expect
+      .poll(() => pushed.get(host)?.at(-1)?.selectionExplanation)
+      .toEqual(proposal);
     for (const cookie of cookies)
       expect((await cmd(cookie, { type: 'ban', songIds: [] })).status).toBe(
         200,
       );
+    const final = (await view()).selectionExplanation!;
+    expect(final.stage).toBe('final');
+    expect(final.selectionVersion).toBe(
+      (await view()).assessment?.selectionVersion,
+    );
+    expect(final.selectionVersion).toBeGreaterThan(proposal.selectionVersion);
+    expect(final.steps.map((step) => step.songId)).toEqual(
+      (await view()).assessment?.selectedSongIds,
+    );
+    for (const cookie of cookies) {
+      expect((await view(cookie)).selectionExplanation).toEqual(final);
+      await expect
+        .poll(() => pushed.get(cookie)?.at(-1)?.selectionExplanation)
+        .toEqual(final);
+    }
+    expect(JSON.stringify(final)).not.toMatch(
+      /playerId|profile|matrix|coverageBefore|coverageAfter|seed|questionId|recordingId|answerCardId/,
+    );
     expect((await cmd(host, { type: 'acknowledge' })).status).toBe(200);
     for (const cookie of cookies)
       expect(
@@ -153,6 +203,10 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
     expect((await action(host, 'audio_failed')).status).toBe(200);
     expect((await view(third)).game?.phase).toBe('aborted');
     expect((await cmd(host, { type: 'reset' })).status).toBe(200);
+    expect((await view()).selectionExplanation).toBeNull();
+    await expect
+      .poll(() => pushed.get(host)?.at(-1)?.selectionExplanation)
+      .toBeNull();
     const state = (await (await request('/api/state', late)).json()) as {
       room: LobbySnapshot;
     };
