@@ -280,6 +280,8 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
       id !== current.room.hostId
     )
       throw new Error('仅房主可执行此操作');
+    if (frozen && !frozen.room.members.some((m) => m.id === id))
+      throw new Error('请等待下一局');
     switch (cmd.type) {
       case 'begin': {
         if (phase !== 'idle') throw new Error('请先结束或重置当前准备');

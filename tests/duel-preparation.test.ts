@@ -161,6 +161,60 @@ it.each(['quick', 'standard'] as const)(
     );
   },
 );
+it.each(['quick', 'standard'] as const)(
+  'keeps late entrants outside the frozen %s duel command authority',
+  (preset) => {
+    const f = prepared(preset);
+    f.draft();
+    f.cmd(host, { type: 'acknowledge' });
+    f.cmd(host, { type: 'match_ready', cardsLoaded: true, audioReady: true });
+    f.cmd(guest, { type: 'match_ready', cardsLoaded: true, audioReady: false });
+    f.cmd(host, { type: 'start' });
+    const before = f.duel.snapshot(host);
+    const late = PlayerIdSchema.parse('late');
+    f.lobby.join(late, 'Late', true);
+    expect(f.duel.snapshot(host).game).toEqual(before.game);
+    const afterJoin = f.duel.snapshot(host);
+    expect(() => f.cmd(late, { type: 'interrupt' })).toThrow(/下一局/);
+    expect(f.duel.snapshot(host)).toEqual(afterJoin);
+    const game = before.game!;
+    f.duel.action(
+      host,
+      DuelActionSchema.parse({
+        type: 'audio_started',
+        actionId: 'audio:started',
+        gameSessionId: game.gameSessionId,
+        selectionVersion: game.selectionVersion,
+        roundToken: game.round!.token,
+      }),
+      0,
+    );
+    const playing = f.duel.snapshot(host);
+    expect(playing.game?.phase).toBe('playing');
+    expect(() => f.cmd(late, { type: 'interrupt' })).toThrow(/下一局/);
+    expect(f.duel.snapshot(host)).toEqual(playing);
+    expect(f.completed).toHaveLength(0);
+    expect(f.lobby.self(host).profile.songEvidence).toEqual({});
+    expect(f.lobby.self(guest).profile.songEvidence).toEqual({});
+    // A real competitor retains the right to stop the match.
+    f.cmd(guest, { type: 'interrupt' });
+    expect(f.duel.snapshot(host).game?.phase).toBe('aborted');
+    expect(f.duel.snapshot(host).game?.winnerId).toBeNull();
+    f.cmd(host, { type: 'reset' });
+    f.lobby.releaseWaiting();
+    f.lobby.dispatch(guest, { type: 'leave' });
+    for (const id of [host, late])
+      f.lobby.dispatch(id, { type: 'ready', ready: true });
+    f.cmd(host, { type: 'begin' });
+    f.cmd(late, {
+      type: 'select',
+      songIds: f.duel
+        .snapshot(late)
+        .ownPool.slice(0, DUEL_PRESETS[preset].selectPerPlayer),
+    });
+    expect(f.duel.snapshot(late).selectionComplete).toContain(late);
+  },
+);
 it.each(['profile', 'preset', 'disconnect', 'join'] as const)(
   '%s invalidates frozen readiness and host acknowledgement',
   (kind) => {

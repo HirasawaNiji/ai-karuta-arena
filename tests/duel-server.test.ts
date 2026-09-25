@@ -174,6 +174,72 @@ it.each(['quick', 'standard'] as const)(
     expect((await f.view()).game?.outcome).toBe('aborted');
   },
 );
+it.each(['quick', 'standard'] as const)(
+  'rejects a late session interrupting the %s duel but permits entry next match',
+  async (preset) => {
+    const f = await fixture();
+    await f.draft(preset);
+    const before = await f.view();
+    const { room } = (await (await f.request('/api/state', f.host)).json()) as {
+      room: LobbySnapshot;
+    };
+    const joined = await f.request('/api/rooms/' + room.roomId + '/join', '', {
+      nickname: 'Late',
+    });
+    expect(joined.status).toBe(201);
+    const late = joined.headers.get('set-cookie')!.split(';')[0]!;
+    const entry = (await joined.json()) as {
+      playerId: string;
+      room: LobbySnapshot;
+    };
+    expect(
+      entry.room.members.find((m) => m.id === entry.playerId)
+        ?.waitingForNextMatch,
+    ).toBe(true);
+    await f.connect(late);
+    expect((await f.view()).game).toEqual(before.game);
+    const afterJoin = await f.view();
+    const denied = await f.cmd(late, { type: 'interrupt' });
+    expect(denied.status).toBe(400);
+    expect(await denied.json()).toEqual({ error: '请等待下一局' });
+    expect(await f.view()).toEqual(afterJoin);
+    expect((await f.action(f.host, 'audio_started')).status).toBe(200);
+    const playing = await f.view();
+    expect(playing.game?.phase).toBe('playing');
+    expect((await f.cmd(late, { type: 'interrupt' })).status).toBe(400);
+    expect(await f.view()).toEqual(playing);
+    expect((await f.cmd(f.guest, { type: 'interrupt' })).status).toBe(200);
+    expect((await f.view()).game?.phase).toBe('aborted');
+    expect((await f.view()).game?.winnerId).toBeNull();
+    expect((await f.cmd(f.host, { type: 'reset' })).status).toBe(200);
+    const after = (await (await f.request('/api/state', late)).json()) as {
+      room: LobbySnapshot;
+    };
+    expect(
+      after.room.members.every((m) => !m.waitingForNextMatch && !m.lobbyReady),
+    ).toBe(true);
+    expect(
+      (await f.request('/api/commands', f.guest, { type: 'leave' })).status,
+    ).toBe(200);
+    for (const cookie of [f.host, late])
+      expect(
+        (
+          await f.request('/api/commands', cookie, {
+            type: 'ready',
+            ready: true,
+          })
+        ).status,
+      ).toBe(200);
+    expect((await f.cmd(f.host, { type: 'begin' })).status).toBe(200);
+    const choices = (await f.view(late)).ownPool.slice(
+      0,
+      DUEL_PRESETS[preset].selectPerPlayer,
+    );
+    expect(
+      (await f.cmd(late, { type: 'select', songIds: choices })).status,
+    ).toBe(200);
+  },
+);
 it('detects a blackhole connection even while its SSE remains open', async () => {
   const f = await fixture();
   await f.draft('quick');
