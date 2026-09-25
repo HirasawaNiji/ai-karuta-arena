@@ -6,6 +6,7 @@ import {
 import { randomBytes } from 'node:crypto';
 import { readFile, stat } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
+import { pipeline } from 'node:stream/promises';
 import { resolve, extname, sep } from 'node:path';
 import {
   PlayerIdSchema,
@@ -637,7 +638,10 @@ export function createApp(options: ServerOptions) {
     file: string,
   ) {
     res.setHeader('Cache-Control', 'no-store');
-    const size = (await stat(file)).size;
+    const info = await stat(file).catch(() => null);
+    if (!info?.isFile() || info.size === 0)
+      return send(res, 404, { error: '音频文件不可用' });
+    const size = info.size;
     const range = req.headers.range;
     if (range) {
       const match = /^bytes=(\d+)-(\d*)$/.exec(range);
@@ -654,7 +658,7 @@ export function createApp(options: ServerOptions) {
         'Content-Range': 'bytes ' + start + '-' + end + '/' + size,
         'Content-Length': end - start + 1,
       });
-      createReadStream(file, { start, end }).pipe(res);
+      await pipeline(createReadStream(file, { start, end }), res);
       return;
     }
     res.writeHead(200, {
@@ -662,10 +666,12 @@ export function createApp(options: ServerOptions) {
       'Accept-Ranges': 'bytes',
       'Content-Length': size,
     });
-    createReadStream(file).pipe(res);
+    await pipeline(createReadStream(file), res);
   }
   const server = createServer((req, res) => {
     void route(req, res).catch((error) => {
+      // pipeline has already closed failed or cancelled audio responses.
+      if (res.destroyed || res.writableEnded) return;
       if (!res.headersSent)
         send(res, 400, {
           error:
