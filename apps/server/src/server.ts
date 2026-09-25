@@ -303,6 +303,16 @@ export function createApp(options: ServerOptions) {
       } catch {
         return send(res, 401, { error: '请重新加入房间' });
       }
+      const input = req.method === 'POST' ? await body(req) : undefined;
+      if (req.method === 'POST') {
+        // Reading a streamed body yields: the session may expire or be revoked.
+        // Resolve the room and check its mode only after that wait has finished.
+        try {
+          session = authenticate(req);
+        } catch {
+          return send(res, 401, { error: '请重新加入房间' });
+        }
+      }
       const room = rooms.get(session.roomId)!;
       session.lastSeen = now();
       room.touched = now();
@@ -343,7 +353,7 @@ export function createApp(options: ServerOptions) {
         return;
       }
       if (req.method === 'POST' && path === '/api/commands') {
-        const cmd = LobbyCommandSchema.parse(await body(req));
+        const cmd = LobbyCommandSchema.parse(input);
         const member = room.lobby
           .snapshot()
           .members.find((m) => m.id === session.playerId);
@@ -386,7 +396,7 @@ export function createApp(options: ServerOptions) {
       if (req.method === 'POST' && path === '/api/tournament/command') {
         if (room.lobby.snapshot().mode !== 'tournament')
           throw new Error('请切换到淘汰赛模式');
-        const cmd = TournamentCommandSchema.parse(await body(req));
+        const cmd = TournamentCommandSchema.parse(input);
         if (
           cmd.type === 'refresh_pool' &&
           room.tournament.checkRefresh(session.playerId, cmd)
@@ -395,6 +405,11 @@ export function createApp(options: ServerOptions) {
             throw new Error('管理员尚未配置题库刷新来源');
           const refreshed = await options.reloadTournamentMaterials();
           // Loading is asynchronous: reject stale requests before changing room data.
+          try {
+            authenticate(req);
+          } catch {
+            return send(res, 401, { error: '请重新加入房间' });
+          }
           if (!room.tournament.checkRefresh(session.playerId, cmd))
             return send(
               res,
@@ -420,7 +435,7 @@ export function createApp(options: ServerOptions) {
         return send(res, 200, result);
       }
       if (req.method === 'POST' && path === '/api/tournament/prepare') {
-        const envelope = TournamentPrepareSchema.parse(await body(req));
+        const envelope = TournamentPrepareSchema.parse(input);
         const cmd = envelope.command;
         const pair =
           room.tournament
@@ -453,7 +468,7 @@ export function createApp(options: ServerOptions) {
           200,
           room.tournament.action(
             session.playerId,
-            DuelActionSchema.parse(await body(req)),
+            DuelActionSchema.parse(input),
             samples[Math.floor(samples.length / 2)] ?? 0,
           ),
         );
@@ -473,7 +488,7 @@ export function createApp(options: ServerOptions) {
       if (req.method === 'GET' && path === '/api/duel')
         return send(res, 200, room.duel.snapshot(session.playerId));
       if (req.method === 'POST' && path === '/api/heartbeat') {
-        const reply = HeartbeatReplySchema.parse(await body(req));
+        const reply = HeartbeatReplySchema.parse(input);
         const challenge = session.challenge;
         if (
           !challenge ||
@@ -497,7 +512,7 @@ export function createApp(options: ServerOptions) {
       if (req.method === 'POST' && path === '/api/duel/prepare') {
         if (room.lobby.snapshot().mode !== 'duel')
           throw new Error('请切换到双人模式');
-        const cmd = DuelPreparationCommandSchema.parse(await body(req));
+        const cmd = DuelPreparationCommandSchema.parse(input);
         if (
           cmd.type === 'start' &&
           [...sessions.values()]
@@ -513,7 +528,7 @@ export function createApp(options: ServerOptions) {
         return send(res, 200, result);
       }
       if (req.method === 'POST' && path === '/api/duel/action') {
-        const cmd = DuelActionSchema.parse(await body(req));
+        const cmd = DuelActionSchema.parse(input);
         const samples = [...session.rttSamples].sort((a, b) => a - b);
         return send(
           res,
@@ -530,7 +545,7 @@ export function createApp(options: ServerOptions) {
       if (req.method === 'POST' && path === '/api/multiplayer/prepare') {
         if (room.lobby.snapshot().mode !== 'multiplayer')
           throw new Error('请切换到多人模式');
-        const cmd = MultiplayerPreparationCommandSchema.parse(await body(req));
+        const cmd = MultiplayerPreparationCommandSchema.parse(input);
         if (
           cmd.type === 'start' &&
           [...sessions.values()]
@@ -557,7 +572,7 @@ export function createApp(options: ServerOptions) {
           200,
           room.multi.action(
             session.playerId,
-            MultiplayerActionSchema.parse(await body(req)),
+            MultiplayerActionSchema.parse(input),
           ),
         );
       const multiAudio = /^\/api\/multiplayer\/audio\/([A-Za-z0-9:-]+)$/.exec(
