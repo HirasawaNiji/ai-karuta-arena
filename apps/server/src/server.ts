@@ -205,6 +205,9 @@ export function createApp(options: ServerOptions) {
       if (sessions.size >= 500)
         return send(res, 503, { error: '演示服务已满' });
       const { nickname } = LobbyEntrySchema.parse(await body(req));
+      // Other entrants can fill the service while this request body arrives.
+      if (sessions.size >= 500)
+        return send(res, 503, { error: '演示服务已满' });
       const playerId = PlayerIdSchema.parse('player:' + id());
       if (path === '/api/rooms') {
         if (rooms.size >= 100) return send(res, 503, { error: '演示房间已满' });
