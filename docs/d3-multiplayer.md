@@ -11,3 +11,26 @@
 验证：三独立 Chrome 客户端使用真实曲包完成选曲、三个 BAN、最终 12 首确认、实际音频、抢牌、错抢与结算；三端均为 8/0/0 分，排名 1/2/2。房主 8 条歌曲反馈，两名好友各 1 条对应错抢题目反馈。自动点击只依据当前已返回音频的哈希映射可见歌名，非真人识曲。单元/HTTP 测试覆盖竞争只得一分、错抢锁定、并列、短库、过期版本、伪造字段、音频权限、晚加入和断线。最终构建 360/390/430px 无水平溢出；浏览器拦截下一题音频后两端中断，未作答好友画像版本仍为 1、歌曲证据为 0。证据见 [三客户端验证](evidence/d3-browser-validation.json)。本地全量 509 项中 508 项通过、1 项发生 loopback 连接超时；该 HTTP 文件单独重验 4 项均通过。最终 CI 结果见 PR。
 
 D4 后续实现见 [赛事说明](d4-tournament.md)，完整 Demo #14 仍保留现场验收。QQ WebView/真机与现场真人听辨单独验收。
+
+## 选曲解释 API（前端交接）
+
+GET /api/multiplayer、POST /api/multiplayer/prepare 的返回值和 SSE 的 multiplayer 事件均包含 selectionExplanation。该字段是实际 selectPlaylist 返回值的只读投影；无需单独请求，也不使用 LLM。当前页面尚未呈现逐首解释，展示与交互由 UI 迭代 #33 接手；接口完成不表示 UI 已完成。
+
+| 字段 | 含义 |
+| --- | --- |
+| stage | proposal 为 BAN 前提案，final 为全员 BAN 完成后的重新选曲结果；部分玩家提交 BAN 时仍展示原提案，不能标成已应用全部禁歌 |
+| selectionVersion | 必须与当前 view.version 相同；final 时也与 assessment.selectionVersion 相同 |
+| selectionConfigVersion / scoringConfigVersion / fairnessConfigVersion | 本次实际使用的选曲、熟悉度评分和公平规则版本 |
+| requestedCount / actualCount | 请求与实际选出的数量；短库保留真实数量，不补假歌曲 |
+| steps | 逐首加入题组的实际贡献，顺序为算法选曲顺序，**不是随机播放顺序** |
+| steps[].songId | 可用公共曲库查歌名；每步对应当前提案或最终评估中的一首歌 |
+| steps[].deficitGain | 所有参赛者熟悉覆盖缺口平方和的减少量，优先级最高；不是熟悉歌曲数量。例如三人的缺口各从 3 变 2，值为 3 × (9 − 4) = 15 |
+| steps[].objectiveGains | fairness、diversity、competition、exploration、softRatio 五个目标相对前一步的变化，未乘权重，可能为负；保留原值，不能全部描述为改善 |
+| steps[].softRatioContribution / totalGain | 原引擎记录的软比例加权贡献 / 综合目标变化；综合目标在覆盖缺口改善并列后才用于选择 |
+| steps[].tieBreakRule | deficit：覆盖缺口改善唯一最优；objective：缺口改善并列后，量化综合目标唯一最优；song_id：仍并列时按稳定歌曲 ID 决定，不是随机或更强推荐 |
+
+接手时先检查 selectionExplanation 非空且版本与当前视图一致，再按 stage 显示“选曲提案依据”或“最终题组依据”。例如 deficitGain > 0 可说明“优先补足当前熟悉覆盖缺口”；不能把 15 写成“增加 15 首熟悉歌”。当 tieBreakRule 为 song_id 时应如实说明同等条件下按固定顺序选择。整体是否通过公平检查仍以当前 assessment 为准，单个贡献项为正不等于全局公平通过，也不是识别概率或胜率。
+
+未选曲、重置、房间/画像/准备修订使旧准备失效，或内部故障被隔离时，字段为 null；BAN 全部结束后替换为新版本。客户端不得保留旧解释冒充当前题组。输出不包含个人原始证据、完整画像/矩阵、逐玩家覆盖表、题目答案映射、随机种子或未来题序；快照深拷贝，读取方修改不会污染后续状态。普通双人及赛事沿用玩家手选，不能套用此自动选曲解释。
+
+新增回归使用可手算的三人共同自报样例核对首曲缺口贡献 15、目标变化及综合贡献，同时覆盖 BAN 后替换、短库、重置、画像/离线失效、内部故障与快照隔离；HTTP/SSE 用例核对全员得到相同的提案/最终版本，并保留现有准备、音箱权限、晚加入与中断断言。

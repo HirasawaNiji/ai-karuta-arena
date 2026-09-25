@@ -6,6 +6,7 @@ import {
   GameSessionInputSchema,
   type MultiplayerPreparationCommand,
   type MultiplayerPreparationView,
+  type MultiplayerSelectionExplanation,
   type MultiplayerEngine,
   type MultiplayerEngineFactory,
   type MultiplayerAction,
@@ -57,6 +58,7 @@ export function createMultiplayerPreparation(
   let proposed: readonly SongId[] = [],
     selected: readonly SongId[] = [],
     bans: Record<string, readonly SongId[]> = {},
+    selectionExplanation: MultiplayerSelectionExplanation | null = null,
     state: PartyState | null = null,
     game: MultiplayerEngine | null = null;
   const ready = new Set<PlayerId>(),
@@ -76,6 +78,7 @@ export function createMultiplayerPreparation(
     proposed = [];
     selected = [];
     bans = {};
+    selectionExplanation = null;
     state = null;
     game = null;
     ready.clear();
@@ -93,6 +96,7 @@ export function createMultiplayerPreparation(
       ready.clear();
       audioReady = false;
       state = null;
+      selectionExplanation = null;
     } else clear('房间状态已变化，请重新准备并选曲');
   }
   function guard() {
@@ -134,6 +138,7 @@ export function createMultiplayerPreparation(
         .map((card) => ({ cardId: card.cardId, title: card.text })),
       readyPlayerIds: [...ready],
       assessment: state?.fairnessAssessment ?? null,
+      selectionExplanation,
       acknowledged: !!state?.hostAcknowledgement,
       blockers,
       canStart: phase === 'confirming' && blockers.length === 0,
@@ -192,6 +197,24 @@ export function createMultiplayerPreparation(
       roundNumber: 1,
     });
     selected = selection.selectedSongIds;
+    // Project the actual selection trace, excluding individual coverage and input evidence.
+    selectionExplanation = {
+      stage: final ? 'final' : 'proposal',
+      selectionVersion: selection.inputVersions.selectionVersion,
+      selectionConfigVersion: selection.inputVersions.selectionConfig.version,
+      scoringConfigVersion: selection.inputVersions.scoringConfig.version,
+      fairnessConfigVersion: selection.inputVersions.fairnessConfig.version,
+      requestedCount: selection.requestedCount,
+      actualCount: selection.actualCount,
+      steps: selection.steps.map((step) => ({
+        songId: step.songId,
+        deficitGain: step.deficitGain,
+        objectiveGains: step.objectiveGains,
+        softRatioContribution: step.softRatioContribution,
+        totalGain: step.totalGain,
+        tieBreakRule: step.tieBreak.rule,
+      })),
+    };
     if (!final) {
       proposed = selected;
       return;
@@ -411,6 +434,7 @@ export function createMultiplayerPreparation(
     } catch {
       fault = '对局状态校验失败，请重新准备';
       state = null;
+      selectionExplanation = null;
       ready.clear();
       audioReady = false;
       try {
