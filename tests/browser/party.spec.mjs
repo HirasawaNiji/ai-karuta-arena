@@ -1,4 +1,6 @@
+/* global fetch */
 import { test, expect } from '@playwright/test';
+import { randomUUID } from 'node:crypto';
 import {
   room,
   ready,
@@ -22,6 +24,7 @@ for (const preset of ['quick', 'standard'])
     'real UI completes ' + preset + ' duel with audio, claims and transfer',
     async ({ browser, baseURL }, testInfo) => {
       const r = await room(browser, baseURL, 2);
+      let late;
       try {
         await ready(r.clients, 'duel', preset);
         await prepareDuel(r.clients, preset);
@@ -29,6 +32,41 @@ for (const preset of ['quick', 'standard'])
         expect(Object.values(opening.hands).map((hand) => hand.length)).toEqual(
           preset === 'quick' ? [10, 10] : [15, 15],
         );
+        late = await room(browser, baseURL, 1, {
+          code: r.clients[0].code,
+          nicknameOffset: 2,
+        });
+        const newcomer = late.clients[0];
+        await expect(
+          newcomer.page.getByRole('button', {
+            name: '等待下一局',
+            exact: true,
+          }),
+        ).toBeDisabled();
+        const frozen = await view(newcomer.page, '/api/duel');
+        const denied = await newcomer.page.evaluate(
+          async (command) => {
+            const response = await fetch('/api/duel/prepare', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(command),
+            });
+            return { status: response.status, body: await response.json() };
+          },
+          {
+            type: 'interrupt',
+            actionId: randomUUID(),
+            expectedVersion: frozen.version,
+          },
+        );
+        expect(denied).toEqual({
+          status: 400,
+          body: { error: '请等待下一局' },
+        });
+        const continued = (await view(r.clients[0].page, '/api/duel')).game;
+        expect(continued.gameSessionId).toBe(opening.gameSessionId);
+        expect(['aborted', 'completed']).not.toContain(continued.phase);
+        expect(Object.keys(continued.scores)).not.toContain(newcomer.id);
         const result = await play(r.clients[0], r.clients[0], '/api/duel');
         expect(result.game.winnerId).toBe(r.clients[0].id);
         expect(result.game.hands[r.clients[0].id]).toHaveLength(0);
@@ -47,12 +85,13 @@ for (const preset of ['quick', 'standard'])
           (await view(r.clients[0].page, '/api/profile')).profile
             .profileVersion,
         ).toBeGreaterThan(1);
-        expect(r.errors).toEqual([]);
+        expect([...r.errors, ...late.errors]).toEqual([]);
         await testInfo.attach('duel-result', {
           body: JSON.stringify(result),
           contentType: 'application/json',
         });
       } finally {
+        await late?.close();
         await r.close();
       }
     },
