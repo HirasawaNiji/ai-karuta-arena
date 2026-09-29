@@ -581,7 +581,7 @@ function App() {
                     <span className="muted small">可跳过</span>
                   </div>
                   <p className="muted">
-                    选择偏好只帮助了解你，不会当作你认识每一首歌。
+                    选择词条只帮助了解你的音乐偏好，不会认为你熟悉这里面的每一首歌。
                   </p>
                   <div className="tag-list">
                     {library?.tags.map((t) => (
@@ -602,8 +602,7 @@ function App() {
                   </div>
                   <h2>挑几首熟悉的歌</h2>
                   <p className="muted small">
-                    推荐 3–5
-                    首。未指定录音的“前奏就能认出”按歌曲级熟悉处理；对局只使用已核验的前奏题目。
+                    让我们知道你对这些曲子的熟悉程度（听过/熟悉/前奏就能听出），如果对下面展示歌曲不满意可以通过搜索直接添加。
                   </p>
                   <label className="search">
                     搜索歌曲
@@ -757,7 +756,7 @@ function App() {
                     </p>
                   </div>
                   <div className="panel">
-                    <h2>选曲前，先听听大家的偏好</h2>
+                    <h2>选曲前，先看看大家的偏好</h2>
                     <div className="assessment-stats">
                       <div>
                         <b>{room.playableCount}</b>
@@ -841,7 +840,7 @@ function App() {
                           >
                             <strong>
                               {mode === 'duel'
-                                ? '双人经典抢牌'
+                                ? '经典1v1solo抢牌'
                                 : mode === 'multiplayer'
                                   ? '多人同场抢牌'
                                   : '好友单淘汰赛'}

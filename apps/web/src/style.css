@@ -551,7 +551,12 @@ main {
 }
 .preset-list {
   display: grid;
-  gap: 10px;
+  gap: 16px;
+}
+.preset-list + .preset-list:not(:empty) {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
 }
 .preset-list button {
   text-align: left;
