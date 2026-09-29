@@ -833,6 +833,19 @@ footer {
   max-width: 980px;
   margin: 0 auto;
 }
+.duel-start {
+  display: block;
+  width: min(100%, 360px);
+  min-height: 72px;
+  margin: 28px auto 0;
+  padding: 18px 28px;
+  border-radius: 18px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.duel-start-notice {
+  margin: 28px 0 0;
+}
 .section-heading,
 .duel-score {
   display: flex;
