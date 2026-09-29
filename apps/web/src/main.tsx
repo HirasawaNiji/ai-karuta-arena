@@ -497,8 +497,16 @@ function App() {
                   setScreen('profile');
                 }}
               >
-                01 音乐偏好
+                <span className="step-number">01</span>{' '}
+                <span className="step-label">音乐偏好</span>
               </button>
+              <svg
+                className="step-arrow"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M4 12h15m-6-6 6 6-6 6" />
+              </svg>
               <button
                 disabled={[
                   duel?.game,
@@ -511,13 +519,22 @@ function App() {
                   setScreen('lobby');
                 }}
               >
-                02 好友大厅
+                <span className="step-number">02</span>{' '}
+                <span className="step-label">好友大厅</span>
               </button>
+              <svg
+                className="step-arrow"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path d="M4 12h15m-6-6 6 6-6 6" />
+              </svg>
               <button
                 aria-current={screen === 'duel' ? 'step' : undefined}
                 onClick={() => setScreen('duel')}
               >
-                03 听歌抢牌
+                <span className="step-number">03</span>{' '}
+                <span className="step-label">听歌抢牌</span>
               </button>
             </nav>
             {screen === 'duel' ? (
