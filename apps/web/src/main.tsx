@@ -85,6 +85,7 @@ const preferenceGroups = [
   },
 ] as const;
 function App() {
+  const [practice, setPractice] = useState(false);
   const [tournament, setTournament] = useState<TournamentView | null>(null);
   const [multi, setMulti] = useState<MultiplayerPreparationView | null>(null);
   const [duel, setDuel] = useState<DuelPreparationView | null>(null);
@@ -129,6 +130,9 @@ function App() {
     );
   }
   useEffect(() => {
+    void api<{ practice?: boolean }>('/api/health')
+      .then((health) => setPractice(health.practice === true))
+      .catch(() => {});
     void api<Library>('/api/catalog')
       .then(setLibrary)
       .catch((e) => setError(String(e)));
@@ -332,6 +336,19 @@ function App() {
         <span className="pill">{platform.label}</span>
       </header>
       <main>
+        {practice && (
+          <div className="message" role="note">
+            <strong>单人人机陪练 · 本局不记录画像成绩</strong>
+            <p>
+              电脑自动准备、选歌和禁歌；播放后等待 4–6
+              秒尝试抢牌，部分题目会放过。这是规则陪练，不是 AI 听歌识别。
+            </p>
+            <p>
+              填写昵称创建房间 → 填写或跳过偏好 → 准备好了 →
+              听歌抢牌。选歌、禁歌和启用音箱由你确认；结束后可重新选歌，停止陪练请退出房间。
+            </p>
+          </div>
+        )}
         <div role="alert" className={error ? 'message error' : 'hidden'}>
           {error}
         </div>
@@ -380,7 +397,7 @@ function App() {
             </section>
             <section className="panel entry">
               <div className="eyebrow">开始一次音乐相遇</div>
-              <h2>把朋友叫上吧</h2>
+              <h2>{practice ? '一个人也能练一局' : '把朋友叫上吧'}</h2>
               <div className="segmented">
                 <button
                   aria-pressed={mode === 'create'}
@@ -390,6 +407,7 @@ function App() {
                 </button>
                 <button
                   aria-pressed={mode === 'join'}
+                  hidden={practice}
                   onClick={() => setMode('join')}
                 >
                   加入好友
@@ -453,7 +471,7 @@ function App() {
                 </h1>
                 <p className="muted">
                   房间 <strong>{room.roomId}</strong> · {room.members.length} /
-                  8 人 ·{' '}
+                  {practice ? 2 : 8} 人 ·{' '}
                   {room.mode === 'multiplayer'
                     ? '多人 · 12 题'
                     : preset.handSize + ' 对 ' + preset.handSize}
@@ -590,6 +608,7 @@ function App() {
                 )
               ) : duel && entry && library ? (
                 <DuelPanel
+                  practice={practice}
                   room={room}
                   playerId={entry.playerId}
                   songs={library.songs}
@@ -902,8 +921,9 @@ function App() {
                   <section className="panel">
                     <h2>这一局怎么听</h2>
                     <div className="preset-list">
-                      {(['duel', 'multiplayer', 'tournament'] as const).map(
-                        (mode) => (
+                      {(['duel', 'multiplayer', 'tournament'] as const)
+                        .filter((mode) => !practice || mode === 'duel')
+                        .map((mode) => (
                           <button
                             key={mode}
                             disabled={
@@ -931,8 +951,7 @@ function App() {
                                   : '4 / 8 人 · 半决赛到冠军'}
                             </small>
                           </button>
-                        ),
-                      )}
+                        ))}
                     </div>
                     <div className="preset-list">
                       {room.mode !== 'multiplayer' &&

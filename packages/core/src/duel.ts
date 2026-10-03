@@ -134,7 +134,7 @@ export interface DuelEngine {
   abort(reason: string): void;
   snapshot(): DuelView;
   result(): DuelResult | null;
-  /** Trusted host audio route only; never project this mapping into a browser state. */
+  /** Trusted audio route/local scripted practice only; never project answers into browser state. */
   currentQuestion(token: string): Question | null;
 }
 export interface DuelEngineDependencies {

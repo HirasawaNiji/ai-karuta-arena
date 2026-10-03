@@ -80,4 +80,6 @@ M1–M5 的核心 Mock 已实现，`install / build / typecheck / test / lint / 
 
 ## 静音浏览器回归
 
+单人试玩可使用独立的本地规则陪练：构建并配置真实素材后运行 `pnpm practice`，打开 http://127.0.0.1:3224 。电脑自动准备与操作，真人控制开局，陪练局不更新画像成绩。操作、停止方式与边界见 [人机陪练](docs/local-practice.md)。
+
 执行 `pnpm exec playwright install chromium` 后运行 `pnpm test:browser`，自动验证画像入场、双人两种局长、多人及四人/八人淘汰流程，以及准备失效、过期心跳恢复和中断重开。测试强制静音，使用明确标注的合成测试音，说明见 [浏览器回归](docs/browser-regression.md)。
