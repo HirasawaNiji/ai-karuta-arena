@@ -20,5 +20,7 @@ jobs:
           python-version: '3.12'
       - name: Validate repository files
         run: python scripts/check_repository.py
+      - name: Validate reviewed playlist catalog
+        run: python scripts/check_playlist_catalog.py
       - name: Check material audit failure cases
         run: python -m unittest discover -s scripts -p "test_*.py"
