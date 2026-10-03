@@ -155,6 +155,27 @@ try {
     await expect
       .poll(async () => (await view(clients[0].page, '/api/duel')).game?.phase)
       .toBe('playing');
+    if (preset === 'standard' && process.env.AMP_VERIFY_ALL_PRIORITY === '1') {
+      const deadline = Date.now() + 360000;
+      while ([...priorityTitles].some((title) => !playedTitles.has(title))) {
+        assert.ok(
+          Date.now() < deadline,
+          'All supplemental songs actually play within one full question cycle',
+        );
+        assert.notEqual(
+          (await view(clients[0].page, '/api/duel')).game?.phase,
+          'completed',
+          'Supplemental audio is exposed before the question cycle ends',
+        );
+        await delay(1000);
+      }
+      console.log(
+        JSON.stringify({
+          priorityAudioCoverage: priorityTitles.size,
+          completed: true,
+        }),
+      );
+    }
     const opening = (await view(clients[0].page, '/api/duel')).game;
     assert.equal(
       await responseStatus(
@@ -175,7 +196,12 @@ try {
     );
     const result = await play(clients[0], clients[0], '/api/duel');
     assert.equal(result.game.phase, 'completed');
-    assert.equal(result.game.winnerId, clients[0].id);
+    if (preset === 'standard' && process.env.AMP_VERIFY_ALL_PRIORITY === '1')
+      assert.ok(
+        result.game.winnerId === clients[0].id ||
+          result.game.reason === 'exhausted',
+      );
+    else assert.equal(result.game.winnerId, clients[0].id);
     assert.equal(
       (await view(clients[1].page, '/api/duel')).game.phase,
       'completed',
