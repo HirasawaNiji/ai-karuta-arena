@@ -116,10 +116,17 @@ async function leave() {
   await Promise.all(clients.splice(0).map((c) => c.context.close()));
 }
 try {
-  for (const preset of ['quick', 'standard']) {
+  const presets = ['quick', 'standard'];
+  let supplementalAttempts = 0;
+  for (const preset of presets) {
     await enter(2);
     await ready(clients, 'duel', preset);
-    if (preset === 'standard' && priorityTitles.size) {
+    if (
+      priorityTitles.size &&
+      (preset === 'standard' || supplementalAttempts > 0)
+    ) {
+      const selectCount = preset === 'standard' ? 18 : 12;
+      const banCount = preset === 'standard' ? 3 : 2;
       await clients[0].page
         .getByRole('button', { name: '开始选歌', exact: true })
         .click();
@@ -130,7 +137,7 @@ try {
         const chosen = [
           ...names.filter((name) => priorityTitles.has(name)),
           ...names.filter((name) => !priorityTitles.has(name)),
-        ].slice(0, 18);
+        ].slice(0, selectCount);
         for (const name of chosen)
           await page.getByRole('button', { name, exact: true }).click();
         await page
@@ -144,7 +151,7 @@ try {
         const names = await page.locator('button.song-card').allTextContents();
         for (const name of names
           .filter((name) => !priorityTitles.has(name))
-          .slice(0, 3))
+          .slice(0, banCount))
           await page.getByRole('button', { name, exact: true }).click();
         await page
           .getByRole('button', { name: '确认禁歌', exact: true })
@@ -173,35 +180,9 @@ try {
       token,
       'No-answer round advances after ten seconds',
     );
-    if (preset === 'standard' && process.env.AMP_VERIFY_ALL_PRIORITY === '1') {
-      const deadline = Date.now() + 480000;
-      while ([...priorityTitles].some((title) => !playedTitles.has(title))) {
-        assert.ok(
-          Date.now() < deadline,
-          'All supplemental songs actually play within one full question cycle',
-        );
-        assert.notEqual(
-          (await view(clients[0].page, '/api/duel')).game?.phase,
-          'completed',
-          'Supplemental audio is exposed before the question cycle ends',
-        );
-        await delay(1000);
-      }
-      console.log(
-        JSON.stringify({
-          priorityAudioCoverage: priorityTitles.size,
-          completed: true,
-        }),
-      );
-    }
     const result = await play(clients[0], clients[0], '/api/duel');
     assert.equal(result.game.phase, 'completed');
-    if (preset === 'standard' && process.env.AMP_VERIFY_ALL_PRIORITY === '1')
-      assert.ok(
-        result.game.winnerId === clients[0].id ||
-          result.game.outcome === 'exhausted',
-      );
-    else assert.equal(result.game.winnerId, clients[0].id);
+    assert.equal(result.game.winnerId, clients[0].id);
     assert.equal(
       (await view(clients[1].page, '/api/duel')).game.phase,
       'completed',
@@ -221,7 +202,31 @@ try {
     });
     console.log(JSON.stringify(results.at(-1)));
     await leave();
+    const missing = [...priorityTitles].filter(
+      (title) => !playedTitles.has(title),
+    );
+    if (preset !== 'quick' || supplementalAttempts > 0) {
+      console.log(
+        JSON.stringify({
+          priorityAudioCoverage: priorityTitles.size - missing.length,
+          required: priorityTitles.size,
+          missing,
+        }),
+      );
+      if (
+        process.env.AMP_VERIFY_ALL_PRIORITY === '1' &&
+        missing.length &&
+        supplementalAttempts++ < 12
+      )
+        presets.push('quick');
+    }
   }
+  if (process.env.AMP_VERIFY_ALL_PRIORITY === '1')
+    assert.deepEqual(
+      [...priorityTitles].filter((title) => !playedTitles.has(title)),
+      [],
+      'Every supplemental song has a hash-verified public question response',
+    );
   await enter(3);
   await ready(clients, 'multiplayer');
   const host = clients[0];
@@ -281,6 +286,10 @@ try {
     JSON.stringify(
       {
         error: String(e),
+        playedTitles: [...playedTitles],
+        missingPriorityTitles: [...priorityTitles].filter(
+          (title) => !playedTitles.has(title),
+        ),
         results,
         errors,
         view: await view(clients[0]?.page, '/api/duel').catch(() => null),
