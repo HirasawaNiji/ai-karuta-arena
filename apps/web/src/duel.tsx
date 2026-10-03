@@ -260,7 +260,7 @@ export function DuelPanel({
             首。先清空自己手牌的人获胜，由本场第一位选手设备共享播放。
           </p>
           <button
-            className="primary"
+            className="primary duel-start"
             disabled={
               busy ||
               !host ||
@@ -273,8 +273,8 @@ export function DuelPanel({
             {host ? '开始选歌' : '等待播放选手开始'}
           </button>
           {room.playableCount < preset.minimumCandidates && (
-            <p className="message">
-              目前已核验 {room.playableCount} 首，需要至少{' '}
+            <p className="message duel-start-notice">
+              暂时无法开启游戏：目前已核验 {room.playableCount} 首，需要至少{' '}
               {preset.minimumCandidates} 首前奏题目。
             </p>
           )}

@@ -302,28 +302,99 @@ main {
 .room-heading p {
   margin: 0;
 }
+@property --step-glow-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
 .steps {
-  display: flex;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr) 24px minmax(0, 1fr);
+  gap: 14px;
   align-items: center;
   border-bottom: 1px solid var(--line);
-  padding-bottom: 19px;
+  padding: 4px 0 23px;
   margin-bottom: 26px;
-  flex-wrap: wrap;
 }
 .steps button {
-  background: transparent;
-  border: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-width: 0;
+  min-height: 70px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #ffffffb3;
   color: var(--muted);
+  font-size: 16px;
 }
-.steps button[aria-current='step'] {
-  background: #ddf6e8;
+.steps button:hover:not(:disabled) {
+  background: #ecf9f1;
   color: #146747;
 }
-.steps span {
-  color: #919d96;
+.steps button[aria-current='step'] {
+  background: #e0f8eb;
+  border-color: #9bdcba;
+  color: #146747;
+  box-shadow:
+    0 0 0 4px #22ce8b0a,
+    0 5px 20px #22ce8b12;
+}
+.steps button[aria-current='step']::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(
+    from var(--step-glow-angle),
+    transparent 0% 55%,
+    #a2f2c7 72%,
+    #1acb89 86%,
+    #119963 94%,
+    transparent 100%
+  );
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  animation: step-border-orbit 3.2s linear infinite;
+}
+@keyframes step-border-orbit {
+  to {
+    --step-glow-angle: 360deg;
+  }
+}
+.steps .step-number {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #edf2ee;
   font-size: 13px;
-  padding: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.steps button[aria-current='step'] .step-number {
+  background: #146747;
+  color: white;
+}
+.steps .step-label {
+  white-space: nowrap;
+}
+.step-arrow {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: #91b5a0;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .content-grid {
   display: grid;
@@ -480,7 +551,12 @@ main {
 }
 .preset-list {
   display: grid;
-  gap: 10px;
+  gap: 16px;
+}
+.preset-list + .preset-list:not(:empty) {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
 }
 .preset-list button {
   text-align: left;
@@ -678,18 +754,31 @@ footer {
     min-height: 44px;
   }
   .steps {
-    gap: 4px;
-    padding-bottom: 13px;
+    grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1fr) 16px minmax(
+        0,
+        1fr
+      );
+    gap: 6px;
+    padding-bottom: 18px;
     margin-bottom: 20px;
   }
   .steps button {
-    font-size: 12px;
-    padding: 9px 11px;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 82px;
+    padding: 10px 4px;
+    border-radius: 13px;
+    font-size: 13px;
   }
-  .steps span {
-    font-size: 11px;
-    padding: 7px 6px;
-    width: 100%;
+  .steps .step-number {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    font-size: 12px;
+  }
+  .step-arrow {
+    width: 16px;
+    height: 16px;
   }
   .panel {
     border-radius: 18px;
@@ -731,6 +820,10 @@ footer {
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .steps button[aria-current='step']::before {
+    animation: none;
+    background: #22b77b;
+  }
   * {
     transition: none !important;
   }
@@ -739,6 +832,19 @@ footer {
 .duel-panel {
   max-width: 980px;
   margin: 0 auto;
+}
+.duel-start {
+  display: block;
+  width: min(100%, 360px);
+  min-height: 72px;
+  margin: 28px auto 0;
+  padding: 18px 28px;
+  border-radius: 18px;
+  font-size: 20px;
+  font-weight: 700;
+}
+.duel-start-notice {
+  margin: 28px 0 0;
 }
 .section-heading,
 .duel-score {
