@@ -6,6 +6,11 @@ import { resolve } from 'node:path';
 import { loadReviewedMaterials } from './reviewed-materials.js';
 import { createApp } from './server.js';
 
+const practice = process.env.AMP_PRACTICE === '1';
+const host = process.env.HOST ?? '127.0.0.1';
+if (practice && host !== '127.0.0.1' && host !== '::1')
+  throw new Error('人机陪练仅允许本机回环地址');
+
 const loadMaterial = () =>
   loadPendingMaterials(
     fileURLToPath(
@@ -40,6 +45,7 @@ const reviewed = reviewPath
       questionAudioFiles: new Map<string, string>(),
     };
 const app = createApp({
+  practice,
   ...reviewed,
   ...(reviewPath
     ? {
@@ -76,7 +82,6 @@ const app = createApp({
 const port = Number(process.env.PORT ?? 3210);
 if (!Number.isInteger(port) || port < 1 || port > 65535)
   throw new Error('Invalid PORT');
-const host = process.env.HOST ?? '127.0.0.1';
 app.server.listen(port, host, () =>
   console.log('Music Party: http://' + host + ':' + port),
 );

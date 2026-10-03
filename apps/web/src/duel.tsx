@@ -39,10 +39,12 @@ export function DuelPanel({
   onView,
   endpoint = '/api/duel',
   tournament = false,
+  practice = false,
   match,
 }: {
   endpoint?: string;
   tournament?: boolean;
+  practice?: boolean;
   match?: { matchId: string; attempt: number };
   room: LobbySnapshot;
   playerId: string;
@@ -422,9 +424,11 @@ export function DuelPanel({
               <p>
                 {game.phase === 'aborted'
                   ? '本局不计正式胜负，也不会更新识曲反馈。'
-                  : game.outcome === 'exhausted'
-                    ? '题目已播完，双方仍有手牌。可以重新选歌再来一局。'
-                    : '明确作答的结果已用于更新音乐画像。'}
+                  : practice
+                    ? '陪练结果仅供本次体验，不会更新任何玩家的音乐画像。'
+                    : game.outcome === 'exhausted'
+                      ? '题目已播完，双方仍有手牌。可以重新选歌再来一局。'
+                      : '明确作答的结果已用于更新音乐画像。'}
               </p>
             </div>
           ) : (

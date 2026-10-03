@@ -39,8 +39,11 @@ import {
   type LobbyController,
 } from '@amp/party-runtime';
 import { type MaterialPreview } from './materials.js';
+import { createPracticeOpponent } from './practice-opponent.js';
 
 export interface ServerOptions {
+  /** Trusted startup option. Dedicated local 1v1 rooms, no gameplay feedback. */
+  practice?: boolean;
   catalog: Catalog;
   verifiedQuestionIds?: readonly string[];
   materials?: readonly MaterialPreview[];
@@ -66,6 +69,7 @@ export function createApp(options: ServerOptions) {
       tournament: TournamentPreparationController;
       touched: number;
       questionAudioFiles: Map<string, string>;
+      practice?: ReturnType<typeof createPracticeOpponent>;
     }
   >();
   type Session = {
@@ -169,7 +173,11 @@ export function createApp(options: ServerOptions) {
     )
       return send(res, 403, { error: '不接受跨站请求' });
     if (req.method === 'GET' && path === '/api/health')
-      return send(res, 200, { status: 'ok', mode: 'D4-tournament' });
+      return send(res, 200, {
+        status: 'ok',
+        mode: 'D4-tournament',
+        practice: !!options.practice,
+      });
     if (req.method === 'GET' && path === '/api/catalog') {
       let catalog = options.catalog;
       let playableSongIds = catalog.questions
@@ -195,6 +203,10 @@ export function createApp(options: ServerOptions) {
       req.method === 'POST' &&
       (path === '/api/rooms' || /^\/api\/rooms\/[A-F0-9]{6}\/join$/.test(path))
     ) {
+      if (options.practice && path !== '/api/rooms')
+        return send(res, 403, {
+          error: '陪练房间仅供单人使用，请创建自己的陪练局',
+        });
       // Avoid silently stranding an existing member by replacing its session cookie.
       try {
         authenticate(req);
@@ -237,7 +249,7 @@ export function createApp(options: ServerOptions) {
           nextId: id,
           seed: () => randomBytes(4).readUInt32LE(),
           onChange: () => broadcast(roomId),
-          onCompleted: lobby.settleDuel,
+          onCompleted: options.practice ? () => {} : lobby.settleDuel,
         });
         const multi = createMultiplayerPreparation({
           context: lobby.preparationContext,
@@ -266,6 +278,18 @@ export function createApp(options: ServerOptions) {
           touched: now(),
           questionAudioFiles: new Map(options.questionAudioFiles),
         });
+        if (options.practice) {
+          const botId = PlayerIdSchema.parse('practice:' + id());
+          lobby.join(botId, '电脑陪练（规则）');
+          rooms.get(roomId)!.practice = createPracticeOpponent({
+            playerId: botId,
+            lobby,
+            duel,
+            now,
+            nextId: id,
+            onChange: () => broadcast(roomId),
+          });
+        }
         establish(res, roomId, playerId);
         return;
       }
@@ -317,6 +341,12 @@ export function createApp(options: ServerOptions) {
         }
       }
       const room = rooms.get(session.roomId)!;
+      if (
+        options.practice &&
+        /^\/api\/(multiplayer|tournament)(\/|$)/.test(path) &&
+        req.method === 'POST'
+      )
+        return send(res, 403, { error: '陪练仅支持双人模式' });
       session.lastSeen = now();
       room.touched = now();
       if (req.method === 'GET' && path === '/api/state')
@@ -357,6 +387,8 @@ export function createApp(options: ServerOptions) {
       }
       if (req.method === 'POST' && path === '/api/commands') {
         const cmd = LobbyCommandSchema.parse(input);
+        if (options.practice && cmd.type === 'mode' && cmd.mode !== 'duel')
+          return send(res, 403, { error: '陪练仅支持双人模式' });
         const member = room.lobby
           .snapshot()
           .members.find((m) => m.id === session.playerId);
@@ -385,7 +417,10 @@ export function createApp(options: ServerOptions) {
               stream.end();
             }
           }
-          if (session.playerId === state.hostId) rooms.delete(session.roomId);
+          if (session.playerId === state.hostId) {
+            room.practice?.stop();
+            rooms.delete(session.roomId);
+          }
           res.setHeader(
             'Set-Cookie',
             'amp_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0',
@@ -746,6 +781,18 @@ export function createApp(options: ServerOptions) {
       r.duel.tick();
       r.multi.tick();
       r.tournament.tick();
+      try {
+        r.practice?.tick();
+      } catch {
+        // Fail closed; never let a companion fault take down other rooms.
+        r.practice?.stop();
+        const bot = r.lobby
+          .snapshot()
+          .members.find((m) => m.id.startsWith('practice:'));
+        if (bot) r.lobby.setOnline(bot.id, false);
+        r.duel.tick();
+        broadcast(r.lobby.snapshot().roomId);
+      }
     }
   }, 50);
   gameTimer.unref();
@@ -768,6 +815,7 @@ export function createApp(options: ServerOptions) {
 }
 
 export { loadPendingMaterials } from './materials.js';
+export { createPracticeOpponent } from './practice-opponent.js';
 export {
   loadReviewedMaterials,
   type MaterialReview,
