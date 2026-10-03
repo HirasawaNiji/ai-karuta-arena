@@ -155,8 +155,26 @@ try {
     await expect
       .poll(async () => (await view(clients[0].page, '/api/duel')).game?.phase)
       .toBe('playing');
+    const opening = (await view(clients[0].page, '/api/duel')).game;
+    assert.equal(
+      await responseStatus(
+        clients[1].page,
+        '/api/duel/audio/' + opening.round.token,
+      ),
+      403,
+    );
+    assert.ok(opening.round.deadline - Date.now() <= 10100);
+    // Let one real round expire: a 30-second stored file must not extend it.
+    const token = opening.round.token;
+    await delay(11000);
+    const after = (await view(clients[0].page, '/api/duel')).game;
+    assert.notEqual(
+      after.round?.token,
+      token,
+      'No-answer round advances after ten seconds',
+    );
     if (preset === 'standard' && process.env.AMP_VERIFY_ALL_PRIORITY === '1') {
-      const deadline = Date.now() + 360000;
+      const deadline = Date.now() + 480000;
       while ([...priorityTitles].some((title) => !playedTitles.has(title))) {
         assert.ok(
           Date.now() < deadline,
@@ -176,30 +194,12 @@ try {
         }),
       );
     }
-    const opening = (await view(clients[0].page, '/api/duel')).game;
-    assert.equal(
-      await responseStatus(
-        clients[1].page,
-        '/api/duel/audio/' + opening.round.token,
-      ),
-      403,
-    );
-    assert.ok(opening.round.deadline - Date.now() <= 10100);
-    // Let one real round expire: a 30-second stored file must not extend it.
-    const token = opening.round.token;
-    await delay(11000);
-    const after = (await view(clients[0].page, '/api/duel')).game;
-    assert.notEqual(
-      after.round?.token,
-      token,
-      'No-answer round advances after ten seconds',
-    );
     const result = await play(clients[0], clients[0], '/api/duel');
     assert.equal(result.game.phase, 'completed');
     if (preset === 'standard' && process.env.AMP_VERIFY_ALL_PRIORITY === '1')
       assert.ok(
         result.game.winnerId === clients[0].id ||
-          result.game.reason === 'exhausted',
+          result.game.outcome === 'exhausted',
       );
     else assert.equal(result.game.winnerId, clients[0].id);
     assert.equal(
