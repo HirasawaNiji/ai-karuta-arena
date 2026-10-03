@@ -68,6 +68,8 @@ Python 文本检查仅需要 Python 3.11 或更新版本，无第三方依赖；
 
 ## 当前范围
 
+已提供网易云候选歌单的前 30 秒下载脚本、运行时标签接入与公网部署流程；存储 30 秒、每题仍播放前 10 秒，来源校验和缺失曲目说明见[公网前奏部署](docs/public-intro-deployment.md)。
+
 M1–M5 的核心 Mock 已实现，`install / build / typecheck / test / lint / demo` 可用。`pnpm demo` 默认运行 mixed、stress、ban、feedback；也可用 `--scenario` 单选。合成数据不含音频，无任何平台/LLM Key 也能运行。JSON 模式保留实际告警和明确的模拟房主动作；支持 `pnpm demo:check` 进行进程级验证。
 
 可信房间身份、手动画像界面、105 首前奏素材和真实 1v1 已接入。多人及 4/8 人淘汰赛已接入；现场真人听辨仍待验收。QQ 官方能力与替代路径见[适配器状态](docs/adapter-status.md)。现有引擎的实际差异见 [D0 核对](docs/karuta-engine-audit.md)，新增周杰伦专场方向见[艺人专场](docs/artist-party.md)。详见 [项目状态](docs/project-state.md)。
