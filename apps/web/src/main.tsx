@@ -58,6 +58,32 @@ const levels = {
   familiar: '熟悉',
   intro: '前奏就能认出',
 } as const;
+const preferenceGroups = [
+  {
+    id: 'languages',
+    title: '语言',
+    hint: '常听的语言',
+    dimensions: ['languages'],
+  },
+  {
+    id: 'genres',
+    title: '曲风',
+    hint: '喜欢的音乐风格',
+    dimensions: ['genres'],
+  },
+  {
+    id: 'culture',
+    title: '内容与文化',
+    hint: '从喜爱的作品开始',
+    dimensions: ['cultures', 'franchises', 'scenes'],
+  },
+  {
+    id: 'other',
+    title: '更多偏好',
+    hint: '年代与地区',
+    dimensions: ['eras', 'regions'],
+  },
+] as const;
 function App() {
   const [tournament, setTournament] = useState<TournamentView | null>(null);
   const [multi, setMulti] = useState<MultiplayerPreparationView | null>(null);
@@ -583,22 +609,74 @@ function App() {
                   <p className="muted">
                     选择词条只帮助了解你的音乐偏好，不会认为你熟悉这里面的每一首歌。
                   </p>
-                  <div className="tag-list">
-                    {library?.tags.map((t) => (
-                      <button
-                        key={t.id}
-                        aria-pressed={tags.includes(t.id)}
-                        onClick={() =>
-                          setTags((old) =>
-                            old.includes(t.id)
-                              ? old.filter((id) => id !== t.id)
-                              : [...old, t.id],
-                          )
-                        }
-                      >
-                        {t.label}
-                      </button>
-                    ))}
+                  <div className="preference-groups">
+                    {preferenceGroups.map((group) => {
+                      const groupTags =
+                        library?.tags.filter((tag) =>
+                          (group.dimensions as readonly string[]).includes(
+                            tag.dimension,
+                          ),
+                        ) ?? [];
+                      if (!groupTags.length) return null;
+                      const selectedCount = groupTags.filter((tag) =>
+                        tags.includes(tag.id),
+                      ).length;
+                      return (
+                        <section
+                          className="preference-group"
+                          aria-labelledby={'preference-' + group.id}
+                          key={group.id}
+                        >
+                          <div className="preference-group-heading">
+                            <div>
+                              <h3 id={'preference-' + group.id}>
+                                {group.title}
+                              </h3>
+                              <span className="muted small">{group.hint}</span>
+                            </div>
+                            <span
+                              className="preference-count"
+                              data-selected={selectedCount > 0}
+                            >
+                              {selectedCount
+                                ? `已选 ${selectedCount} 项`
+                                : '可多选'}
+                            </span>
+                          </div>
+                          <div className="tag-list">
+                            {groupTags.map((t) => (
+                              <button
+                                type="button"
+                                key={t.id}
+                                aria-pressed={tags.includes(t.id)}
+                                onClick={() =>
+                                  setTags((old) =>
+                                    old.includes(t.id)
+                                      ? old.filter((id) => id !== t.id)
+                                      : [...old, t.id],
+                                  )
+                                }
+                              >
+                                <svg
+                                  className="tag-indicator"
+                                  viewBox="0 0 16 16"
+                                  aria-hidden="true"
+                                >
+                                  <path
+                                    d={
+                                      tags.includes(t.id)
+                                        ? 'm3 8 3 3 7-7'
+                                        : 'M8 3v10M3 8h10'
+                                    }
+                                  />
+                                </svg>
+                                {t.label}
+                              </button>
+                            ))}
+                          </div>
+                        </section>
+                      );
+                    })}
                   </div>
                   <h2>挑几首熟悉的歌</h2>
                   <p className="muted small">
