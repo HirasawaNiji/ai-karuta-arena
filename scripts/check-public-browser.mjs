@@ -23,6 +23,13 @@ const audioIndex = JSON.parse(
   await readFile(process.env.AMP_AUDIO_INDEX, 'utf8'),
 );
 const titles = new Map(audioIndex.map((r) => [r.sha256, r.title]));
+const playedTitles = new Set();
+const priorityIds = new Set(
+  (process.env.AMP_PRIORITY_SONG_IDS ?? '').split(',').filter(Boolean),
+);
+const priorityTitles = new Set(
+  audioIndex.filter((r) => priorityIds.has(r.id)).map((r) => r.title),
+);
 const out = 'output/playwright/public-intros';
 await mkdir(out, { recursive: true });
 const browser = await chromium.launch({
@@ -72,6 +79,7 @@ async function enter(count) {
             'Question audio stays within ten-second bandwidth budget',
           );
           client.audio.set(response.url().split('/').at(-1), title);
+          playedTitles.add(title);
           responses++;
         })
         .catch((e) => errors.push(String(e)));
@@ -111,7 +119,39 @@ try {
   for (const preset of ['quick', 'standard']) {
     await enter(2);
     await ready(clients, 'duel', preset);
-    await prepareDuel(clients, preset);
+    if (preset === 'standard' && priorityTitles.size) {
+      await clients[0].page
+        .getByRole('button', { name: '开始选歌', exact: true })
+        .click();
+      for (const { page } of clients) {
+        const cards = page.locator('button.song-card');
+        await expect(cards.first()).toBeVisible();
+        const names = await cards.allTextContents();
+        const chosen = [
+          ...names.filter((name) => priorityTitles.has(name)),
+          ...names.filter((name) => !priorityTitles.has(name)),
+        ].slice(0, 18);
+        for (const name of chosen)
+          await page.getByRole('button', { name, exact: true }).click();
+        await page
+          .getByRole('button', { name: '确认选歌', exact: true })
+          .click();
+      }
+      for (const { page } of clients) {
+        await expect(
+          page.getByRole('button', { name: '确认禁歌', exact: true }),
+        ).toBeVisible();
+        const names = await page.locator('button.song-card').allTextContents();
+        for (const name of names
+          .filter((name) => !priorityTitles.has(name))
+          .slice(0, 3))
+          await page.getByRole('button', { name, exact: true }).click();
+        await page
+          .getByRole('button', { name: '确认禁歌', exact: true })
+          .click();
+      }
+      await confirm(clients, clients[0]);
+    } else await prepareDuel(clients, preset);
     await expect
       .poll(async () => (await view(clients[0].page, '/api/duel')).game?.phase)
       .toBe('playing');
@@ -195,6 +235,10 @@ try {
         muted: true,
         realMaterials: titles.size,
         audioResponses: responses,
+        playedTitles: [...playedTitles],
+        priorityPlayedTitles: [...playedTitles].filter((title) =>
+          priorityTitles.has(title),
+        ),
         results,
         errors,
       },

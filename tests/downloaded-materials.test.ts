@@ -47,11 +47,14 @@ async function fixture() {
     retrievedAt: '2026-10-04T00:00:00Z',
     verification: 'exact-platform-id-full-source-zero-start-decode',
   };
-  const load = async (records: unknown[]) => {
+  const load = async (
+    records: unknown[],
+    schemaVersion = 'netease-intros-v1',
+  ) => {
     await writeFile(
       join(dir, 'materials.json'),
       JSON.stringify({
-        schemaVersion: 'netease-intros-v1',
+        schemaVersion,
         taxonomy: [
           { id: 'lang:zh', label: '国语', dimension: 'languages' },
           { id: 'genre:rock', label: '摇滚', dimension: 'genres' },
@@ -123,4 +126,93 @@ it('reuses immutable clips on restart and rejects corrupt cache bytes', async ()
   expect(second.questionAudioFiles).toEqual(first.questionAudioFiles);
   await writeFile(first.questionAudioFiles.values().next().value!, 'corrupt');
   await expect(load([record])).rejects.toThrow('cache bytes changed');
+});
+
+const youtubeSource = {
+  sourcePlatform: 'youtube',
+  sourceSongId: 'Eax2zhVA0Zo',
+  sourceAlbumId: undefined,
+  sourceChannelId: 'UC2jp9Hgdcsm506i8HiNvO4g',
+  sourceReference: 'https://www.youtube.com/watch?v=Eax2zhVA0Zo',
+  sourceAlbum: 'Arcaea Sound Collection: Memories of Conflict',
+  sourceReview:
+    'Artist and original game-length album verified in label metadata',
+  sourceTrust: 'label-or-artist',
+  sourceStartMs: 0,
+  sourceDurationMs: 141000,
+  verification: 'reviewed-platform-metadata-original-intro-decode',
+};
+it('accepts reviewed alternate-platform intros without inventing NetEase IDs or album IDs', async () => {
+  const { record, load } = await fixture();
+  const result = await load(
+    [{ ...record, ...youtubeSource }],
+    'downloaded-intros-v2',
+  );
+  expect(result.catalog.songs[0]?.source).toBe('youtube-reviewed-recording');
+  expect(result.catalog.audioAssets[0]?.usage.source).toBe(
+    youtubeSource.sourceReference,
+  );
+  expect(result.catalog.recordings[0]?.versionLabel).toContain(
+    youtubeSource.sourceAlbum,
+  );
+  expect(result.catalog.questions[0]?.startMs).toBe(0);
+  expect(result.catalog.questions[0]?.durationMs).toBe(10000);
+});
+it.each([
+  { sourcePlatform: 'unknown' },
+  { sourceChannelId: '' },
+  { sourceReference: 'https://example.com/watch?v=Eax2zhVA0Zo' },
+  { sourceReview: '' },
+  { sourceTrust: 'assumed-official' },
+  { sourceAlbum: '' },
+  { sourceStartMs: -1 },
+  { sourceStartMs: 120000 },
+  { sourceDurationMs: Number.NaN },
+  { audioDurationMs: Number.NaN },
+  { verification: 'exact-platform-id-full-source-zero-start-decode' },
+])(
+  'rejects incomplete or mislabeled alternate provenance: %j',
+  async (change) => {
+    const { record, load } = await fixture();
+    await expect(
+      load(
+        [{ ...record, ...youtubeSource, ...change }],
+        'downloaded-intros-v2',
+      ),
+    ).rejects.toThrow('provenance');
+    expect(calls).toHaveLength(0);
+  },
+);
+it('binds the 5sing original to its author and forbids nonzero previews', async () => {
+  const { record, load } = await fixture();
+  const author = {
+    ...record,
+    ...youtubeSource,
+    sourcePlatform: '5sing',
+    sourceSongId: '2893264',
+    sourceChannelId: '18397096',
+    sourceReference: 'https://5sing.kugou.com/yc/2893264.html',
+    sourceTrust: 'author-original',
+  };
+  const result = await load([author], 'downloaded-intros-v2');
+  expect(result.catalog.songs[0]?.source).toBe('5sing-reviewed-recording');
+  for (const change of [
+    { sourceChannelId: '' },
+    { sourceStartMs: 30000 },
+    { sourceTrust: 'community-upload' },
+  ])
+    await expect(
+      load([{ ...author, ...change }], 'downloaded-intros-v2'),
+    ).rejects.toThrow('provenance');
+});
+it('does not allow the legacy manifest to silently relabel an alternate recording', async () => {
+  const { record, load } = await fixture();
+  await expect(load([{ ...record, ...youtubeSource }])).rejects.toThrow(
+    'provenance',
+  );
+  const result = await load(
+    [{ ...record, sourcePlatform: 'netease' }],
+    'downloaded-intros-v2',
+  );
+  expect(result.catalog.songs[0]?.source).toBe('netease-exact-recording');
 });

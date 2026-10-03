@@ -31,3 +31,4 @@ coverage/
 
 # Browser regression artifacts (may contain test sessions)
 output/playwright/
+.playwright-cli/

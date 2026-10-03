@@ -45,7 +45,7 @@ def main():
         todo = []
         for song in batch:
             old = prior.get(song['id'])
-            if old and old['sourceSongId'] == song['source']['songId']:
+            if old and (old['sourceSongId'] == song['source']['songId'] or old.get('sourcePlatform') in ['youtube', '5sing']):
                 file = root/old['file']
                 if file.exists() and hashlib.sha256(file.read_bytes()).hexdigest() == old['audioSha256']:
                     records.append(old)
@@ -105,9 +105,13 @@ def main():
             return {'id': song['id'], 'title': song['title'], 'sourceSongId': song['source']['songId'], 'reason': str(e) if type(e) is RuntimeError else type(e).__name__}
 
     def checkpoint():
-        manifest = {'schemaVersion': 'netease-intros-v1', 'taxonomy': data['taxonomy'], 'records': sorted(records,key=lambda r:r['id'])}
+        mixed = any(r.get('sourcePlatform') in ['youtube', '5sing'] for r in records)
+        if mixed:
+            for r in records:
+                r.setdefault('sourcePlatform', 'netease')
+        manifest = {'schemaVersion': 'downloaded-intros-v2' if mixed else 'netease-intros-v1', 'taxonomy': data['taxonomy'], 'records': sorted(records,key=lambda r:r['id'])}
         (root/'materials.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-        report = {'requested': len(songs), 'downloaded': len(records), 'missing': sorted(missing,key=lambda r:r['id']), 'storedSeconds': 30, 'questionSeconds': 10, 'humanListeningChecked': False}
+        report = {'requested': len(songs), 'downloaded': len(records), 'neteaseDownloaded': sum(r.get('sourcePlatform', 'netease') == 'netease' for r in records), 'alternateDownloaded': sum(r.get('sourcePlatform') in ['youtube', '5sing'] for r in records), 'missing': sorted(missing,key=lambda r:r['id']), 'storedSeconds': 30, 'questionSeconds': 10, 'humanListeningChecked': False, 'communityUploadIds': [r['id'] for r in records if r.get('sourceTrust') == 'community-upload']}
         (root/'download-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
     checkpoint()

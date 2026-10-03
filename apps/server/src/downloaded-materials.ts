@@ -30,7 +30,14 @@ export async function loadDownloadedMaterials(input: {
       artists: string[];
       tagIds: string[];
       sourceSongId: string;
-      sourceAlbumId: string;
+      sourceAlbumId?: string;
+      sourcePlatform?: string;
+      sourceChannelId?: string;
+      sourceAlbum?: string;
+      sourceReview?: string;
+      sourceTrust?: string;
+      sourceStartMs?: number;
+      sourceDurationMs?: number;
       sourceReference: string;
       file: string;
       audioSha256: string;
@@ -42,7 +49,12 @@ export async function loadDownloadedMaterials(input: {
       verification: string;
     }[];
   };
-  if (raw.schemaVersion !== 'netease-intros-v1' || !Array.isArray(raw.records))
+  if (
+    !['netease-intros-v1', 'downloaded-intros-v2'].includes(
+      raw.schemaVersion,
+    ) ||
+    !Array.isArray(raw.records)
+  )
     throw new Error('Invalid downloaded intro manifest');
   const root = resolve(input.directory);
   const cache = resolve(input.cacheDirectory);
@@ -64,25 +76,63 @@ export async function loadDownloadedMaterials(input: {
   const previews: MaterialPreview[] = [];
   for (const r of raw.records) {
     const file = resolve(root, r.file);
+    const platform =
+      raw.schemaVersion === 'netease-intros-v1' ? 'netease' : r.sourcePlatform;
+    const sourceKey = platform + ':' + r.sourceSongId;
+    const netease =
+      platform === 'netease' &&
+      /^\d+$/.test(r.sourceSongId) &&
+      /^\d+$/.test(r.sourceAlbumId ?? '') &&
+      r.sourceReference ===
+        'https://music.163.com/#/song?id=' + r.sourceSongId &&
+      r.verification === 'exact-platform-id-full-source-zero-start-decode' &&
+      (r.sourceStartMs === undefined || r.sourceStartMs === 0) &&
+      (r.sourcePlatform === undefined || r.sourcePlatform === 'netease');
+    const youtube =
+      raw.schemaVersion === 'downloaded-intros-v2' &&
+      platform === 'youtube' &&
+      /^[A-Za-z0-9_-]{11}$/.test(r.sourceSongId) &&
+      /^UC[A-Za-z0-9_-]{22}$/.test(r.sourceChannelId ?? '') &&
+      r.sourceReference ===
+        'https://www.youtube.com/watch?v=' + r.sourceSongId &&
+      !!r.sourceAlbum?.trim() &&
+      !!r.sourceReview?.trim() &&
+      ['label-or-artist', 'community-upload'].includes(r.sourceTrust ?? '') &&
+      r.sourceStartMs === 0 &&
+      Number.isSafeInteger(r.sourceDurationMs) &&
+      r.sourceDurationMs! >= 30000 &&
+      r.verification === 'reviewed-platform-metadata-original-intro-decode';
+    const fiveSing =
+      raw.schemaVersion === 'downloaded-intros-v2' &&
+      platform === '5sing' &&
+      /^\d+$/.test(r.sourceSongId) &&
+      /^\d+$/.test(r.sourceChannelId ?? '') &&
+      r.sourceReference ===
+        'https://5sing.kugou.com/yc/' + r.sourceSongId + '.html' &&
+      !!r.sourceAlbum?.trim() &&
+      !!r.sourceReview?.trim() &&
+      r.sourceTrust === 'author-original' &&
+      r.sourceStartMs === 0 &&
+      Number.isSafeInteger(r.sourceDurationMs) &&
+      r.sourceDurationMs! >= 30000 &&
+      r.verification === 'reviewed-platform-metadata-original-intro-decode';
     if (
       !/^S\d{3,}$/.test(r.id) ||
       files.has(r.id) ||
-      !/^\d+$/.test(r.sourceSongId) ||
-      !/^\d+$/.test(r.sourceAlbumId) ||
-      sourceIds.has(r.sourceSongId) ||
+      !(netease || youtube || fiveSing) ||
+      sourceIds.has(sourceKey) ||
       !/^[a-f0-9]{64}$/.test(r.audioSha256) ||
-      r.sourceReference !==
-        'https://music.163.com/#/song?id=' + r.sourceSongId ||
       !file.startsWith(root + sep) ||
       r.file !== r.id + '.mp3' ||
       !r.title?.trim() ||
       !Array.isArray(r.artists) ||
       !r.artists.length ||
       r.artists.some((a) => !a.trim()) ||
-      r.verification !== 'exact-platform-id-full-source-zero-start-decode' ||
       r.introDurationMs !== 30000 ||
+      !Number.isSafeInteger(r.audioDurationMs) ||
       r.audioDurationMs < 30000 ||
       r.audioDurationMs > 30150 ||
+      !Number.isSafeInteger(r.recordingDurationMs) ||
       r.recordingDurationMs < r.introDurationMs ||
       !Number.isFinite(Date.parse(r.retrievedAt)) ||
       !Array.isArray(r.tagIds) ||
@@ -95,7 +145,7 @@ export async function loadDownloadedMaterials(input: {
       createHash('sha256').update(bytes).digest('hex') !== r.audioSha256
     )
       throw new Error('Downloaded intro bytes changed');
-    sourceIds.add(r.sourceSongId);
+    sourceIds.add(sourceKey);
     files.set(r.id, file);
     const artistIds = r.artists.map((name) => {
       const id =
@@ -190,14 +240,24 @@ export async function loadDownloadedMaterials(input: {
       languages: languageTags.length ? languageTags : ['lang:unknown'],
       genres: byDimension(r.tagIds, 'genres'),
       cultures: byDimension(r.tagIds, 'cultures'),
-      source: 'netease-exact-recording',
+      source:
+        platform === 'netease'
+          ? 'netease-exact-recording'
+          : platform + '-reviewed-recording',
     });
     recordings.push({
       recordingId: 'recording:' + r.id,
       songId: r.id,
       audioAssetId: 'asset:' + r.id,
-      versionLabel:
-        '网易云录音 ' + r.sourceSongId + ' / 专辑 ' + r.sourceAlbumId,
+      versionLabel: netease
+        ? '网易云录音 ' + r.sourceSongId + ' / 专辑 ' + r.sourceAlbumId
+        : platform +
+          ' 音源 ' +
+          r.sourceSongId +
+          ' / ' +
+          r.sourceAlbum +
+          ' / ' +
+          r.sourceReview,
     });
     audioAssets.push({
       assetId: 'asset:' + r.id,
@@ -207,9 +267,13 @@ export async function loadDownloadedMaterials(input: {
       usage: {
         status: 'verified',
         source: r.sourceReference,
-        reference: r.verification + ' / ' + r.retrievedAt,
+        reference:
+          r.verification +
+          ' / ' +
+          r.retrievedAt +
+          (youtube || fiveSing ? ' / 源起点 ' + r.sourceStartMs + 'ms' : ''),
         allowedUse:
-          '用户授权的项目演示；平台 ID、从零截取与解码自动核验，未声称真人听辨验收',
+          '用户授权的项目演示；来源与版本依据、从零截取及解码核验，尚未真人听辨验收',
       },
     });
     cards.push({
@@ -239,7 +303,7 @@ export async function loadDownloadedMaterials(input: {
   const catalog = CatalogSchema.parse({
     schemaVersion: 1,
     catalogVersion:
-      'netease:' +
+      'downloaded:' +
       createHash('sha256')
         .update(JSON.stringify(raw))
         .digest('hex')
