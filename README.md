@@ -18,6 +18,7 @@ AI Music Party / AI 音乐派对：根据参与者的音乐画像、证据与游
 | [验收矩阵](docs/acceptance.md) | 20 组算法、状态和集成场景；区分计划测试与执行证据 |
 | [来源映射](docs/source-map.md) | 修订 Prompt 四十九章到需求和验收的完整追溯 |
 | [开发路线图](docs/development-roadmap.md) | 分阶段任务、依赖与领取条件 |
+| [Demo 歌单审阅稿](docs/playlists/demo-candidates.md) | 16 标签各 30 首推荐、网易云歌曲与专辑来源、备用与待定曲目 |
 
 采用 pnpm TypeScript 轻量 Monorepo：先核对现有引擎接口，以单进程 CLI 验证画像、选曲、主持与 Mock 游戏反馈，再接 Web/单个服务端和现有 Karuta。已建立 core、music-profile、playlist-engine、party-runtime 和 adapters 工作区；来源到选曲、禁歌/确认、Mock 游戏结算和固定 CLI 场景已有业务测试，按 D0–D4 的依赖继续推进，小组循环赛为后续扩展。
 
