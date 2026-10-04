@@ -5,6 +5,7 @@ import { loadPendingMaterials } from './materials.js';
 import { resolve } from 'node:path';
 import { loadReviewedMaterials } from './reviewed-materials.js';
 import { createApp } from './server.js';
+import { loadDownloadedMaterials } from './downloaded-materials.js';
 
 const practice = process.env.AMP_PRACTICE === '1';
 const host = process.env.HOST ?? '127.0.0.1';
@@ -18,51 +19,69 @@ const loadMaterial = () =>
     ),
     process.env.AMP_MATERIAL_DIR,
   );
-const material = await loadMaterial();
-const reviewPath =
-  process.env.AMP_REVIEWED_MATERIALS ??
-  (process.env.AMP_MATERIAL_DIR
-    ? fileURLToPath(
-        new URL(
-          '../../../docs/evidence/pjsk-intro-review.json',
-          import.meta.url,
+const downloadManifest = process.env.AMP_DOWNLOADED_MATERIALS;
+const loadDownloads = () => {
+  if (!downloadManifest || !process.env.AMP_MATERIAL_DIR)
+    throw new Error('Downloaded manifest requires AMP_MATERIAL_DIR');
+  return loadDownloadedMaterials({
+    manifestPath: downloadManifest,
+    directory: process.env.AMP_MATERIAL_DIR,
+    cacheDirectory: resolve(process.env.AMP_AUDIO_CACHE ?? '.local/duel-audio'),
+    ffmpeg: process.env.FFMPEG_PATH ?? 'ffmpeg',
+  });
+};
+const material = downloadManifest
+  ? await loadDownloads()
+  : await loadMaterial();
+const reviewPath = downloadManifest
+  ? undefined
+  : (process.env.AMP_REVIEWED_MATERIALS ??
+    (process.env.AMP_MATERIAL_DIR
+      ? fileURLToPath(
+          new URL(
+            '../../../docs/evidence/pjsk-intro-review.json',
+            import.meta.url,
+          ),
+        )
+      : undefined));
+const reviewed = downloadManifest
+  ? (material as Awaited<ReturnType<typeof loadDownloadedMaterials>>)
+  : reviewPath
+    ? await loadReviewedMaterials({
+        catalog: material.catalog,
+        files: material.files,
+        manifestPath: reviewPath,
+        cacheDirectory: resolve(
+          process.env.AMP_AUDIO_CACHE ?? '.local/duel-audio',
         ),
-      )
-    : undefined);
-const reviewed = reviewPath
-  ? await loadReviewedMaterials({
-      catalog: material.catalog,
-      files: material.files,
-      manifestPath: reviewPath,
-      cacheDirectory: resolve(
-        process.env.AMP_AUDIO_CACHE ?? '.local/duel-audio',
-      ),
-      ffmpeg: process.env.FFMPEG_PATH ?? 'ffmpeg',
-    })
-  : {
-      catalog: material.catalog,
-      verifiedQuestionIds: [],
-      questionAudioFiles: new Map<string, string>(),
-    };
+        ffmpeg: process.env.FFMPEG_PATH ?? 'ffmpeg',
+      })
+    : {
+        catalog: material.catalog,
+        verifiedQuestionIds: [],
+        questionAudioFiles: new Map<string, string>(),
+      };
 const app = createApp({
   practice,
   ...reviewed,
-  ...(reviewPath
-    ? {
-        reloadTournamentMaterials: async () => {
-          const fresh = await loadMaterial();
-          return loadReviewedMaterials({
-            catalog: fresh.catalog,
-            files: fresh.files,
-            manifestPath: reviewPath,
-            cacheDirectory: resolve(
-              process.env.AMP_AUDIO_CACHE ?? '.local/duel-audio',
-            ),
-            ffmpeg: process.env.FFMPEG_PATH ?? 'ffmpeg',
-          });
-        },
-      }
-    : {}),
+  ...(downloadManifest
+    ? { reloadTournamentMaterials: loadDownloads }
+    : reviewPath
+      ? {
+          reloadTournamentMaterials: async () => {
+            const fresh = await loadMaterial();
+            return loadReviewedMaterials({
+              catalog: fresh.catalog,
+              files: fresh.files,
+              manifestPath: reviewPath,
+              cacheDirectory: resolve(
+                process.env.AMP_AUDIO_CACHE ?? '.local/duel-audio',
+              ),
+              ffmpeg: process.env.FFMPEG_PATH ?? 'ffmpeg',
+            });
+          },
+        }
+      : {}),
   materials: material.previews.map((m) => ({
     ...m,
     artist:

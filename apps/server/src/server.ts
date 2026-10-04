@@ -815,6 +815,7 @@ export function createApp(options: ServerOptions) {
 }
 
 export { loadPendingMaterials } from './materials.js';
+export { loadDownloadedMaterials } from './downloaded-materials.js';
 export { createPracticeOpponent } from './practice-opponent.js';
 export {
   loadReviewedMaterials,
