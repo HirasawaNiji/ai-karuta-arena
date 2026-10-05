@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   DUEL_PRESETS,
@@ -17,6 +17,7 @@ import { DuelPanel } from './duel.js';
 import { MultiplayerPanel } from './multiplayer.js';
 import { TournamentPanel } from './tournament.js';
 import { platform } from './platform.js';
+import { matchingSongs, sampleSongs } from './song-suggestions.js';
 import './style.css';
 
 type Entry = { playerId: string; room: LobbySnapshot };
@@ -98,6 +99,14 @@ function App() {
     'profile',
   );
   const [tags, setTags] = useState<string[]>([]);
+  const [suggestedSongs, setSuggestedSongs] = useState<Catalog['songs']>([]);
+  const songPool = useMemo(
+    () => matchingSongs(library?.songs ?? [], tags),
+    [library, tags],
+  );
+  useEffect(() => {
+    setSuggestedSongs(sampleSongs(songPool));
+  }, [songPool]);
   const [reports, setReports] = useState<ManualPreferences['reports']>([]);
   const [self, setSelf] = useState<LobbySelf | null>(null);
   const [query, setQuery] = useState('');
@@ -265,10 +274,14 @@ function App() {
   const me = room?.members.find((m) => m.id === entry?.playerId);
   const host = room?.hostId === entry?.playerId;
   const preset = DUEL_PRESETS[room?.preset ?? 'quick'];
-  const shownSongs =
-    library?.songs
-      .filter((s) => s.title.toLowerCase().includes(query.toLowerCase()))
-      .slice(0, 30) ?? [];
+  const searching = query.trim().length > 0;
+  const shownSongs = searching
+    ? (library?.songs
+        .filter((s) =>
+          s.title.toLowerCase().includes(query.trim().toLowerCase()),
+        )
+        .slice(0, 30) ?? [])
+    : suggestedSongs;
   function setReport(
     songId: ManualPreferences['reports'][number]['songId'],
     level: string,
@@ -668,13 +681,14 @@ function App() {
                                 type="button"
                                 key={t.id}
                                 aria-pressed={tags.includes(t.id)}
-                                onClick={() =>
+                                onClick={() => {
+                                  setQuery('');
                                   setTags((old) =>
                                     old.includes(t.id)
                                       ? old.filter((id) => id !== t.id)
                                       : [...old, t.id],
-                                  )
-                                }
+                                  );
+                                }}
                               >
                                 <svg
                                   className="tag-indicator"
@@ -697,9 +711,27 @@ function App() {
                       );
                     })}
                   </div>
-                  <h2>挑几首熟悉的歌</h2>
+                  <div className="section-title song-suggestions-heading">
+                    <h2>挑几首熟悉的歌</h2>
+                    <button
+                      type="button"
+                      disabled={!songPool.length}
+                      onClick={() => {
+                        setQuery('');
+                        setSuggestedSongs(
+                          sampleSongs(songPool, suggestedSongs),
+                        );
+                      }}
+                    >
+                      再换一批
+                    </button>
+                  </div>
                   <p className="muted small">
-                    让我们知道你对这些曲子的熟悉程度（听过/熟悉/前奏就能听出），如果对下面展示歌曲不满意可以通过搜索直接添加。
+                    {tags.length
+                      ? '从你选的标签中随机挑选 5 首（匹配任一标签即可）。'
+                      : '从全部曲库中随机挑选 5 首。'}
+                    不足 5
+                    首时展示全部匹配歌曲，也可以搜索全曲库。换批不会清除已填写的熟悉度。
                   </p>
                   <label className="search">
                     搜索歌曲
@@ -709,7 +741,7 @@ function App() {
                       placeholder="输入歌名"
                     />
                   </label>
-                  <div className="song-list">
+                  <div className="song-list" aria-label="熟悉歌曲列表">
                     {shownSongs.map((s, i) => (
                       <div className="song-row" key={s.id}>
                         <span className="song-number">
@@ -749,7 +781,13 @@ function App() {
                       </div>
                     ))}
                     {!shownSongs.length && (
-                      <p className="muted">没有找到这首歌，换个关键词试试。</p>
+                      <p className="muted">
+                        {searching
+                          ? '没有找到这首歌，换个关键词试试。'
+                          : tags.length
+                            ? '这些标签暂时没有匹配歌曲，试试其他标签或搜索全曲库。'
+                            : '曲库暂时没有歌曲。'}
+                      </p>
                     )}
                   </div>
                 </section>

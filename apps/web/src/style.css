@@ -492,6 +492,17 @@ main {
 .search {
   margin-top: 20px;
 }
+.song-suggestions-heading {
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.song-suggestions-heading h2 {
+  margin: 0;
+}
+.song-suggestions-heading button {
+  min-height: 44px;
+  flex-shrink: 0;
+}
 .song-list {
   max-height: 590px;
   overflow-y: auto;
