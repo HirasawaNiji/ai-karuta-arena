@@ -49,8 +49,11 @@ test('independent tag and song profiles survive reload and lower self-report rep
     onProfile: async (page, index) => {
       if (index === 0) await button(page, '测试音').click();
       else {
+        await page.getByLabel('搜索歌曲').fill('合成测试音 001');
         await familiarity(page, '合成测试音 001').selectOption('heard');
+        await page.getByLabel('搜索歌曲').fill('合成测试音 002');
         await familiarity(page, '合成测试音 002').selectOption('familiar');
+        await page.getByLabel('搜索歌曲').fill('合成测试音 003');
         await familiarity(page, '合成测试音 003').selectOption('intro');
       }
       await button(page, '保存偏好，进入大厅').click();
@@ -99,10 +102,13 @@ test('independent tag and song profiles survive reload and lower self-report rep
       'aria-pressed',
       'true',
     );
+    await songPlayer.page.getByLabel('搜索歌曲').fill('合成测试音 003');
     await expect(familiarity(songPlayer.page, '合成测试音 003')).toHaveValue(
       'intro',
     );
+    await songPlayer.page.getByLabel('搜索歌曲').fill('合成测试音 002');
     await familiarity(songPlayer.page, '合成测试音 002').selectOption('heard');
+    await songPlayer.page.getByLabel('搜索歌曲').fill('合成测试音 003');
     await familiarity(songPlayer.page, '合成测试音 003').selectOption('');
     await button(songPlayer.page, '保存偏好，进入大厅').click();
     await expect
