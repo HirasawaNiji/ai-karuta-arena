@@ -36,6 +36,7 @@ import {
 import { canStart } from './can-start.js';
 
 export interface MultiplayerPreparationDependencies {
+  readonly individualAudio?: boolean;
   readonly context: () => LobbyPreparationContext;
   readonly factory: MultiplayerEngineFactory;
   readonly now: () => number;
@@ -61,6 +62,7 @@ export function createMultiplayerPreparation(
     selectionExplanation: MultiplayerSelectionExplanation | null = null,
     state: PartyState | null = null,
     game: MultiplayerEngine | null = null;
+  const audioDevices = new Set<PlayerId>();
   const ready = new Set<PlayerId>(),
     actions = new Map<string, string>();
   let audioReady = false,
@@ -83,6 +85,7 @@ export function createMultiplayerPreparation(
     game = null;
     ready.clear();
     audioReady = false;
+    audioDevices.clear();
     completed = false;
     fault = null;
     events = [];
@@ -95,6 +98,7 @@ export function createMultiplayerPreparation(
       game.abort('成员、画像或准备状态变化，本局中断');
       ready.clear();
       audioReady = false;
+      audioDevices.clear();
       state = null;
       selectionExplanation = null;
     } else clear('房间状态已变化，请重新准备并选曲');
@@ -117,7 +121,10 @@ export function createMultiplayerPreparation(
       blockers.push('MEMBERS_NOT_READY');
     if (state.players.some((p) => !ready.has(p.id)))
       blockers.push('CARDS_NOT_READY');
-    if (!audioReady) blockers.push('HOST_AUDIO_NOT_READY');
+    if (deps.individualAudio) {
+      if (state.players.some((p) => !audioDevices.has(p.id)))
+        blockers.push('PLAYER_AUDIO_NOT_READY');
+    } else if (!audioReady) blockers.push('HOST_AUDIO_NOT_READY');
     return blockers;
   }
   function snapshot(id: PlayerId): MultiplayerPreparationView {
@@ -367,8 +374,10 @@ export function createMultiplayerPreparation(
       case 'match_ready':
         if (phase !== 'confirming' || !state)
           throw new Error('请先完成最终题组');
-        if (id !== c.room.hostId && cmd.audioReady)
+        if (!deps.individualAudio && id !== c.room.hostId && cmd.audioReady)
           throw new Error('音箱由房主确认');
+        if (cmd.audioReady) audioDevices.add(id);
+        else audioDevices.delete(id);
         if (id === c.room.hostId) audioReady = cmd.audioReady;
         ready.add(id);
         break;
@@ -399,6 +408,9 @@ export function createMultiplayerPreparation(
             now: deps.now,
             nextToken: deps.nextId,
             audioPlayerId: c.room.hostId,
+            ...(deps.individualAudio
+              ? { audioPlayerIds: session.playerIds }
+              : {}),
             onChange: deps.onChange,
             onEvent: (event) => {
               progress = advanceProgress(progress!, session, event);
@@ -437,6 +449,7 @@ export function createMultiplayerPreparation(
       selectionExplanation = null;
       ready.clear();
       audioReady = false;
+      audioDevices.clear();
       try {
         game?.abort(fault);
       } catch {
@@ -458,6 +471,8 @@ export function createMultiplayerPreparation(
     },
     currentQuestion: (token: string): Question | null =>
       fault ? null : (game?.currentQuestion(token) ?? null),
+    isAudioParticipant: (id: PlayerId) =>
+      !!state?.players.some((p) => p.id === id),
   };
 }
 export type MultiplayerPreparationController = ReturnType<

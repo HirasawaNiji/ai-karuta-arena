@@ -65,6 +65,7 @@ export const MultiplayerActionSchema = z.discriminatedUnion('type', [
     cardId: CardIdSchema,
   }),
   z.strictObject({ ...actionEnvelope, type: z.literal('audio_started') }),
+  z.strictObject({ ...actionEnvelope, type: z.literal('audio_loaded') }),
   z.strictObject({ ...actionEnvelope, type: z.literal('audio_failed') }),
 ]);
 export type MultiplayerAction = z.infer<typeof MultiplayerActionSchema>;

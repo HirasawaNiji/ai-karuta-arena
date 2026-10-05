@@ -38,6 +38,7 @@ import { canStart } from './can-start.js';
 
 type Context = ReturnType<LobbyController['preparationContext']>;
 export interface DuelPreparationDependencies {
+  readonly individualAudio?: boolean;
   readonly onResult?: (result: DuelResult) => void;
   readonly context: () => Context;
   readonly factory: DuelEngineFactory;
@@ -63,6 +64,7 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
   let hands: Record<string, CardId[]> = {},
     state: PartyState | null = null,
     game: DuelEngine | null = null;
+  const audioDevices = new Set<PlayerId>();
   const ready = new Set<PlayerId>();
   let events: GameEvent[] = [],
     progress: EventProgress | null = null;
@@ -84,6 +86,7 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
     state = null;
     ready.clear();
     audioReady = false;
+    audioDevices.clear();
     game = null;
     faultMessage = null;
     completed = false;
@@ -97,6 +100,7 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
       game.abort('成员、画像或准备状态变化，本局中断');
       ready.clear();
       audioReady = false;
+      audioDevices.clear();
       state = null;
       sourceRevision = deps.context().room.revision;
     } else clear('房间状态已变化，请双方重新准备并选歌');
@@ -113,7 +117,10 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
       blockers.push('MEMBERS_NOT_READY');
     if (state.players.some((p) => !ready.has(p.id)))
       blockers.push('CARDS_NOT_READY');
-    if (!audioReady) blockers.push('HOST_AUDIO_NOT_READY');
+    if (deps.individualAudio) {
+      if (state.players.some((p) => !audioDevices.has(p.id)))
+        blockers.push('PLAYER_AUDIO_NOT_READY');
+    } else if (!audioReady) blockers.push('HOST_AUDIO_NOT_READY');
     return blockers;
   }
   function snapshot(id: PlayerId): DuelPreparationView {
@@ -247,7 +254,7 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
       pendingGameplayEvidence: [],
     });
     phase = 'confirming';
-    message = '最终题组已重评，请确认歌牌与共享音箱';
+    message = '最终题组已重评，请各自确认歌牌并启用音频';
   }
   function settle() {
     const result = game?.result();
@@ -363,8 +370,14 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
       case 'match_ready': {
         if (phase !== 'confirming' || !state)
           throw new Error('请先完成最终题组');
-        if (id !== current.room.hostId && cmd.audioReady)
+        if (
+          !deps.individualAudio &&
+          id !== current.room.hostId &&
+          cmd.audioReady
+        )
           throw new Error('共享音箱由房主设备确认');
+        if (cmd.audioReady) audioDevices.add(id);
+        else audioDevices.delete(id);
         if (id === current.room.hostId) audioReady = cmd.audioReady;
         ready.add(id);
         break;
@@ -398,6 +411,9 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
             now: deps.now,
             nextToken: deps.nextId,
             audioPlayerId: current.room.hostId,
+            ...(deps.individualAudio
+              ? { audioPlayerIds: session.playerIds }
+              : {}),
             onEvent: (event) => {
               progress = advanceProgress(progress!, session, event);
               events.push(event);
@@ -443,6 +459,7 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
       state = null;
       ready.clear();
       audioReady = false;
+      audioDevices.clear();
       try {
         game?.abort(faultMessage);
       } catch {
@@ -458,6 +475,8 @@ export function createDuelPreparation(deps: DuelPreparationDependencies) {
     tick,
     currentQuestion: (token: string): Question | null =>
       game?.currentQuestion(token) ?? null,
+    isAudioParticipant: (id: PlayerId) =>
+      !!state?.players.some((p) => p.id === id),
   };
 }
 export type DuelPreparationController = ReturnType<

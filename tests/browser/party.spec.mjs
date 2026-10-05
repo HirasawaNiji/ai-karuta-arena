@@ -119,13 +119,13 @@ test('three clients complete multiplayer with wrong-answer lock and tied ranks',
       .poll(async () => (await view(host.page, '/api/multiplayer')).game?.phase)
       .toBe('playing');
     const state = await view(host.page, '/api/multiplayer');
-    // The guest's real browser session cannot read the shared speaker's audio.
+    // Every current participant can fetch the current clip.
     expect(
       await responseStatus(
         wrong.page,
         '/api/multiplayer/audio/' + state.game.round.token,
       ),
-    ).toBe(403);
+    ).toBe(200);
     expect(JSON.stringify(state)).not.toMatch(/questionId|recordingId|seed/);
     await expect
       .poll(() => host.audio.get(state.game.round.token))
@@ -378,6 +378,71 @@ test('failed audio leaves profiles unchanged and permits a fresh completed duel'
     ).toBeGreaterThan(1);
     expect(r.errors).toEqual([]);
   } finally {
+    await r.close();
+  }
+});
+
+test('both devices preload before playback and mute changes only local gain', async ({
+  browser,
+  baseURL,
+}) => {
+  const r = await room(browser, baseURL, 2, { audioProbe: true });
+  const [host, guest] = r.clients;
+  let release;
+  try {
+    await ready(r.clients);
+    await prepareDuel(r.clients, 'quick', { start: false });
+    const waiting = new Promise((resolve) => {
+      release = resolve;
+    });
+    await guest.page.route('**/api/duel/audio/**', async (route) => {
+      await waiting;
+      await route.continue();
+    });
+    await host.page.getByRole('button', { name: '静音', exact: true }).click();
+    await host.page
+      .getByRole('button', { name: '开始听歌', exact: true })
+      .click();
+    await expect.poll(() => host.audio.size).toBe(1);
+    await host.page.waitForTimeout(300);
+    expect((await view(host.page, '/api/duel')).game.phase).toBe('loading');
+    for (const c of r.clients)
+      expect(await c.page.evaluate(() => globalThis.__audioProbe.starts)).toBe(
+        0,
+      );
+    release();
+    for (const c of r.clients) {
+      await expect
+        .poll(() => c.page.evaluate(() => globalThis.__audioProbe.starts))
+        .toBe(1);
+      expect(
+        await c.page.evaluate(
+          () => globalThis.__audioProbe.contexts[0].context.state,
+        ),
+      ).toBe('running');
+    }
+    const outputGain = (c) =>
+      c.page.evaluate(
+        () => globalThis.__audioProbe.contexts[0].gains[0].gain.value,
+      );
+    expect(await outputGain(host)).toBe(0);
+    expect(await outputGain(guest)).toBe(1);
+    await host.page
+      .getByRole('button', { name: '取消静音', exact: true })
+      .click();
+    await expect.poll(() => outputGain(host)).toBe(1);
+    await guest.page.getByRole('button', { name: '静音', exact: true }).click();
+    await expect.poll(() => outputGain(guest)).toBe(0);
+    expect(await outputGain(host)).toBe(1);
+    for (const c of r.clients)
+      expect(await c.page.evaluate(() => globalThis.__audioProbe.starts)).toBe(
+        1,
+      );
+    expect((await view(host.page, '/api/duel')).game.phase).toBe('playing');
+    await assertNoOverflow(guest.page);
+    expect(r.errors).toEqual([]);
+  } finally {
+    release?.();
     await r.close();
   }
 });

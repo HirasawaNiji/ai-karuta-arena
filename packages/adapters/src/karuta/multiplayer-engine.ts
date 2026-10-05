@@ -33,6 +33,14 @@ export function createMultiplayer(
     players = input.session.playerIds;
   if (!players.includes(deps.audioPlayerId))
     throw new Error('Audio player must participate');
+  const audioPlayers = deps.audioPlayerIds ?? [deps.audioPlayerId];
+  if (
+    !audioPlayers.length ||
+    new Set(audioPlayers).size !== audioPlayers.length ||
+    audioPlayers.some((id) => !input.session.playerIds.includes(id))
+  )
+    throw new Error('Audio devices must be unique frozen participants');
+  const loadedAudio = new Set<PlayerId>();
   const plan = shuffledQuestions(input.questions, input.seed),
     remaining = new Set(input.questions.map((q) => q.answerCardId));
   const scores: Record<string, number> = Object.fromEntries(
@@ -127,8 +135,9 @@ export function createMultiplayer(
     deadline = deps.now() + MULTIPLAYER_RULES.loadingMs;
     revealed = false;
     locked.clear();
+    loadedAudio.clear();
     phase = 'loading';
-    message = '等待房主音箱播放';
+    message = '等待参赛设备加载片段';
     deps.onChange();
   }
   function closeRound() {
@@ -176,15 +185,22 @@ export function createMultiplayer(
       throw new Error('题目或比赛已结束');
     if (actions.size >= 4000) throw new Error('本局动作过多');
     if (a.type === 'audio_failed') {
-      if (id !== deps.audioPlayerId) throw new Error('仅播放设备可报告音频');
+      if (!audioPlayers.includes(id)) throw new Error('仅播放设备可报告音频');
       actions.set(a.actionId, key);
-      abort('房主设备播放失败，本局中断');
+      abort('参赛设备播放失败，本局中断');
       return snapshot();
     }
-    if (a.type === 'audio_started') {
-      if (id !== deps.audioPlayerId || phase !== 'loading')
+    if (a.type === 'audio_loaded' || a.type === 'audio_started') {
+      if (deps.audioPlayerIds && a.type !== 'audio_loaded')
+        throw new Error('请先加载片段，等待全员确认');
+      if (!audioPlayers.includes(id) || phase !== 'loading')
         throw new Error('音频确认已过期');
       actions.set(a.actionId, key);
+      loadedAudio.add(id);
+      if (audioPlayers.some((id) => !loadedAudio.has(id))) {
+        deps.onChange();
+        return snapshot();
+      }
       phase = 'playing';
       deadline = deps.now() + MULTIPLAYER_RULES.roundMs;
       played.push(question()!.songId);

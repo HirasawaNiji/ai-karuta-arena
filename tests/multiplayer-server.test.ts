@@ -159,7 +159,7 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
           await cmd(cookie, {
             type: 'match_ready',
             cardsLoaded: true,
-            audioReady: cookie === host,
+            audioReady: true,
           })
         ).status,
       ).toBe(200);
@@ -172,7 +172,7 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
     expect(
       (await request('/api/multiplayer/audio/' + game.round!.token, guest))
         .status,
-    ).toBe(403);
+    ).toBe(404);
     expect((await request('/api/multiplayer/audio/future', host)).status).toBe(
       404,
     );
@@ -189,12 +189,17 @@ it('runs three authenticated participants, enforces mode/audio authority and fre
         roundToken: game.round!.token,
         ...extra,
       });
-    expect((await action(guest, 'audio_started')).status).toBe(400);
+    expect((await action(guest, 'audio_loaded')).status).toBe(200);
+    expect((await view()).game?.phase).toBe('loading');
     expect((await action(host, 'audio_started', { score: 99 })).status).toBe(
       400,
     );
     const late = await join('Late');
     expect((await view()).game?.phase).toBe('loading');
+    expect(
+      (await request('/api/multiplayer/audio/' + game.round!.token, late))
+        .status,
+    ).toBe(403);
     expect((await cmd(late, { type: 'interrupt' })).status).toBe(400);
     expect(
       (await request('/api/commands', host, { type: 'mode', mode: 'duel' }))

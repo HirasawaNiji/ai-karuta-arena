@@ -50,6 +50,14 @@ export function createKarutaDuel(
   const input = DuelInputSchema.parse(raw);
   if (!input.session.playerIds.includes(deps.audioPlayerId))
     throw new Error('Audio player must be a frozen participant');
+  const audioPlayers = deps.audioPlayerIds ?? [deps.audioPlayerId];
+  if (
+    !audioPlayers.length ||
+    new Set(audioPlayers).size !== audioPlayers.length ||
+    audioPlayers.some((id) => !input.session.playerIds.includes(id))
+  )
+    throw new Error('Audio devices must be unique frozen participants');
+  const loadedAudio = new Set<PlayerId>();
   const players = input.session.playerIds;
   const hands: Record<string, CardId[]> = Object.fromEntries(
     players.map((id) => [id, [...input.hands[id]!]]),
@@ -176,8 +184,9 @@ export function createKarutaDuel(
     };
     claims.clear();
     settlementAt = null;
+    loadedAudio.clear();
     phase = 'loading';
-    message = '等待房主设备加载并播放片段';
+    message = '等待参赛设备加载片段';
     changed();
   }
   function start() {
@@ -325,20 +334,27 @@ export function createKarutaDuel(
     if (outcome || !current || a.roundToken !== current.token)
       throw new Error('题目已结束或动作已过期');
     if (a.type === 'audio_failed') {
-      if (playerId !== deps.audioPlayerId)
+      if (!audioPlayers.includes(playerId))
         throw new Error('仅播放设备可报告音频状态');
       actions.set(a.actionId, key);
-      abort('房主设备播放失败，本局中断');
+      abort('参赛设备播放失败，本局中断');
       return snapshot();
     }
-    if (a.type === 'audio_started') {
+    if (a.type === 'audio_loaded' || a.type === 'audio_started') {
+      if (deps.audioPlayerIds && a.type !== 'audio_loaded')
+        throw new Error('请先加载片段，等待全员确认');
       if (
-        playerId !== deps.audioPlayerId ||
+        !audioPlayers.includes(playerId) ||
         phase !== 'loading' ||
         deps.now() > current.deadline
       )
         throw new Error('音频确认不适用于当前题目');
       actions.set(a.actionId, key);
+      loadedAudio.add(playerId);
+      if (audioPlayers.some((id) => !loadedAudio.has(id))) {
+        changed();
+        return snapshot();
+      }
       current.startAt = deps.now();
       current.deadline = deps.now() + DUEL_RULES.roundMs;
       phase = 'playing';

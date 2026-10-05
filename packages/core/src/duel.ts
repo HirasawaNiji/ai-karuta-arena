@@ -86,6 +86,7 @@ export const DuelActionSchema = z.discriminatedUnion('type', [
     cardId: CardIdSchema,
   }),
   z.strictObject({ ...actionEnvelope, type: z.literal('audio_started') }),
+  z.strictObject({ ...actionEnvelope, type: z.literal('audio_loaded') }),
   z.strictObject({ ...actionEnvelope, type: z.literal('audio_failed') }),
 ]);
 export type DuelAction = z.infer<typeof DuelActionSchema>;
@@ -141,6 +142,8 @@ export interface DuelEngineDependencies {
   readonly now: () => number;
   readonly nextToken: () => string;
   readonly audioPlayerId: PlayerId;
+  /** When set, every listed device must decode the current clip before playing. */
+  readonly audioPlayerIds?: readonly PlayerId[];
   readonly onEvent: (event: GameEvent) => void;
   readonly onChange: () => void;
 }

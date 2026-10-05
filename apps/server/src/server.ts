@@ -243,6 +243,7 @@ export function createApp(options: ServerOptions) {
             ),
         });
         const duel = createDuelPreparation({
+          individualAudio: !options.practice,
           context: lobby.preparationContext,
           factory: new KarutaDuelFactory(),
           now,
@@ -252,6 +253,7 @@ export function createApp(options: ServerOptions) {
           onCompleted: options.practice ? () => {} : lobby.settleDuel,
         });
         const multi = createMultiplayerPreparation({
+          individualAudio: true,
           context: lobby.preparationContext,
           factory: new MultiplayerFactory(),
           now,
@@ -261,6 +263,7 @@ export function createApp(options: ServerOptions) {
           onCompleted: lobby.settleGame,
         });
         const tournament = createTournamentPreparation({
+          individualAudio: true,
           context: lobby.preparationContext,
           room: lobby.snapshot,
           factory: new KarutaDuelFactory(),
@@ -617,8 +620,8 @@ export function createApp(options: ServerOptions) {
         path,
       );
       if (req.method === 'GET' && multiAudio) {
-        if (session.playerId !== room.lobby.snapshot().hostId)
-          return send(res, 403, { error: '音频仅由共享音箱播放' });
+        if (!room.multi.isAudioParticipant(session.playerId))
+          return send(res, 403, { error: '仅本场参赛玩家可播放音频' });
         room.multi.tick();
         room.tournament.tick();
         const q = room.multi.currentQuestion(multiAudio[1]!);
@@ -632,8 +635,8 @@ export function createApp(options: ServerOptions) {
         path,
       );
       if (req.method === 'GET' && roundAudio) {
-        if (session.playerId !== room.lobby.snapshot().hostId)
-          return send(res, 403, { error: '音频仅由共享音箱播放' });
+        if (!room.duel.isAudioParticipant(session.playerId))
+          return send(res, 403, { error: '仅本场参赛玩家可播放音频' });
         room.duel.tick();
         const question = room.duel.currentQuestion(roundAudio[1]!);
         const file = question

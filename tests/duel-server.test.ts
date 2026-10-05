@@ -117,6 +117,13 @@ async function fixture() {
       cardsLoaded: true,
       audioReady: false,
     });
+    expect((await view()).blockers).toContain('PLAYER_AUDIO_NOT_READY');
+    expect((await cmd(host, { type: 'start' })).status).toBe(400);
+    await cmd(guest, {
+      type: 'match_ready',
+      cardsLoaded: true,
+      audioReady: true,
+    });
     expect((await cmd(host, { type: 'start' })).status).toBe(200);
   }
   const action = async (
@@ -159,14 +166,15 @@ it.each(['quick', 'standard'] as const)(
     expect(JSON.stringify(view)).not.toMatch(
       /questionId|recordingId|seed|questionBySongId/,
     );
-    expect((await f.action(f.guest, 'audio_started')).status).toBe(400);
+    expect((await f.action(f.guest, 'audio_loaded')).status).toBe(200);
+    expect((await f.view()).game?.phase).toBe('loading');
     expect(
       (await f.action(f.host, 'audio_started', { playerId: 'forged' })).status,
     ).toBe(400);
     expect(
       (await f.request('/api/duel/audio/' + view.game!.round!.token, f.guest))
         .status,
-    ).toBe(403);
+    ).toBe(404);
     expect((await f.request('/api/duel/audio/future', f.host)).status).toBe(
       404,
     );
@@ -196,6 +204,10 @@ it.each(['quick', 'standard'] as const)(
       entry.room.members.find((m) => m.id === entry.playerId)
         ?.waitingForNextMatch,
     ).toBe(true);
+    expect(
+      (await f.request('/api/duel/audio/' + before.game!.round!.token, late))
+        .status,
+    ).toBe(403);
     await f.connect(late);
     expect((await f.view()).game).toEqual(before.game);
     const afterJoin = await f.view();
@@ -203,7 +215,9 @@ it.each(['quick', 'standard'] as const)(
     expect(denied.status).toBe(400);
     expect(await denied.json()).toEqual({ error: '请等待下一局' });
     expect(await f.view()).toEqual(afterJoin);
-    expect((await f.action(f.host, 'audio_started')).status).toBe(200);
+    expect((await f.action(f.host, 'audio_loaded')).status).toBe(200);
+    expect((await f.view()).game?.phase).toBe('loading');
+    expect((await f.action(f.guest, 'audio_loaded')).status).toBe(200);
     const playing = await f.view();
     expect(playing.game?.phase).toBe('playing');
     expect((await f.cmd(late, { type: 'interrupt' })).status).toBe(400);
