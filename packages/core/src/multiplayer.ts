@@ -124,6 +124,7 @@ export const MultiplayerPreparationCommandSchema = z.discriminatedUnion(
       type: z.literal('match_ready'),
       cardsLoaded: z.literal(true),
       audioReady: z.boolean(),
+      audioProtocol: z.literal('all-player-preload-v1').optional(),
     }),
     z.strictObject({ ...envelope, type: z.literal('start') }),
     z.strictObject({ ...envelope, type: z.literal('interrupt') }),

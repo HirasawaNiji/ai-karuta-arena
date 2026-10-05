@@ -372,6 +372,11 @@ export function createMultiplayerPreparation(
         });
         break;
       case 'match_ready':
+        if (
+          deps.individualAudio &&
+          cmd.audioProtocol !== 'all-player-preload-v1'
+        )
+          throw new Error('页面音频版本已更新，请刷新页面后重新启用我的音频');
         if (phase !== 'confirming' || !state)
           throw new Error('请先完成最终题组');
         if (!deps.individualAudio && id !== c.room.hostId && cmd.audioReady)

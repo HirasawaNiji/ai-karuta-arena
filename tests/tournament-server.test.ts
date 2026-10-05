@@ -230,6 +230,7 @@ it('authenticates tournament scheduling, binds preparation to a match, and prote
             type: 'match_ready',
             cardsLoaded: true,
             audioReady: true,
+            audioProtocol: 'all-player-preload-v1',
           })
         ).status,
       ).toBe(200);

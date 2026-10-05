@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { confirmAudioLoaded } from './audio-confirmation.js';
 import { newActionId } from './platform.js';
 import {
   MULTIPLAYER_RULES,
@@ -162,7 +163,20 @@ export function MultiplayerPanel({
         );
         if (cancelled) return;
         prepared.current = { token: token!, buffer, started: false };
-        await gameAction({ type: 'audio_loaded' }, snapshot);
+        await confirmAudioLoaded(
+          '/api/multiplayer',
+          {
+            type: 'audio_loaded',
+            actionId: newActionId(),
+            gameSessionId: snapshot.gameSessionId,
+            selectionVersion: snapshot.selectionVersion,
+            roundToken: token,
+          },
+          () =>
+            current.current.game?.gameSessionId === snapshot.gameSessionId &&
+            current.current.game?.round?.token === token &&
+            ['loading', 'playing'].includes(current.current.game.phase),
+        );
       } catch (e) {
         if (!cancelled) {
           setError(e instanceof Error ? e.message : '播放失败');
@@ -232,7 +246,12 @@ export function MultiplayerPanel({
       setError(String(e));
       return;
     }
-    await command({ type: 'match_ready', cardsLoaded: true, audioReady: true });
+    await command({
+      type: 'match_ready',
+      cardsLoaded: true,
+      audioReady: true,
+      audioProtocol: 'all-player-preload-v1',
+    });
   }
   const participant = view.playerIds.includes(
     playerId as LobbySnapshot['hostId'],

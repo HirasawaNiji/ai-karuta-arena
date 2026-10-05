@@ -728,6 +728,17 @@ export function createApp(options: ServerOptions) {
     void route(req, res).catch((error) => {
       // pipeline has already closed failed or cancelled audio responses.
       if (res.destroyed || res.writableEnded) return;
+      if (/^\/api\/(duel|multiplayer|tournament)\/action$/.test(req.url ?? ''))
+        console.warn(
+          JSON.stringify({
+            event: 'game_action_rejected',
+            endpoint: req.url,
+            reason:
+              error instanceof Error && !('issues' in error)
+                ? error.message
+                : '请求字段无效',
+          }),
+        );
       if (!res.headersSent)
         send(res, 400, {
           error:

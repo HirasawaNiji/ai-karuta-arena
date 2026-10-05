@@ -107,15 +107,27 @@ async function fixture() {
         ).status,
       ).toBe(200);
     await cmd(host, { type: 'acknowledge' });
+    const legacy = await cmd(host, {
+      type: 'match_ready',
+      cardsLoaded: true,
+      audioReady: true,
+    });
+    expect(legacy.status).toBe(400);
+    expect(await legacy.json()).toEqual({
+      error: '页面音频版本已更新，请刷新页面后重新启用我的音频',
+    });
+    expect((await view()).readyPlayerIds).toEqual([]);
     await cmd(host, {
       type: 'match_ready',
       cardsLoaded: true,
       audioReady: true,
+      audioProtocol: 'all-player-preload-v1',
     });
     await cmd(guest, {
       type: 'match_ready',
       cardsLoaded: true,
       audioReady: false,
+      audioProtocol: 'all-player-preload-v1',
     });
     expect((await view()).blockers).toContain('PLAYER_AUDIO_NOT_READY');
     expect((await cmd(host, { type: 'start' })).status).toBe(400);
@@ -123,6 +135,7 @@ async function fixture() {
       type: 'match_ready',
       cardsLoaded: true,
       audioReady: true,
+      audioProtocol: 'all-player-preload-v1',
     });
     expect((await cmd(host, { type: 'start' })).status).toBe(200);
   }
