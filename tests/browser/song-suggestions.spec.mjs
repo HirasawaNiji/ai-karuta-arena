@@ -43,52 +43,55 @@ test('familiar songs follow tags, refresh without repeats and preserve saved rep
   const refresh = tag('再换一批');
   const search = page.getByLabel('搜索歌曲');
   const title = (n) => '合成测试音 ' + String(n).padStart(3, '0');
+  // Row count can stay at five while React updates the catalog/tag batch.
+  // Wait for the content we care about before reading a batch for later checks.
+  async function batch(allowed, excluded = []) {
+    await expect
+      .poll(async () => {
+        const current = await titles();
+        return (
+          current.length === Math.min(5, allowed.length) &&
+          new Set(current).size === current.length &&
+          current.every((t) => allowed.includes(t) && !excluded.includes(t))
+        );
+      })
+      .toBe(true);
+    return titles();
+  }
+  const all = Array.from({ length: 14 }, (_, i) => title(i + 1));
   try {
-    await expect(rows).toHaveCount(5);
-    const initial = await titles();
+    const initial = await batch(all);
     expect(new Set(initial).size).toBe(5);
     const chosen = initial[0];
     await rows.first().getByRole('combobox').selectOption('familiar');
     await expect(rows.locator('strong')).toHaveText(initial);
     await refresh.click();
-    await expect(rows).toHaveCount(5);
-    expect((await titles()).every((t) => !initial.includes(t))).toBe(true);
+    await batch(all, initial);
 
     await tag('测试音').click();
-    await expect(rows).toHaveCount(5);
-    const languageBatch = await titles();
     const allowed = Array.from({ length: 10 }, (_, i) => title(i + 1));
-    expect(languageBatch.every((t) => allowed.includes(t))).toBe(true);
+    const languageBatch = await batch(allowed);
     await refresh.click();
-    const next = await titles();
-    expect(
-      next.every((t) => allowed.includes(t) && !languageBatch.includes(t)),
-    ).toBe(true);
+    await batch(allowed, languageBatch);
 
     // Searching remains global, even when a selected tag excludes this song.
     await search.fill(title(14));
     await expect(rows.locator('strong')).toHaveText([title(14)]);
     await refresh.click();
     await expect(search).toHaveValue('');
-    await expect(rows).toHaveCount(5);
-    expect((await titles()).every((t) => allowed.includes(t))).toBe(true);
+    await batch(allowed);
 
     await search.fill(title(14));
     await tag('少量测试').click();
     await expect(search).toHaveValue('');
     await tag('测试音').click();
-    await expect(rows).toHaveCount(3);
-    expect((await titles()).sort()).toEqual([title(10), title(11), title(12)]);
+    const small = [title(10), title(11), title(12)];
+    expect((await batch(small)).sort()).toEqual(small);
     await refresh.click();
-    expect((await titles()).sort()).toEqual([title(10), title(11), title(12)]);
+    expect((await batch(small)).sort()).toEqual(small);
     await tag('测试音').click();
-    await expect(rows).toHaveCount(5); // union, not the one-song intersection
-    expect(new Set(await titles()).size).toBe(5);
-    expect(
-      (await titles()).every((t) =>
-        [...allowed, title(11), title(12)].includes(t),
-      ),
-    ).toBe(true);
+    // The union has a five-song batch, not the one-song intersection.
+    await batch([...allowed, title(11), title(12)]);
 
     await tag('测试音').click();
     await tag('少量测试').click();
