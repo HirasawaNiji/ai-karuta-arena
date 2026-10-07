@@ -175,10 +175,14 @@ export async function confirm(clients, audio, { start = true } = {}) {
         exact: true,
       })
       .click();
-  if (start)
-    await audio.page
-      .getByRole('button', { name: '开始听歌', exact: true })
-      .click();
+  // Clicking starts asynchronous AudioContext unlock and readiness requests.
+  // Wait for the host's authoritative ready state even when leaving it unstarted.
+  const startButton = audio.page.getByRole('button', {
+    name: '开始听歌',
+    exact: true,
+  });
+  await expect(startButton).toBeEnabled();
+  if (start) await startButton.click();
 }
 export async function prepareDuel(pair, preset = 'quick', options = {}) {
   await pair[0].page
