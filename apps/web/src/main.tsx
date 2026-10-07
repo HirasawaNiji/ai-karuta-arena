@@ -388,14 +388,10 @@ function App() {
                 <br />
                 成为相聚的理由。
               </p>
-              <div className="brand-art" aria-hidden="true">
-                <img
-                  className="hero-brand-icon"
-                  src="/brand-icon.svg"
-                  alt=""
-                  width="185"
-                  height="185"
-                />
+              <div className="record-art" aria-hidden="true">
+                <div className="vinyl">
+                  <span>♪</span>
+                </div>
                 <div className="float-note">你的歌，也是我们的默契</div>
               </div>
               <div className="hero-facts">

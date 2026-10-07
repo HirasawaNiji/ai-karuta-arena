@@ -174,7 +174,7 @@ main {
   color: var(--ink);
   margin-bottom: 22px;
 }
-.brand-art {
+.record-art {
   height: 220px;
   position: relative;
   display: flex;
@@ -182,12 +182,32 @@ main {
   justify-content: center;
   background: radial-gradient(ellipse, #d5f4d9 0, transparent 67%);
 }
-.hero-brand-icon {
+.vinyl {
   height: 185px;
   width: 185px;
-  display: block;
-  object-fit: contain;
-  filter: drop-shadow(8px 15px 14px #1b55301f);
+  border-radius: 50%;
+  background: repeating-radial-gradient(
+    circle,
+    #242e29 0,
+    #242e29 3px,
+    #364139 4px,
+    #27372e 5px
+  );
+  box-shadow: 8px 15px 28px #1b55301f;
+  display: grid;
+  place-items: center;
+  transform: rotate(-15deg);
+}
+.vinyl span {
+  background: var(--green);
+  width: 76px;
+  height: 76px;
+  border: 8px solid #88eec0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 42px;
+  line-height: 1;
 }
 .float-note {
   position: absolute;
@@ -747,17 +767,24 @@ footer {
   .hero .hero-subtitle {
     font-size: 18px;
   }
-  .brand-art {
+  .record-art {
     position: absolute;
     right: 0;
     top: 94px;
     width: 120px;
     height: 135px;
+    opacity: 0.75;
     pointer-events: none;
   }
-  .hero-brand-icon {
+  .vinyl {
     width: 115px;
     height: 115px;
+  }
+  .vinyl span {
+    width: 48px;
+    height: 48px;
+    font-size: 27px;
+    border-width: 5px;
   }
   .float-note {
     display: none;
