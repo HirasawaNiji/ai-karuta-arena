@@ -65,6 +65,7 @@ export const MultiplayerActionSchema = z.discriminatedUnion('type', [
     cardId: CardIdSchema,
   }),
   z.strictObject({ ...actionEnvelope, type: z.literal('audio_started') }),
+  z.strictObject({ ...actionEnvelope, type: z.literal('audio_loaded') }),
   z.strictObject({ ...actionEnvelope, type: z.literal('audio_failed') }),
 ]);
 export type MultiplayerAction = z.infer<typeof MultiplayerActionSchema>;
@@ -123,6 +124,7 @@ export const MultiplayerPreparationCommandSchema = z.discriminatedUnion(
       type: z.literal('match_ready'),
       cardsLoaded: z.literal(true),
       audioReady: z.boolean(),
+      audioProtocol: z.literal('all-player-preload-v1').optional(),
     }),
     z.strictObject({ ...envelope, type: z.literal('start') }),
     z.strictObject({ ...envelope, type: z.literal('interrupt') }),

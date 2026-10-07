@@ -211,7 +211,7 @@ it('keeps spectators out, isolates unrelated connectivity, and aborts only a mis
   expect(() => f.prep(spectator, { type: 'interrupt' })).toThrow(/本场/);
   expect(() =>
     f.t.currentQuestion(spectator, f.view().preparation!.game!.round!.token),
-  ).toThrow(/音箱/);
+  ).toThrow(/仅本场选手/);
   f.lobby.setOnline(spectator, false);
   f.advance(1);
   expect(f.view().preparation!.game!.phase).toBe('loading');

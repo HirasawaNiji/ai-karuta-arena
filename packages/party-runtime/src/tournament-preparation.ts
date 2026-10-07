@@ -22,6 +22,7 @@ import { type LobbyPreparationContext } from './lobby.js';
 import { supplementCatalog } from './material-pool.js';
 
 export function createTournamentPreparation(deps: {
+  individualAudio?: boolean;
   context: () => LobbyPreparationContext;
   room?: () => LobbySnapshot;
   factory: DuelEngineFactory;
@@ -117,6 +118,7 @@ export function createTournamentPreparation(deps: {
     signature = '';
     duel = createDuelPreparation({
       context,
+      individualAudio: deps.individualAudio ?? false,
       now: deps.now,
       nextId: deps.nextId,
       seed: deps.seed,
@@ -214,7 +216,7 @@ export function createTournamentPreparation(deps: {
           );
         tournament.open(cmd.matchId);
         makeDuel(cmd.matchId);
-        message = '本场第一位选手负责共享音箱和最终开局确认';
+        message = '本场双方各自启用音频，第一位选手确认开局';
       } else if (cmd.type === 'allow_repeats' || cmd.type === 'refresh_pool') {
         let refreshed = frozen!;
         if (cmd.type === 'refresh_pool') {
@@ -305,7 +307,8 @@ export function createTournamentPreparation(deps: {
     },
     tick: () => duel?.tick(),
     currentQuestion(id: PlayerId, token: string): Question | null {
-      if (id !== currentMatch()?.playerIds[0])
+      participant(id);
+      if (!deps.individualAudio && id !== currentMatch()?.playerIds[0])
         throw new Error('音频仅由本场共享音箱播放');
       return duel?.currentQuestion(token) ?? null;
     },

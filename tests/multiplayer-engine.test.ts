@@ -15,7 +15,7 @@ const players = ['player:A', 'player:B', 'player:C'].map((p) =>
   PlayerIdSchema.parse(p),
 );
 const [A, B, C] = players as [PlayerId, PlayerId, PlayerId];
-function fixture() {
+function fixture(individualAudio = false) {
   let now = Date.parse('2026-09-25T00:00:00Z'),
     nonce = 0;
   const questions = duelCatalog().questions.slice(0, 12);
@@ -39,6 +39,7 @@ function fixture() {
     now: () => now++,
     nextToken: () => 'token:' + ++nonce,
     audioPlayerId: A,
+    ...(individualAudio ? { audioPlayerIds: players } : {}),
     onChange: () => {},
     onEvent: (e) => {
       GameEventContextSchema.parse({ session: input.session, event: e });
@@ -169,4 +170,29 @@ describe('multiplayer authoritative rules', () => {
       }),
     ).toThrow();
   });
+});
+
+it('requires all three decoded clips, resets the gate each round and accepts guest failures', () => {
+  const f = fixture(true);
+  f.action(A, 'audio_loaded');
+  f.action(B, 'audio_loaded');
+  expect(f.engine.snapshot().phase).toBe('loading');
+  f.action(B, 'audio_loaded');
+  expect(() => f.action(C, 'claim', f.answer())).toThrow();
+  f.action(C, 'audio_loaded');
+  expect(f.engine.snapshot().phase).toBe('playing');
+  f.action(A, 'claim', f.answer());
+  f.advance(MULTIPLAYER_RULES.restMs);
+  expect(f.engine.snapshot().phase).toBe('loading');
+  f.action(A, 'audio_loaded');
+  expect(f.engine.snapshot().phase).toBe('loading');
+  f.action(C, 'audio_failed');
+  expect(f.engine.snapshot().phase).toBe('aborted');
+});
+it('times out without counting a partly loaded individual round as played', () => {
+  const f = fixture(true);
+  f.action(B, 'audio_loaded');
+  f.advance(MULTIPLAYER_RULES.loadingMs);
+  expect(f.engine.result()?.status).toBe('aborted');
+  expect(f.engine.result()?.playedSongIds).toEqual([]);
 });

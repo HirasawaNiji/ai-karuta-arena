@@ -92,7 +92,7 @@ try {
         await cards.nth(i).click();
       await click('确认禁歌');
       await click('了解以上差异，继续这一局');
-      await click('歌牌已就绪，启用共享音箱');
+      await click('歌牌已就绪，启用我的音频');
       await expect(
         page.getByRole('button', { name: '开始听歌', exact: true }),
       ).toBeEnabled();

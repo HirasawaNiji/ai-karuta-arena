@@ -229,7 +229,8 @@ it('authenticates tournament scheduling, binds preparation to a match, and prote
           await prepare(id, {
             type: 'match_ready',
             cardsLoaded: true,
-            audioReady: id === audio,
+            audioReady: true,
+            audioProtocol: 'all-player-preload-v1',
           })
         ).status,
       ).toBe(200);
@@ -262,7 +263,8 @@ it('authenticates tournament scheduling, binds preparation to a match, and prote
         roundToken: game.round!.token,
         ...extra,
       });
-    expect((await action(opponent, 'audio_started')).status).toBe(400);
+    expect((await action(opponent, 'audio_loaded')).status).toBe(200);
+    expect((await view()).preparation!.game!.phase).toBe('loading');
     expect((await action(audio, 'audio_started', { score: 99 })).status).toBe(
       400,
     );
