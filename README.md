@@ -2,6 +2,8 @@
 
 AI Music Party / AI 音乐派对：根据参与者的音乐画像、证据与游戏反馈，生成兼顾熟悉覆盖、竞争性和多样性的游戏题组。Karuta 是首个游戏适配目标，QQ 音乐是可能的数据来源；领域模型不绑定某个平台、语言或音乐文化。
 
+2026-10-07 进度：核心和 D1–D4 已合并，公网 Demo 已交付 351 首素材、16 个偏好标签及五首随机推荐/换批。各玩家独立音频修复已部署，但 [PR #72](https://github.com/HirasawaNiji/ai-karuta-arena/pull/72) 仍待审核合并；当前 main 保留共享音箱行为。整体 UI 收尾与完整真人/真机验收尚未完成，已合并、已部署和待办的区别见 [项目状态](docs/project-state.md)。
+
 当前已完成 M1–M5 核心与可运行的无密钥 CLI Demo：画像、选曲、禁歌/房主确认、Mock 游戏与反馈都可实际演示。D1 入场和 D2 双人真实对局已实现并完成自动浏览器验收，D3 多人与 D4 单淘汰已接入，完整启动和演示步骤见 [演示手册](docs/demo-walkthrough.md)。初赛目标是玩家通过标签和熟悉歌曲建立画像，体验多人抢牌、经典 1v1 和简单淘汰赛；暂不接大模型，QQ 授权也不作为游玩前提。核心先完成无需 API Key 的本地 Mock 验证，再接现有歌牌引擎与真人房间。熟悉度采用规则评分，ban 后重评，覆盖不足时等待房主选择。产品主线见 [真人 Demo #14](https://github.com/HirasawaNiji/ai-karuta-arena/issues/14)，核心进度见 [Issue #4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。周杰伦专场 #12 是 P3 副线，不是通用 Demo 的前置条件。
 
 ## 需求与架构入口
