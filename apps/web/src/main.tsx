@@ -344,7 +344,14 @@ function App() {
     <div className="app-shell">
       <header className="topbar">
         <a className="brand" href="/" aria-label="此刻同频首页">
-          <span className="brand-mark">♪</span> 此刻同频
+          <img
+            className="brand-mark"
+            src="/brand-icon.svg"
+            alt=""
+            width="35"
+            height="35"
+          />{' '}
+          此刻同频
         </a>
         <span className="pill">{platform.label}</span>
       </header>
@@ -381,10 +388,14 @@ function App() {
                 <br />
                 成为相聚的理由。
               </p>
-              <div className="record-art" aria-hidden="true">
-                <div className="vinyl">
-                  <span>♪</span>
-                </div>
+              <div className="brand-art" aria-hidden="true">
+                <img
+                  className="hero-brand-icon"
+                  src="/brand-icon.svg"
+                  alt=""
+                  width="185"
+                  height="185"
+                />
                 <div className="float-note">你的歌，也是我们的默契</div>
               </div>
               <div className="hero-facts">
