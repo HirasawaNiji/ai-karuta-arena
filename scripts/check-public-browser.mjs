@@ -7,6 +7,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { setTimeout as delay } from 'node:timers/promises';
 import {
+  installAudioProbe,
   ready,
   prepareDuel,
   confirm,
@@ -41,11 +42,29 @@ const results = [],
   errors = [],
   clients = [];
 let responses = 0;
+async function verifyDevices(clients) {
+  const devices = [];
+  for (const c of clients) {
+    const probe = await c.page.evaluate(() => ({
+      starts: globalThis.__audioProbe.starts,
+      state: globalThis.__audioProbe.contexts[0]?.context.state,
+      volume: globalThis.__audioProbe.contexts[0]?.gains[0]?.gain.value,
+    }));
+    assert.ok(probe.starts > 0, 'Each player actually starts WebAudio');
+    assert.equal(probe.state, 'running');
+    assert.equal(probe.starts, c.audio.size, 'Each decoded clip plays once');
+    devices.push({ clips: c.audio.size, ...probe });
+  }
+  const tokens = [...clients[0].audio.keys()].sort();
+  for (const c of clients) assert.deepEqual([...c.audio.keys()].sort(), tokens);
+  return devices;
+}
 async function enter(count) {
   for (let i = 0; i < count; i++) {
     const context = await browser.newContext({
       viewport: { width: 390, height: 844 },
     });
+    await installAudioProbe(context);
     const page = await context.newPage();
     page.setDefaultTimeout(20000);
     const client = {
@@ -168,9 +187,35 @@ try {
         clients[1].page,
         '/api/duel/audio/' + opening.round.token,
       ),
-      403,
+      200,
     );
     assert.ok(opening.round.deadline - Date.now() <= 10100);
+    await clients[1].page
+      .getByRole('button', { name: '静音', exact: true })
+      .click();
+    await expect
+      .poll(() =>
+        clients[1].page.evaluate(
+          () => globalThis.__audioProbe.contexts[0].gains[0].gain.value,
+        ),
+      )
+      .toBe(0);
+    assert.equal(
+      await clients[0].page.evaluate(
+        () => globalThis.__audioProbe.contexts[0].gains[0].gain.value,
+      ),
+      1,
+    );
+    await clients[1].page
+      .getByRole('button', { name: '取消静音', exact: true })
+      .click();
+    await expect
+      .poll(() =>
+        clients[1].page.evaluate(
+          () => globalThis.__audioProbe.contexts[0].gains[0].gain.value,
+        ),
+      )
+      .toBe(1);
     // Let one real round expire: a 30-second stored file must not extend it.
     const token = opening.round.token;
     await delay(11000);
@@ -197,8 +242,9 @@ try {
       completed: true,
       answered: result.answered,
       transfers: result.transfers,
-      guestAudioDenied: true,
+      guestAudioAllowed: true,
       timeoutAdvances: true,
+      devices: await verifyDevices(clients),
     });
     console.log(JSON.stringify(results.at(-1)));
     await leave();
@@ -255,6 +301,7 @@ try {
     completed: true,
     questions: 12,
     consistentStandings: true,
+    devices: await verifyDevices(clients),
   });
   console.log(JSON.stringify(results.at(-1)));
   await leave();

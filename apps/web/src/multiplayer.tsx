@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { confirmAudioLoaded } from './audio-confirmation.js';
 import { newActionId } from './platform.js';
 import {
   MULTIPLAYER_RULES,
@@ -47,11 +48,21 @@ export function MultiplayerPanel({
   const [selected, setSelected] = useState<SongId[]>([]),
     [error, setError] = useState(''),
     [busy, setBusy] = useState(false),
+    [muted, setMuted] = useState(false),
     [clock, setClock] = useState(Date.now());
   const audio = useRef<AudioContext | null>(null),
     source = useRef<AudioBufferSourceNode | null>(null),
+    output = useRef<GainNode | null>(null),
+    prepared = useRef<{
+      token: string;
+      buffer: AudioBuffer;
+      started: boolean;
+    } | null>(null),
     current = useRef(view);
   current.current = view;
+  useEffect(() => {
+    if (output.current) output.current.gain.value = muted ? 0 : 1;
+  }, [muted]);
   const host = playerId === room.hostId,
     game = view.game;
   useEffect(() => {
@@ -126,19 +137,23 @@ export function MultiplayerPanel({
       if (audio.current) audio.current.onstatechange = null;
       void audio.current?.close();
       audio.current = null;
+      output.current = null;
     };
   }, []);
   const token = game?.round?.token,
     phase = game?.phase;
   useEffect(() => {
-    if (!host || phase !== 'loading' || !token) return;
+    if (phase !== 'loading' || !token) return;
+    source.current?.stop();
+    source.current = null;
+    prepared.current = null;
     let cancelled = false;
     const snapshot = current.current.game!;
     async function play() {
       try {
         const context = audio.current;
         if (!context || context.state !== 'running' || document.hidden)
-          throw new Error('音箱未解锁，请重新准备');
+          throw new Error('音频未解锁，请重新准备');
         const response = await fetch(
           '/api/multiplayer/audio/' + encodeURIComponent(token!),
         );
@@ -147,12 +162,21 @@ export function MultiplayerPanel({
           await response.arrayBuffer(),
         );
         if (cancelled) return;
-        const node = context.createBufferSource();
-        node.buffer = buffer;
-        node.connect(context.destination);
-        source.current = node;
-        node.start();
-        await gameAction({ type: 'audio_started' }, snapshot);
+        prepared.current = { token: token!, buffer, started: false };
+        await confirmAudioLoaded(
+          '/api/multiplayer',
+          {
+            type: 'audio_loaded',
+            actionId: newActionId(),
+            gameSessionId: snapshot.gameSessionId,
+            selectionVersion: snapshot.selectionVersion,
+            roundToken: token,
+          },
+          () =>
+            current.current.game?.gameSessionId === snapshot.gameSessionId &&
+            current.current.game?.round?.token === token &&
+            ['loading', 'playing'].includes(current.current.game.phase),
+        );
       } catch (e) {
         if (!cancelled) {
           setError(e instanceof Error ? e.message : '播放失败');
@@ -164,7 +188,26 @@ export function MultiplayerPanel({
     return () => {
       cancelled = true;
     };
-  }, [host, phase, token]);
+  }, [phase, token]);
+  useEffect(() => {
+    if (phase !== 'playing' || !token) return;
+    const clip = prepared.current;
+    const context = audio.current;
+    if (!clip || clip.token !== token || clip.started) return;
+    try {
+      if (!context || context.state !== 'running' || document.hidden)
+        throw new Error('音频未解锁，请重新准备');
+      const node = context.createBufferSource();
+      node.buffer = clip.buffer;
+      node.connect(output.current!);
+      source.current = node;
+      node.start();
+      clip.started = true;
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '播放失败');
+      void gameAction({ type: 'audio_failed' });
+    }
+  }, [phase, token]);
   useEffect(() => {
     if (phase && phase !== 'loading' && phase !== 'playing') {
       source.current?.stop();
@@ -172,35 +215,43 @@ export function MultiplayerPanel({
     }
   }, [phase]);
   async function confirm() {
-    if (host) {
-      try {
-        audio.current ??= new AudioContext();
-        audio.current.onstatechange = () => {
-          const g = current.current.game;
-          if (
-            g &&
-            ['loading', 'playing'].includes(g.phase) &&
-            audio.current?.state !== 'running'
-          )
-            void gameAction({ type: 'audio_failed' }, g);
-        };
-        await audio.current.resume();
-        if (audio.current.state !== 'running')
-          throw new Error('浏览器未允许播放，请再点一次');
-        const tone = audio.current.createOscillator(),
-          volume = audio.current.createGain();
-        volume.gain.value = 0.06;
-        tone.frequency.value = 660;
-        tone.connect(volume);
-        volume.connect(audio.current.destination);
-        tone.start();
-        tone.stop(audio.current.currentTime + 0.15);
-      } catch (e) {
-        setError(String(e));
-        return;
+    try {
+      audio.current ??= new AudioContext();
+      if (!output.current) {
+        output.current = audio.current.createGain();
+        output.current.connect(audio.current.destination);
       }
+      output.current.gain.value = muted ? 0 : 1;
+      audio.current.onstatechange = () => {
+        const g = current.current.game;
+        if (
+          g &&
+          ['loading', 'playing'].includes(g.phase) &&
+          audio.current?.state !== 'running'
+        )
+          void gameAction({ type: 'audio_failed' }, g);
+      };
+      await audio.current.resume();
+      if (audio.current.state !== 'running')
+        throw new Error('浏览器未允许播放，请再点一次');
+      const tone = audio.current.createOscillator(),
+        volume = audio.current.createGain();
+      volume.gain.value = 0.06;
+      tone.frequency.value = 660;
+      tone.connect(volume);
+      volume.connect(output.current);
+      tone.start();
+      tone.stop(audio.current.currentTime + 0.15);
+    } catch (e) {
+      setError(String(e));
+      return;
     }
-    await command({ type: 'match_ready', cardsLoaded: true, audioReady: host });
+    await command({
+      type: 'match_ready',
+      cardsLoaded: true,
+      audioReady: true,
+      audioProtocol: 'all-player-preload-v1',
+    });
   }
   const participant = view.playerIds.includes(
     playerId as LobbySnapshot['hostId'],
@@ -226,6 +277,13 @@ export function MultiplayerPanel({
           多人 · {MULTIPLAYER_RULES.questionCount} 题
         </span>
       </div>
+      <button
+        type="button"
+        aria-pressed={muted}
+        onClick={() => setMuted((value) => !value)}
+      >
+        {muted ? '取消静音' : '静音'}
+      </button>
       <p role="status">{game?.message ?? view.message}</p>
       {error && (
         <p role="alert" className="message error">
@@ -236,7 +294,7 @@ export function MultiplayerPanel({
         <>
           <p>
             2–8
-            人同场，由房主音箱播放。首个抢对者收下一分，错抢后等下一题；同分并列。
+            人同场，每人用自己的设备播放。首个抢对者收下一分，错抢后等下一题；同分并列。
           </p>
           <button
             className="primary"
@@ -327,7 +385,7 @@ export function MultiplayerPanel({
           >
             {view.readyPlayerIds.includes(playerId as LobbySnapshot['hostId'])
               ? '重新确认'
-              : '歌牌已就绪' + (host ? '，启用共享音箱' : '')}
+              : '歌牌已就绪，启用我的音频'}
           </button>
           <p>
             已确认 {view.readyPlayerIds.length} / {view.playerIds.length} 人

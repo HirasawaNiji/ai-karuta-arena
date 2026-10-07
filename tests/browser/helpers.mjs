@@ -13,11 +13,40 @@ export const view = (page, path) =>
   }, path);
 export const responseStatus = (page, path) =>
   page.evaluate(async (path) => (await fetch(path)).status, path);
+export async function installAudioProbe(context) {
+  await context.addInitScript(() => {
+    const NativeContext = globalThis.AudioContext;
+    globalThis.__audioProbe = { starts: 0, contexts: [] };
+    globalThis.AudioContext = class extends NativeContext {
+      constructor(...args) {
+        super(...args);
+        const record = { context: this, gains: [] };
+        globalThis.__audioProbe.contexts.push(record);
+        const gain = this.createGain.bind(this);
+        this.createGain = () => {
+          const node = gain();
+          record.gains.push(node);
+          return node;
+        };
+        const source = this.createBufferSource.bind(this);
+        this.createBufferSource = () => {
+          const node = source();
+          const start = node.start.bind(node);
+          node.start = (...args) => {
+            start(...args);
+            globalThis.__audioProbe.starts++;
+          };
+          return node;
+        };
+      }
+    };
+  });
+}
 export async function room(
   browser,
   baseURL,
   count,
-  { code, onProfile, beforeEnter, nicknameOffset = 0 } = {},
+  { code, onProfile, beforeEnter, nicknameOffset = 0, audioProbe = false } = {},
 ) {
   const clients = [],
     errors = [];
@@ -26,6 +55,7 @@ export async function room(
       const context = await browser.newContext({
         viewport: { width: 390, height: 844 },
       });
+      if (audioProbe) await installAudioProbe(context);
       const page = await context.newPage();
       page.setDefaultTimeout(15_000);
       const client = {
@@ -141,7 +171,7 @@ export async function confirm(clients, audio, { start = true } = {}) {
   for (const client of clients)
     await client.page
       .getByRole('button', {
-        name: client === audio ? '歌牌已就绪，启用共享音箱' : '歌牌已就绪',
+        name: '歌牌已就绪，启用我的音频',
         exact: true,
       })
       .click();

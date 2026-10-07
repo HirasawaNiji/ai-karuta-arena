@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { newActionId } from './platform.js';
+import { confirmAudioLoaded } from './audio-confirmation.js';
 import {
   DUEL_PRESETS,
   type DuelPreparationView,
@@ -55,11 +56,21 @@ export function DuelPanel({
   const [selected, setSelected] = useState<SongId[]>([]),
     [error, setError] = useState(''),
     [busy, setBusy] = useState(false),
+    [muted, setMuted] = useState(false),
     [clock, setClock] = useState(Date.now());
   const audio = useRef<AudioContext | null>(null),
     source = useRef<AudioBufferSourceNode | null>(null),
+    output = useRef<GainNode | null>(null),
+    prepared = useRef<{
+      token: string;
+      buffer: AudioBuffer;
+      started: boolean;
+    } | null>(null),
     current = useRef(view);
   current.current = view;
+  useEffect(() => {
+    if (output.current) output.current.gain.value = muted ? 0 : 1;
+  }, [muted]);
   const host = playerId === room.hostId,
     preset = DUEL_PRESETS[view.preset],
     game = view.game;
@@ -140,19 +151,23 @@ export function DuelPanel({
       if (audio.current) audio.current.onstatechange = null;
       void audio.current?.close();
       audio.current = null;
+      output.current = null;
     };
   }, []);
   const token = game?.round?.token,
     phase = game?.phase;
   useEffect(() => {
-    if (!host || phase !== 'loading' || !token) return;
+    if (phase !== 'loading' || !token) return;
+    source.current?.stop();
+    source.current = null;
+    prepared.current = null;
     let cancelled = false;
     const snapshot = current.current.game!;
     async function play() {
       try {
         const context = audio.current;
         if (!context || context.state !== 'running' || document.hidden)
-          throw new Error('音箱未解锁，请重新准备');
+          throw new Error('音频未解锁，请重新准备');
         const response = await fetch(
           endpoint + '/audio/' + encodeURIComponent(token!),
         );
@@ -161,12 +176,21 @@ export function DuelPanel({
           await response.arrayBuffer(),
         );
         if (cancelled) return;
-        const node = context.createBufferSource();
-        node.buffer = buffer;
-        node.connect(context.destination);
-        source.current = node;
-        node.start();
-        await gameAction({ type: 'audio_started' }, snapshot);
+        prepared.current = { token: token!, buffer, started: false };
+        await confirmAudioLoaded(
+          endpoint,
+          {
+            type: 'audio_loaded',
+            actionId: newActionId(),
+            gameSessionId: snapshot.gameSessionId,
+            selectionVersion: snapshot.selectionVersion,
+            roundToken: token,
+          },
+          () =>
+            current.current.game?.gameSessionId === snapshot.gameSessionId &&
+            current.current.game?.round?.token === token &&
+            ['loading', 'playing'].includes(current.current.game.phase),
+        );
       } catch (e) {
         if (!cancelled) {
           setError(e instanceof Error ? e.message : '播放失败');
@@ -178,7 +202,26 @@ export function DuelPanel({
     return () => {
       cancelled = true;
     };
-  }, [host, phase, token]);
+  }, [phase, token]);
+  useEffect(() => {
+    if (phase !== 'playing' || !token) return;
+    const clip = prepared.current;
+    const context = audio.current;
+    if (!clip || clip.token !== token || clip.started) return;
+    try {
+      if (!context || context.state !== 'running' || document.hidden)
+        throw new Error('音频未解锁，请重新准备');
+      const node = context.createBufferSource();
+      node.buffer = clip.buffer;
+      node.connect(output.current!);
+      source.current = node;
+      node.start();
+      clip.started = true;
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '播放失败');
+      void gameAction({ type: 'audio_failed' });
+    }
+  }, [phase, token]);
   useEffect(() => {
     if (phase && phase !== 'loading' && phase !== 'playing') {
       source.current?.stop();
@@ -186,35 +229,43 @@ export function DuelPanel({
     }
   }, [phase]);
   async function confirm() {
-    if (host) {
-      try {
-        audio.current ??= new AudioContext();
-        audio.current.onstatechange = () => {
-          const g = current.current.game;
-          if (
-            g &&
-            ['loading', 'playing'].includes(g.phase) &&
-            audio.current?.state !== 'running'
-          )
-            void gameAction({ type: 'audio_failed' }, g);
-        };
-        await audio.current.resume();
-        if (audio.current.state !== 'running')
-          throw new Error('浏览器未允许播放，请再点一次');
-        const tone = audio.current.createOscillator(),
-          volume = audio.current.createGain();
-        volume.gain.value = 0.06;
-        tone.frequency.value = 660;
-        tone.connect(volume);
-        volume.connect(audio.current.destination);
-        tone.start();
-        tone.stop(audio.current.currentTime + 0.15);
-      } catch (e) {
-        setError(String(e));
-        return;
+    try {
+      audio.current ??= new AudioContext();
+      if (!output.current) {
+        output.current = audio.current.createGain();
+        output.current.connect(audio.current.destination);
       }
+      output.current.gain.value = muted ? 0 : 1;
+      audio.current.onstatechange = () => {
+        const g = current.current.game;
+        if (
+          g &&
+          ['loading', 'playing'].includes(g.phase) &&
+          audio.current?.state !== 'running'
+        )
+          void gameAction({ type: 'audio_failed' }, g);
+      };
+      await audio.current.resume();
+      if (audio.current.state !== 'running')
+        throw new Error('浏览器未允许播放，请再点一次');
+      const tone = audio.current.createOscillator(),
+        volume = audio.current.createGain();
+      volume.gain.value = 0.06;
+      tone.frequency.value = 660;
+      tone.connect(volume);
+      volume.connect(output.current);
+      tone.start();
+      tone.stop(audio.current.currentTime + 0.15);
+    } catch (e) {
+      setError(String(e));
+      return;
     }
-    await command({ type: 'match_ready', cardsLoaded: true, audioReady: host });
+    await command({
+      type: 'match_ready',
+      cardsLoaded: true,
+      audioReady: true,
+      audioProtocol: 'all-player-preload-v1',
+    });
   }
   const choosing = view.phase === 'selecting',
     banning = view.phase === 'banning';
@@ -242,6 +293,13 @@ export function DuelPanel({
           {preset.handSize} 对 {preset.handSize}
         </span>
       </div>
+      <button
+        type="button"
+        aria-pressed={muted}
+        onClick={() => setMuted((value) => !value)}
+      >
+        {muted ? '取消静音' : '静音'}
+      </button>
       <p role="status">
         {game?.message ??
           (tournament
@@ -257,7 +315,7 @@ export function DuelPanel({
         <>
           <p className="muted">
             各选 {preset.selectPerPlayer} 首，交换禁掉 {preset.banPerPlayer}{' '}
-            首。先清空自己手牌的人获胜，由本场第一位选手设备共享播放。
+            首。先清空自己手牌的人获胜，每位玩家用自己的设备播放。
           </p>
           <button
             className="primary duel-start"
@@ -330,7 +388,7 @@ export function DuelPanel({
         <>
           <p>
             最终 {view.cards.length}{' '}
-            首已重新评估。双方确认看到全部歌牌，本场播放选手点击确认时会播放提示音。
+            首已重新评估。双方确认看到全部歌牌，每位玩家点击确认时会播放提示音，请确认自己能听到。
           </p>
           {view.assessment?.reasons.map((r, i) => (
             <p className="message" key={i}>
@@ -368,7 +426,7 @@ export function DuelPanel({
           <button disabled={busy} onClick={() => void confirm()}>
             {view.readyPlayerIds.includes(playerId as LobbySnapshot['hostId'])
               ? '重新确认'
-              : '歌牌已就绪' + (host ? '，启用共享音箱' : '')}
+              : '歌牌已就绪，启用我的音频'}
           </button>
           <p className="muted">已确认 {view.readyPlayerIds.length} / 2 人</p>
           {host && (

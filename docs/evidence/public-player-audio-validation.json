@@ -1,0 +1,117 @@
+{
+  "verifiedAt": "2026-10-05T23:01:09.986672+08:00",
+  "applicationCommit": "3f0f5f05b7b7740dd60fc96be44285adaa429b42",
+  "issue": 71,
+  "pr": 72,
+  "browserOutputMuted": true,
+  "realMaterialCatalogue": 351,
+  "ci": {
+    "ubuntuCore": 592,
+    "windowsCore": 592,
+    "browser": 13,
+    "coreRun": "https://github.com/HirasawaNiji/ai-karuta-arena/actions/runs/37325559358",
+    "browserRun": "https://github.com/HirasawaNiji/ai-karuta-arena/actions/runs/37325559194"
+  },
+  "publicResults": [
+    {
+      "mode": "quick",
+      "completed": true,
+      "answered": 10,
+      "transfers": 5,
+      "guestAudioAllowed": true,
+      "timeoutAdvances": true,
+      "devices": [
+        {
+          "clips": 11,
+          "starts": 11,
+          "state": "running",
+          "volume": 1
+        },
+        {
+          "clips": 11,
+          "starts": 11,
+          "state": "running",
+          "volume": 1
+        }
+      ]
+    },
+    {
+      "mode": "standard",
+      "completed": true,
+      "answered": 15,
+      "transfers": 10,
+      "guestAudioAllowed": true,
+      "timeoutAdvances": true,
+      "devices": [
+        {
+          "clips": 16,
+          "starts": 16,
+          "state": "running",
+          "volume": 1
+        },
+        {
+          "clips": 16,
+          "starts": 16,
+          "state": "running",
+          "volume": 1
+        }
+      ]
+    },
+    {
+      "mode": "multiplayer",
+      "players": 3,
+      "completed": true,
+      "questions": 12,
+      "consistentStandings": true,
+      "devices": [
+        {
+          "clips": 12,
+          "starts": 12,
+          "state": "running",
+          "volume": 1
+        },
+        {
+          "clips": 12,
+          "starts": 12,
+          "state": "running",
+          "volume": 1
+        },
+        {
+          "clips": 12,
+          "starts": 12,
+          "state": "running",
+          "volume": 1
+        }
+      ]
+    },
+    {
+      "mode": "tournament",
+      "players": 4,
+      "currentPlayers": 2,
+      "devices": [
+        {
+          "clips": 1,
+          "starts": 1,
+          "state": "running",
+          "volume": 1
+        },
+        {
+          "clips": 1,
+          "starts": 1,
+          "state": "running",
+          "volume": 1
+        }
+      ],
+      "spectatorAudioDenied": true
+    }
+  ],
+  "confirmedDevicePlaybackStarts": 92,
+  "independentMuteChecked": true,
+  "serviceHealthy": true,
+  "automaticRestarts": 0,
+  "limits": [
+    "Public tournament supplement checks one round and spectator access; complete 4/8-player tournaments are covered by CI.",
+    "Automation checks HTTP bytes, decode, WebAudio start and gain; no human listening or QQ WebView acceptance.",
+    "Initial tournament probes read the match before scheduling completed and used a five-second wait shorter than the fifteen-second load gate. The corrected probe awaits the match and playback or abort; the server deadline is unchanged."
+  ]
+}

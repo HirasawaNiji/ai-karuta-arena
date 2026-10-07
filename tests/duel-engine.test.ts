@@ -14,7 +14,11 @@ import { createKarutaDuel, shuffledQuestions } from '@amp/adapters';
 const A = PlayerIdSchema.parse('player:A'),
   B = PlayerIdSchema.parse('player:B');
 const origin = Date.parse('2026-09-24T00:00:00Z');
-function fixture(preset: DuelPresetId = 'quick', movingClock = false) {
+function fixture(
+  preset: DuelPresetId = 'quick',
+  movingClock = false,
+  individualAudio = false,
+) {
   const n = preset === 'quick' ? 10 : 15;
   const input = DuelInputSchema.parse({
     session: {
@@ -52,6 +56,7 @@ function fixture(preset: DuelPresetId = 'quick', movingClock = false) {
     now: () => (movingClock ? now++ : now),
     nextToken: () => 'opaque-' + ++nonce,
     audioPlayerId: A,
+    ...(individualAudio ? { audioPlayerIds: [A, B] } : {}),
     onEvent: (e) => {
       GameEventContextSchema.parse({ session: input.session, event: e });
       events.push(e);
@@ -285,4 +290,43 @@ describe('ported classic duel rules', () => {
     );
     expect(new Set(shuffledQuestions([1, 2, 3, 4, 5], 77)).size).toBe(5);
   });
+});
+
+it('waits for both decoded clips each round and aborts on guest audio failure', () => {
+  const f = fixture('quick', false, true);
+  expect(() => f.action(A, 'audio_started')).toThrow();
+  f.action(A, 'audio_loaded');
+  expect(f.game.snapshot().phase).toBe('loading');
+  expect(() =>
+    f.action(
+      A,
+      'claim',
+      f.game.currentQuestion(f.game.snapshot().round!.token)!.answerCardId,
+    ),
+  ).toThrow();
+  f.action(A, 'audio_loaded');
+  expect(f.game.snapshot().phase).toBe('loading');
+  f.advance(2000);
+  f.action(B, 'audio_loaded');
+  expect(f.game.snapshot().phase).toBe('playing');
+  expect(f.game.snapshot().round!.deadline).toBe(
+    origin + 2000 + DUEL_RULES.roundMs,
+  );
+  const oldToken = f.game.snapshot().round!.token;
+  f.advance(DUEL_RULES.roundMs + DUEL_RULES.compensationCapMs + 1);
+  f.advance(DUEL_RULES.restMs);
+  expect(f.game.snapshot().phase).toBe('loading');
+  expect(() =>
+    f.action(B, 'audio_loaded', undefined, { roundToken: oldToken }),
+  ).toThrow();
+  f.action(A, 'audio_loaded');
+  expect(f.game.snapshot().phase).toBe('loading');
+  f.action(B, 'audio_failed');
+  expect(f.game.snapshot().phase).toBe('aborted');
+});
+it('aborts when one individual audio device never finishes loading', () => {
+  const f = fixture('standard', false, true);
+  f.action(A, 'audio_loaded');
+  f.advance(DUEL_RULES.loadingMs);
+  expect(f.game.snapshot().outcome).toBe('aborted');
 });
