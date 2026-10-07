@@ -343,8 +343,15 @@ function App() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <a className="brand" href="/" aria-label="音乐碰个面首页">
-          <span className="brand-mark">♪</span> 音乐碰个面
+        <a className="brand" href="/" aria-label="此刻同频首页">
+          <img
+            className="brand-mark"
+            src="/brand-icon.svg"
+            alt=""
+            width="35"
+            height="35"
+          />{' '}
+          此刻同频
         </a>
         <span className="pill">{platform.label}</span>
       </header>
@@ -374,15 +381,12 @@ function App() {
           <div className="landing">
             <section className="hero">
               <div className="eyebrow">MUSIC BRINGS US TOGETHER</div>
-              <h1>
-                让熟悉的旋律，
+              <h1>此刻同频</h1>
+              <p className="hero-subtitle">音乐歌牌派对</p>
+              <p>
+                让喜欢的旋律，
                 <br />
                 成为相聚的理由。
-              </h1>
-              <p>
-                选几首你爱的歌，邀请朋友，
-                <br />
-                一起发现彼此的音乐世界。
               </p>
               <div className="record-art" aria-hidden="true">
                 <div className="vinyl">

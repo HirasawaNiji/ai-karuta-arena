@@ -62,7 +62,7 @@ for (const expected of bundle.reports) {
 }
 const text = execute([]);
 assert.equal(text.status, 0, text.stderr);
-assert.match(text.stdout, /AI 音乐派对/);
+assert.match(text.stdout, /此刻同频 · 音乐歌牌派对/);
 assert.match(text.stdout, /simulated_host/);
 for (const args of [
   ['--scenario', 'unknown'],

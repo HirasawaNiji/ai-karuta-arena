@@ -120,13 +120,11 @@ textarea {
   align-items: center;
 }
 .brand-mark {
-  background: var(--green);
   height: 35px;
   width: 35px;
-  border-radius: 12px;
-  display: grid;
-  place-items: center;
-  font-size: 28px;
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
 }
 .pill {
   display: inline-flex;
@@ -164,11 +162,17 @@ main {
 .hero h1 {
   font-size: 44px;
   line-height: 1.35;
-  margin-bottom: 22px;
+  margin-bottom: 8px;
 }
 .hero p {
   font-size: 16px;
   color: var(--muted);
+}
+.hero .hero-subtitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 22px;
 }
 .record-art {
   height: 220px;
@@ -736,7 +740,6 @@ footer {
   .brand-mark {
     height: 30px;
     width: 30px;
-    font-size: 24px;
   }
   main {
     padding: 24px max(16px, env(safe-area-inset-right)) 32px;
@@ -760,6 +763,9 @@ footer {
   .hero p {
     font-size: 14px;
     margin-bottom: 14px;
+  }
+  .hero .hero-subtitle {
+    font-size: 18px;
   }
   .record-art {
     position: absolute;

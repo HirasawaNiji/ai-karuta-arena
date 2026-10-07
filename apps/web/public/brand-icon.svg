@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">此刻同频</title>
+  <desc id="desc">绿色圆角底上的白色歌牌与黑色音符。</desc>
+  <rect width="512" height="512" rx="112" fill="#22CE8B"/>
+  <rect x="157" y="102" width="234" height="322" rx="28" transform="rotate(9 274 263)" fill="#111916"/>
+  <g transform="rotate(-9 245 251)">
+    <rect x="128" y="90" width="234" height="322" rx="28" fill="#FFFFFF"/>
+    <rect x="152" y="116" width="12" height="34" rx="6" fill="#22CE8B"/>
+    <rect x="326" y="352" width="12" height="34" rx="6" fill="#22CE8B"/>
+    <path d="M258 171C258 164.925 262.925 160 269 160C275.075 160 280 164.925 280 171V300H258V171Z" fill="#111916"/>
+    <path d="M268 163C279 178 286 183 300 191C321 203 326 215 323 233C321 246 312 258 298 266C306 252 310 239 305 230C301 222 289 218 273 214L268 163Z" fill="#111916"/>
+    <ellipse cx="243" cy="304" rx="38" ry="27" transform="rotate(-18 243 304)" fill="#111916"/>
+  </g>
+</svg>

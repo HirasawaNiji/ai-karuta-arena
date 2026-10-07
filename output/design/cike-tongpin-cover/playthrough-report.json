@@ -1,0 +1,38 @@
+{
+  "completed": true,
+  "rounds": 12,
+  "players": [
+    {
+      "nickname": "小满",
+      "audioResponses": 12
+    },
+    {
+      "nickname": "阿青",
+      "audioResponses": 12
+    },
+    {
+      "nickname": "小夏",
+      "audioResponses": 12
+    }
+  ],
+  "scores": [
+    {
+      "nickname": "阿青",
+      "score": 3,
+      "rank": 1
+    },
+    {
+      "nickname": "小满",
+      "score": 2,
+      "rank": 2
+    },
+    {
+      "nickname": "小夏",
+      "score": 1,
+      "rank": 3
+    }
+  ],
+  "captures": ["profile.png", "game-1.png", "game-4.png", "game-7.png"],
+  "errors": [],
+  "method": "Three independent muted Chrome contexts; real public material and server; automated card choices, not human listening."
+}
