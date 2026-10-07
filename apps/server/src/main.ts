@@ -102,7 +102,7 @@ const port = Number(process.env.PORT ?? 3210);
 if (!Number.isInteger(port) || port < 1 || port > 65535)
   throw new Error('Invalid PORT');
 app.server.listen(port, host, () =>
-  console.log('Music Party: http://' + host + ':' + port),
+  console.log('此刻同频 · 音乐歌牌派对: http://' + host + ':' + port),
 );
 for (const signal of ['SIGINT', 'SIGTERM'] as const)
   process.once(signal, () => {

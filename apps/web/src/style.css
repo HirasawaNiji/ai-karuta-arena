@@ -164,11 +164,17 @@ main {
 .hero h1 {
   font-size: 44px;
   line-height: 1.35;
-  margin-bottom: 22px;
+  margin-bottom: 8px;
 }
 .hero p {
   font-size: 16px;
   color: var(--muted);
+}
+.hero .hero-subtitle {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 22px;
 }
 .record-art {
   height: 220px;
@@ -760,6 +766,9 @@ footer {
   .hero p {
     font-size: 14px;
     margin-bottom: 14px;
+  }
+  .hero .hero-subtitle {
+    font-size: 18px;
   }
   .record-art {
     position: absolute;

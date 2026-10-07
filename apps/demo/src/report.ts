@@ -126,7 +126,7 @@ export interface DemoBundle {
 }
 export function renderText(bundle: DemoBundle): string {
   const lines = [
-    'AI 音乐派对 · 无密钥核心 Demo',
+    '此刻同频 · 音乐歌牌派对 · 无密钥核心 Demo',
     '合成元数据 / 模拟房主与游戏；无真实音频、联网或真人游玩验收。',
   ];
   for (const report of bundle.reports) {

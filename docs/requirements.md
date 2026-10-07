@@ -1,4 +1,4 @@
-# AI 音乐派对需求规格 v0.1
+# 此刻同频需求规格 v0.1
 
 状态：需求文档基线；尚无业务实现。来源：2026-09-20 修订 Prompt 与已确认的公平处理规则。文档任务：[#3](https://github.com/HirasawaNiji/ai-karuta-arena/issues/3)；开发进度：[#4](https://github.com/HirasawaNiji/ai-karuta-arena/issues/4)。
 
